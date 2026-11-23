@@ -3,7 +3,7 @@
 Invitación de boda en una sola página, con HTML, CSS y JavaScript nativos. Adaptada a móvil y escritorio.
 
 ## Secciones
-- Tarjeta de dos tapas en relieve con lacre marfil. La apertura se puede saltar con el botón o con Escape. Con movimiento reducido, la invitación se abre de inmediato.
+- Tarjeta de dos tapas en relieve con lacre marfil. Tocar el sobre o activar el lacre con el teclado abre la carta. Con movimiento reducido, la invitación se abre de inmediato.
 - Portada con la fecha y accesos a la confirmación y al lugar
 - Calendario, cuenta regresiva y enlace para agendar en Google Calendar
 - Itinerario con horarios visibles desde el inicio
