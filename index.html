@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=lacre">
+<link rel="stylesheet" href="styles.css?v=sello">
 <link rel="stylesheet" href="interior-motion.css?v=lacre">
 </head>
 <body>
@@ -34,13 +34,11 @@
       </div>
       <span class="mail-seam" aria-hidden="true"></span>
       <span class="mail-motes" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
-      <button class="seal-button" id="seal" type="button">
+      <button class="seal-button" id="seal" type="button" aria-label="Abrir la carta de Sofía y Diego">
         <span class="mail-seal" aria-hidden="true"><img src="img/lacre-sd.webp" width="288" height="288" alt="" fetchpriority="high"></span>
-        <span class="seal-label">Abrir invitación</span>
       </button>
     </div>
   </div>
-  <button class="skip-opening" id="skipOpening" type="button" hidden>Saltar animación</button>
 </aside>
 
 <main class="page">
@@ -55,19 +53,13 @@
   document.body.classList.add('locked');
 
   const seal = document.getElementById('seal');
-  const skip = document.getElementById('skipOpening');
 
   function showInvitation() {
     if (envelope.hidden) return;
     envelope.hidden = true;
     invitation.inert = false;
     document.body.classList.remove('locked', 'opening-ceremony');
-    document.removeEventListener('keydown', skipWithEscape);
     document.getElementById('titulo').focus({ preventScroll: true });
-  }
-
-  function skipWithEscape(event) {
-    if (event.key === 'Escape') showInvitation();
   }
 
   function openLetter() {
@@ -86,10 +78,7 @@
     const target = title.getBoundingClientRect();
     letter.style.setProperty('--flight-x', (target.left + target.width / 2 - source.left - source.width / 2) + 'px');
     letter.style.setProperty('--flight-y', (target.top + target.height / 2 - source.top - source.height / 2) + 'px');
-    skip.hidden = false;
     seal.disabled = true;
-    skip.focus({ preventScroll: true });
-    document.addEventListener('keydown', skipWithEscape);
     document.body.classList.add('opening-ceremony');
     envelope.classList.add('is-opening');
     const reveal = envelope.getAnimations?.().find(animation => animation.animationName === 'reveal-invitation');
@@ -100,7 +89,6 @@
     }
   }
 
-  skip.addEventListener('click', showInvitation);
   seal.addEventListener('click', openLetter, { once: true });
 })();
 </script>
