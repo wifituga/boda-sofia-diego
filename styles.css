@@ -870,34 +870,64 @@ body:has(.look-dialog[open]) { overflow: hidden; }
 .rsvp-status:empty { display: none; }
 .rsvp-link { color: var(--wine); text-underline-offset: .25em; }
 
-.gifts { border-top: 0; }
-.gift-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; margin-top: 22px; }
-.bank { max-width: 515px; margin: 18px auto 0; text-align: left; border: 1px solid var(--rule); padding: 0 13px; background: var(--paper); }
-.bank-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 10px; }
-.bank-row + .bank-row { border-top: 1px solid var(--rule); }
-.bank-row > div { min-width: 0; overflow-wrap: anywhere; }
-.bank-label { color: var(--muted); font-size: 13px; }
+.gift-list { margin: 24px auto 0; }
+.gift-list summary { list-style: none; gap: 14px; }
+.gift-list summary::-webkit-details-marker { display: none; }
+.gift-list .gift-when-open, .gift-list[open] .gift-when-closed { display: none; }
+.gift-list[open] .gift-when-open { display: inline; }
+.gift-toggle-mark { position: relative; width: 13px; height: 13px; }
+.gift-toggle-mark::before, .gift-toggle-mark::after {
+  content: "";
+  position: absolute;
+  inset: 6px 0 auto;
+  height: 1px;
+  background: currentColor;
+}
+.gift-toggle-mark::after { transform: rotate(90deg); }
+.gift-list[open] .gift-toggle-mark::after { transform: rotate(0); }
+.gift-spread {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  max-width: 900px;
+  margin: clamp(22px, 4vw, 35px) auto 0;
+  padding: clamp(8px, 1vw, 13px);
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  box-shadow: 0 7px 25px -19px #4c302d75;
+  text-align: left;
+}
+.gift-photo { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 40% center; }
+.gift-note { align-self: center; padding: clamp(18px, 3.4vw, 42px); }
+.gift-note-title { color: var(--wine); font: italic 500 clamp(34px, 4vw, 49px)/1 var(--serif); }
+.gift-intro { margin-top: 10px; color: var(--muted); font-size: 16px; }
+.gift-ideas { margin: 20px 0 0; }
+.gift-ideas > div { border-top: 1px solid var(--rule); padding-top: 11px; }
+.gift-ideas > div + div { margin-top: 13px; }
+.gift-ideas dt { color: var(--wine); font: 600 25px/1.12 var(--serif); }
+.gift-ideas dd { margin: 4px 0 0; color: var(--muted); line-height: 1.4; }
+@media (prefers-reduced-motion: no-preference) {
+  .gift-list[open] .gift-spread { animation: gift-unfold .35s ease-out both; }
+  @keyframes gift-unfold { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+}
+@media (max-width: 700px) {
+  .gift-spread { grid-template-columns: minmax(0, 1fr); max-width: 480px; }
+  .gift-photo { height: auto; aspect-ratio: 3 / 2; }
+  .gift-note { padding: 22px clamp(10px, 4vw, 26px); }
+}
+.gift-transfer { max-width: 515px; margin: 10px auto 0; }
+.gift-transfer summary { width: fit-content; margin: auto; padding: 11px 3px; color: var(--wine); cursor: pointer; }
+.bank { margin: 10px 0 0; border: 1px solid var(--rule); padding: 0 14px; background: var(--paper); text-align: left; }
+.bank > div { padding: 10px 0; }
+.bank > div + div { border-top: 1px solid var(--rule); }
+.bank dt { color: var(--muted); font-size: 14px; }
+.bank dd { margin: 0; display: flex; align-items: center; justify-content: space-between; gap: 10px; overflow-wrap: anywhere; }
+.bank-status { margin-top: 8px; color: var(--wine); font-size: 14px; }
+.bank-status:empty { display: none; }
 .copy { min-height: 44px; border: 1px solid var(--rule); padding-inline: 9px; color: var(--wine); background: transparent; }
 .copy:hover { background: var(--sand); }
 .closing { background: var(--wine-dark); color: var(--paper); padding-block: clamp(46px, 7vw, 80px); text-align: center; }
 .closing-line { font: 500 clamp(36px, 5vw, 65px)/1.03 var(--serif); text-wrap: balance; }
 .closing-signature { color: var(--on-wine); margin-top: 17px; font-size: 14px; }
-
-.toast {
-  position: fixed;
-  z-index: 6;
-  right: 16px;
-  bottom: 16px;
-  max-width: calc(100% - 32px);
-  background: var(--ink);
-  color: var(--paper);
-  padding: 9px 14px;
-  font-size: 14px;
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity .2s;
-}
-.toast.show { visibility: visible; opacity: 1; }
 
 @media (max-width: 760px) {
   .mail-scene {
@@ -961,5 +991,5 @@ body:has(.look-dialog[open]) { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .intro.is-opening, .intro.is-opening * { animation: none; }
-  .btn, .toast { transition: none; }
+  .btn { transition: none; }
 }
