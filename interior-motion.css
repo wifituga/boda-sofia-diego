@@ -41,6 +41,15 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  .story-divider.detail-in-view img {
+    transform-origin: 20% 70%;
+    animation: settle-olive 800ms ease-out;
+  }
+
+  .calendar.detail-in-view::before {
+    animation: settle-bloom 700ms ease-out;
+  }
+
   .calendar.detail-in-view .d.m::after {
     animation: interior-circle 720ms ease-in-out;
   }
@@ -79,6 +88,16 @@
   .rsvp-optional[open] .field,
   .bank:not([hidden]) {
     animation: interior-unfold 230ms ease-out;
+  }
+
+  @keyframes settle-olive {
+    from { transform: translateY(-3px) rotate(-8deg); }
+    to { transform: rotate(-5deg); }
+  }
+
+  @keyframes settle-bloom {
+    from { transform: translateY(-3px) rotate(8deg); }
+    to { transform: rotate(12deg); }
   }
 
   @keyframes interior-circle {

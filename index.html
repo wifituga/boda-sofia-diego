@@ -10,8 +10,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=orquideas">
-<link rel="stylesheet" href="interior-motion.css?v=lacre">
+<link rel="stylesheet" href="styles.css?v=jardin">
+<link rel="stylesheet" href="interior-motion.css?v=jardin">
+<link rel="stylesheet" href="papeleria-cierre.css?v=jardin">
 </head>
 <body>
 
@@ -118,6 +119,9 @@
   </section>
 
   <section class="story wrap section-space" aria-labelledby="storyTitle">
+    <div class="story-divider" aria-hidden="true">
+      <img src="img/olivo-de-la-carta.webp" width="650" height="217" alt="" loading="lazy" decoding="async">
+    </div>
     <p class="kicker">Nuestra historia</p>
     <h2 id="storyTitle">Y ahora, <em>para siempre.</em></h2>
     <p class="prose">Después de tantos momentos juntos, decidimos dar el paso más bonito de nuestras vidas. Nada nos haría más felices que celebrarlo contigo.</p>
@@ -177,16 +181,18 @@
         <p class="kicker">Ceremonia y recepción</p>
         <h2 id="lugarTitle">Fundo <em>Pozo Santo</em></h2>
         <p>Av. Víctor Malásquez<br>Lima</p>
-        <a class="btn line" href="https://maps.app.goo.gl/76194Tj1qc9E568Q7" target="_blank" rel="noopener">Abrir Google Maps <span aria-hidden="true">↗&#xfe0e;</span></a>
+        <a class="btn line" href="https://maps.app.goo.gl/76194Tj1qc9E568Q7" target="_blank" rel="noopener">Abrir Google Maps <span class="external-arrow" aria-hidden="true"></span></a>
       </div>
     </section>
   </div>
 
   <section class="dress wrap section-space" aria-labelledby="dressTitle">
-    <picture class="dress-art">
-      <source media="(max-width: 580px)" srcset="img/flor-de-solapa-720.webp">
-      <img src="img/flor-de-solapa.webp" alt="" width="800" height="1000" loading="lazy" decoding="async">
-    </picture>
+    <div class="dress-print">
+      <picture class="dress-art">
+        <source media="(max-width: 580px)" srcset="img/flor-de-solapa-720.webp">
+        <img src="img/flor-de-solapa.webp" alt="" width="800" height="1000" loading="lazy" decoding="async">
+      </picture>
+    </div>
     <div class="dress-copy">
       <p class="kicker">Código de vestimenta</p>
       <h2 id="dressTitle">Formal <em>elegante.</em></h2>
@@ -275,6 +281,6 @@
 
 <div class="toast" id="toast" role="status"></div>
 <script src="invitacion.js?v=lacre" defer></script>
-<script src="interior-motion.js?v=lacre" defer></script>
+<script src="interior-motion.js?v=jardin" defer></script>
 </body>
 </html>

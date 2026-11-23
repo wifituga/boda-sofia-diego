@@ -14,7 +14,7 @@ Invitación de boda en una sola página, con HTML, CSS y JavaScript nativos. Ada
 - Retrato y galería opcionales en «Nuestra historia»
 
 ## Cómo editar
-La estructura y los textos están en `index.html`, junto con la interacción inicial del sobre. Las animaciones de la apertura están en `styles.css` y los datos y formularios en `invitacion.js`. Los detalles que se animan al recorrer la carta están en `interior-motion.css` e `interior-motion.js`.
+La estructura y los textos están en `index.html`, junto con la interacción inicial del sobre. Las animaciones de la apertura están en `styles.css` y los datos y formularios en `invitacion.js`. El estilo de la confirmación, los regalos y la despedida está en `papeleria-cierre.css`. Los detalles que se animan al recorrer la carta están en `interior-motion.css` e `interior-motion.js`.
 
 - **Datos generales**: editar `CONFIG` en `invitacion.js` y actualizar los textos de fecha, ubicación y horarios de `index.html`. El calendario mensual y el enlace de Google Calendar están en `invitacion.js`.
 - **Fotos de la pareja**: copiar las imágenes a `img/fotos/` y listarlas en `FOTOS` de `invitacion.js`. La primera es el retrato principal y las demás forman la galería. Un archivo vertical funciona bien con el recorte 4:5.
@@ -34,4 +34,4 @@ Settings → Pages → *Deploy from a branch* → rama `main`, carpeta `/ (root)
 La invitación queda en `https://<usuario>.github.io/<repo>/`.
 
 ## Imágenes editoriales
-La cubierta en relieve y el monograma de lacre se encuentran en `img/cubierta-relieve.webp` e `img/lacre-sd.webp`. Las flores que enmarcan la carta durante la apertura y en la portada se encuentran en `img/cascada-orquideas*.webp` e `img/cala-prensada.webp`. La foto del código de vestimenta se encuentra en `img/flor-de-solapa*.webp`. Los retratos de los novios se configuran por separado en `FOTOS`.
+La cubierta en relieve y el monograma de lacre se encuentran en `img/cubierta-relieve.webp` e `img/lacre-sd.webp`. Las flores que enmarcan la carta durante la apertura y en la portada se encuentran en `img/cascada-orquideas*.webp` e `img/cala-prensada.webp`. La rama de olivo y la orquídea que aparecen en las secciones interiores están en `img/olivo-de-la-carta.webp` e `img/orquidea-suelta.webp`. La foto del código de vestimenta se encuentra en `img/flor-de-solapa*.webp`. Los retratos de los novios se configuran por separado en `FOTOS`.
