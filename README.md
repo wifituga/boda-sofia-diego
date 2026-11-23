@@ -3,7 +3,7 @@
 Invitación de boda en una sola página, con HTML, CSS y JavaScript nativos. Adaptada a móvil y escritorio.
 
 ## Secciones
-- Sobre interactivo con sello, solapa y carta animada
+- Tarjeta vertical con dos tapas botánicas, sello marfil y apertura animada
 - Portada con la fecha y accesos a la confirmación y al lugar
 - Calendario, cuenta regresiva y enlace para agendar en Google Calendar
 - Itinerario con horarios visibles desde el inicio
@@ -34,4 +34,4 @@ Settings → Pages → *Deploy from a branch* → rama `main`, carpeta `/ (root)
 La invitación queda en `https://<usuario>.github.io/<repo>/`.
 
 ## Imágenes editoriales
-La apertura usa capas CSS para el sobre y la carta, y la imagen editorial del sobre para el detalle del sello. La portada usa el arreglo floral en WebP con variantes para móvil y escritorio.
+La portada y la sección de vestimenta usan interpretaciones originales de un ramo y una flor de solapa con calas y orquídeas. Las ilustraciones y fotografías creadas para la invitación se encuentran en `img/rama-botanica.webp`, `img/ramo-calas*.webp` e `img/flor-de-solapa*.webp`. Los retratos de los novios se configuran por separado en `FOTOS`.
