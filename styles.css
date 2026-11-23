@@ -99,13 +99,17 @@ button, input, select, textarea { font: inherit; }
   overflow: auto;
   overscroll-behavior: contain;
   padding: 22px 12px;
-  background: radial-gradient(ellipse at 46% 38%, #fffcf5 0, #f6eee3 52%, #eadccb 100%);
+  background:
+    radial-gradient(ellipse at 18% 11%, #fffdf5 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 84%, #dfc9b2 0%, transparent 64%),
+    #f5ecdf;
 }
 .intro.is-opening {
-  pointer-events: none;
-  animation: reveal-invitation .37s ease 1.75s both;
+  --opening-length: 3.9s;
+  animation: reveal-invitation var(--opening-length) ease both;
 }
 .intro-layout {
+  position: relative;
   width: min(70vw, 360px, calc(74svh - 99px));
   margin: auto;
   text-align: center;
@@ -124,6 +128,13 @@ button, input, select, textarea { font: inherit; }
   aspect-ratio: .76;
   margin-bottom: var(--action-gap);
   border-radius: 2px;
+}
+.mail-scene::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
   background: #4d1826;
   box-shadow: 3px 7px 9px -6px #4c282d70, 4px 22px 38px -17px #351c20a1;
 }
@@ -174,26 +185,18 @@ button, input, select, textarea { font: inherit; }
 }
 .mail-door-face {
   overflow: hidden;
-  background: linear-gradient(117deg, #783746, #6b283b 45%, #592237);
-  box-shadow: inset 1px 1px 1px #a05d6470, inset -1.5px -1px 2px #39142096;
+  background: #601e32 url("img/cubierta-relieve.webp") left center / 200% 100% no-repeat;
+  box-shadow: inset 1px 1px 1px #e3b29455, inset -1px -1px 1px #320e2080;
 }
-.mail-door-right .mail-door-face {
-  background: linear-gradient(117deg, #682a3a, #642839 61%, #582233);
-}
-.mail-door-face::before, .mail-door-face::after {
-  position: absolute;
-  inset: -5% -18%;
-  content: "";
-  mask: url("img/rama-botanica.webp") center / 97% auto no-repeat;
-  background: #441825;
-  transform: rotate(-15deg);
-}
+.mail-door-right .mail-door-face { background-position: right center; }
 .mail-door-face::after {
-  background: #864451;
-  transform: translate(-1px, -1.4px) rotate(-15deg);
+  content: "";
+  position: absolute;
+  inset: -10% -10%;
+  opacity: 0;
+  background: linear-gradient(105deg, transparent 24%, #fbdca122 40%, #fff0c977 49%, #e7b26e22 55%, transparent 70%);
+  pointer-events: none;
 }
-.mail-door-right .mail-door-face::before { transform: rotate(163deg); }
-.mail-door-right .mail-door-face::after { transform: translate(-1px, -1.4px) rotate(163deg); }
 .mail-door-lining {
   transform: rotateY(180deg);
   background: linear-gradient(110deg,#793947,#642937 67%,#4d1d2c);
@@ -216,28 +219,12 @@ button, input, select, textarea { font: inherit; }
   position: absolute;
   top: calc((100% - var(--action-gap)) * .5);
   left: 50%;
-  display: grid;
-  place-items: center;
-  width: clamp(44px, 22cqw, 77px);
+  width: clamp(45px, 24cqw, 87px);
   aspect-ratio: 1;
-  border: 1px solid #c8b89f;
-  border-radius: 48% 53% 49% 46% / 49% 47% 53% 51%;
-  transform: translate(-50%, -50%) rotate(-6deg);
-  background: radial-gradient(ellipse at 33% 26%, #fffcf0 0%, #e8d9c1 49%, #f3e9d3 69%, #c6aa91 81%, #ecddc2 94%);
-  color: #75523d;
-  box-shadow: inset 1px 1px 1px #fff9e9, inset -2px -2px 3px #a2897580, 2px 4px 6px #2c0d1b80;
-  font: italic 600 clamp(20px, 7.4cqw, 29px)/1 var(--serif);
-  letter-spacing: -.08em;
-  text-shadow: 0 1px .4px #fff8e4;
+  transform: translate(-50%, -50%) rotate(-3deg);
+  filter: drop-shadow(0 2px 1px #3b18255c) drop-shadow(1px 4px 5px #2e10245c);
 }
-.mail-seal::before {
-  position: absolute;
-  inset: 9%;
-  content: "";
-  border: 1px solid #baa284;
-  border-radius: 47% 50% 49% 50%;
-  box-shadow: inset 0 1px 1px #fef7e1, 0 1px 1px #fbf1d8;
-}
+.mail-seal img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .seal-label {
   display: grid;
   min-height: 44px;
@@ -251,27 +238,164 @@ button, input, select, textarea { font: inherit; }
 }
 .seal-button:focus-visible { outline-offset: 5px; }
 .seal-button:hover .seal-label, .seal-button:focus-visible .seal-label { background: var(--wine-dark); }
-.intro.is-opening .intro-caption, .intro.is-opening .seal-button { animation: release-seal .23s ease-in forwards; }
-.intro.is-opening .mail-door-left { animation: open-left-door 1.08s cubic-bezier(.45,.09,.24,1) .12s forwards; }
-.intro.is-opening .mail-door-right { animation: open-right-door 1.12s cubic-bezier(.45,.09,.24,1) .17s forwards; }
-.intro.is-opening .mail-letter { animation: draw-letter .55s ease-out .85s both; }
-@keyframes release-seal {
-  to { opacity: 0; transform: translateY(-5px); }
+/* Opening choreography. Light gathers along the fold before the paper moves. */
+.intro::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 46%, #ffedce99, transparent 55%);
+  opacity: 0;
+}
+.mail-aura {
+  position: absolute;
+  z-index: -1;
+  inset: -17%;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(ellipse, #fff9dc 12%, #eac99870 46%, transparent 70%);
+}
+.mail-seam {
+  position: absolute;
+  z-index: 3;
+  left: calc(50% - 1px);
+  top: 3%;
+  height: 94%;
+  width: 2px;
+  opacity: 0;
+  pointer-events: none;
+  background: linear-gradient(transparent, #f4c789 32%, #fff7d8 50%, #f2ca87 70%, transparent);
+  box-shadow: 0 0 12px 2px #fde0a7aa;
+}
+.mail-motes {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  pointer-events: none;
+}
+.mail-motes i {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  opacity: 0;
+  background: #fff2cd;
+  box-shadow: 0 0 4px 1px #cba266;
+}
+.mail-motes i:nth-child(1) { --x: 43%; --y: 43%; --dx: -58px; --delay: .75s; }
+.mail-motes i:nth-child(2) { --x: 51%; --y: 31%; --dx: 43px; --delay: .97s; }
+.mail-motes i:nth-child(3) { --x: 60%; --y: 52%; --dx: 57px; --delay: 1.12s; }
+.mail-motes i:nth-child(4) { --x: 32%; --y: 72%; --dx: -30px; --delay: .91s; }
+.mail-motes i:nth-child(5) { --x: 64%; --y: 66%; --dx: 23px; --delay: 1.24s; }
+.mail-motes i:nth-child(6) { --x: 24%; --y: 33%; --dx: -17px; --delay: 1.40s; }
+.mail-motes i:nth-child(7) { --x: 77%; --y: 37%; --dx: 27px; --delay: 1.46s; }
+.letter-rule {
+  display: block;
+  width: 24%;
+  height: 1px;
+  margin: 3% 0 2%;
+  background: linear-gradient(90deg, transparent, #b08859 30%, #b08859 70%, transparent);
+}
+.letter-rule::before {
+  content: "";
+  display: block;
+  width: 5px;
+  height: 5px;
+  margin: -2px auto 0;
+  transform: rotate(45deg);
+  background: #bd9567;
+  box-shadow: 0 0 0 3px #fffaed;
+}
+
+.skip-opening {
+  position: fixed;
+  z-index: 7;
+  right: max(18px, env(safe-area-inset-right));
+  bottom: max(12px, env(safe-area-inset-bottom));
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 2px;
+  background: var(--ivory);
+  color: var(--muted);
+  cursor: pointer;
+  font: 500 13px/1.25 var(--sans);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .intro:not(.is-opening) .mail-seal { transition: transform .3s ease; }
+  .seal-button:is(:hover, :focus-visible) .mail-seal { transform: translate(-50%, -52%) rotate(-2deg) scale(1.04); }
+
+  .intro.is-opening::before, .intro.is-opening .mail-aura { animation: candlelight 2.5s ease .15s both; }
+  .intro.is-opening .mail-seam { animation: light-in-the-fold .92s ease .11s both; }
+  .intro.is-opening .mail-seal { animation: lift-the-seal .69s cubic-bezier(.32,.06,.56,.94) both; }
+  .intro.is-opening .intro-caption, .intro.is-opening .seal-label { animation: lift-the-caption .45s ease both; }
+  .intro.is-opening .mail-door-left { animation: open-left-door 1.62s cubic-bezier(.4,.025,.19,1) .46s both, leave-binding .47s ease 2.34s forwards; }
+  .intro.is-opening .mail-door-right { animation: open-right-door 1.66s cubic-bezier(.43,.03,.18,1) .55s both, leave-binding .47s ease 2.34s forwards; }
+  .intro.is-opening .mail-scene::before { animation: leave-binding .47s ease 2.34s forwards; }
+  .intro.is-opening .mail-door-face::after { animation: rake-the-foil 1.48s ease .24s both; }
+  .intro.is-opening .mail-door-right .mail-door-face::after { animation-delay: .35s; }
+  .intro.is-opening .mail-motes i { animation: gold-in-the-light 1.22s ease-out var(--delay) both; }
+  .intro.is-opening .mail-letter { animation: draw-letter var(--opening-length) linear both; }
+  .intro.is-opening .mail-letter .letter-rule { animation: draw-rule .65s ease 1.18s both; }
+  .opening-ceremony .hero-copy { animation: enter-cover .68s cubic-bezier(.18,.74,.25,1) 3.16s both; }
+  .opening-ceremony .hero-art img { animation: reveal-flowers .83s cubic-bezier(.23,.77,.21,1) 3.04s both; }
+}
+
+@keyframes candlelight {
+  0%, 100% { opacity: 0; }
+  38%, 62% { opacity: .9; }
+}
+@keyframes light-in-the-fold {
+  0% { opacity: 0; transform: scaleY(.04); }
+  56% { opacity: .9; transform: scaleY(.9); }
+  100% { opacity: 0; transform: scaleY(1); }
+}
+@keyframes lift-the-seal {
+  0% { opacity: 1; transform: translate(-50%, -50%) rotate(-3deg); }
+  33% { opacity: 1; transform: translate(-48%, -53%) rotate(-9deg) scale(1.03); }
+  68% { opacity: .96; }
+  100% { opacity: 0; transform: translate(-32%, -94%) rotate(10deg) scale(1.09); }
+}
+@keyframes lift-the-caption { to { opacity: 0; transform: translateY(-5px); } }
+@keyframes rake-the-foil {
+  0% { transform: translateX(-110%) skewX(-12deg); opacity: 0; }
+  30% { opacity: .42; }
+  100% { transform: translateX(120%) skewX(-12deg); opacity: 0; }
 }
 @keyframes open-left-door {
-  to { transform: rotateY(-100deg); }
+  0% { transform: rotateY(0deg); }
+  78% { transform: rotateY(-100deg); }
+  100% { transform: rotateY(-98deg); }
 }
 @keyframes open-right-door {
-  to { transform: rotateY(100deg); }
+  0% { transform: rotateY(0deg); }
+  80% { transform: rotateY(100deg); }
+  100% { transform: rotateY(98deg); }
+}
+@keyframes draw-rule { from { opacity: 0; transform: scaleX(.12); } }
+@keyframes gold-in-the-light {
+  0% { opacity: 0; transform: translate(0, 7px) scale(.55); }
+  24% { opacity: .85; }
+  100% { opacity: 0; transform: translate(var(--dx), -54px) scale(.72); }
 }
 @keyframes draw-letter {
-  from { transform: translateY(0); }
-  to { transform: translateY(-2%) scale(1.01); }
+  0%, 29% { transform: translateY(0) scale(1); opacity: 1; }
+  53%, 65% { transform: translateY(-2%) scale(1.02); opacity: 1; z-index: 1; }
+  66% { transform: translateY(-2%) scale(1.02); z-index: 3; animation-timing-function: cubic-bezier(.46,.05,.3,1); }
+  81%, 100% { transform: translate(var(--flight-x), var(--flight-y)) scale(1.06); opacity: 0; z-index: 3; }
 }
+@keyframes leave-binding { to { opacity: 0; } }
 @keyframes reveal-invitation {
-  from { opacity: 1; }
-  to { opacity: 0; }
+  0%, 77% { opacity: 1; }
+  100% { opacity: 0; }
 }
+@keyframes enter-cover { from { opacity: 0; transform: translateY(7px); } }
+@keyframes reveal-flowers { from { opacity: .4; transform: scale(1.038); } }
 
 .hero h1 {
   color: var(--wine);

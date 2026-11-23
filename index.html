@@ -6,10 +6,12 @@
 <meta name="theme-color" content="#f5eee5">
 <meta name="description" content="Invitación de boda de Sofía y Diego. Encuentra la fecha, el itinerario y cómo confirmar tu asistencia.">
 <title>Sofía &amp; Diego · Nos casamos</title>
+<link rel="preload" as="image" href="img/cubierta-relieve.webp" type="image/webp" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=botanica">
+<link rel="stylesheet" href="styles.css?v=lacre">
+<link rel="stylesheet" href="interior-motion.css?v=lacre">
 </head>
 <body>
 
@@ -17,9 +19,11 @@
   <div class="intro-layout">
     <p class="intro-caption" aria-hidden="true">Para ti</p>
     <div class="mail-scene">
+      <span class="mail-aura" aria-hidden="true"></span>
       <div class="mail-letter" aria-hidden="true">
         <span class="kicker">Nos casamos</span>
         <p>Sofía <em>&amp;</em> Diego</p>
+        <span class="letter-rule"></span>
         <time datetime="2027-05-15">15 de mayo de 2027</time>
       </div>
       <div class="mail-door mail-door-left" aria-hidden="true">
@@ -28,15 +32,78 @@
       <div class="mail-door mail-door-right" aria-hidden="true">
         <span class="mail-door-face"></span><span class="mail-door-lining"></span>
       </div>
+      <span class="mail-seam" aria-hidden="true"></span>
+      <span class="mail-motes" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
       <button class="seal-button" id="seal" type="button">
-        <span class="mail-seal" aria-hidden="true">S&amp;D</span>
+        <span class="mail-seal" aria-hidden="true"><img src="img/lacre-sd.webp" width="288" height="288" alt="" fetchpriority="high"></span>
         <span class="seal-label">Abrir invitación</span>
       </button>
     </div>
   </div>
+  <button class="skip-opening" id="skipOpening" type="button" hidden>Saltar animación</button>
 </aside>
 
 <main class="page">
+<script>
+/* El sobre se prepara antes de que el navegador dibuje la portada. */
+(() => {
+  if (location.hash) return;
+  const envelope = document.getElementById('envelope');
+  const invitation = document.querySelector('main');
+  envelope.hidden = false;
+  invitation.inert = true;
+  document.body.classList.add('locked');
+
+  const seal = document.getElementById('seal');
+  const skip = document.getElementById('skipOpening');
+
+  function showInvitation() {
+    if (envelope.hidden) return;
+    envelope.hidden = true;
+    invitation.inert = false;
+    document.body.classList.remove('locked', 'opening-ceremony');
+    document.removeEventListener('keydown', skipWithEscape);
+    document.getElementById('titulo').focus({ preventScroll: true });
+  }
+
+  function skipWithEscape(event) {
+    if (event.key === 'Escape') showInvitation();
+  }
+
+  function openLetter() {
+    const title = document.getElementById('titulo');
+    if (!title) {
+      document.addEventListener('DOMContentLoaded', openLetter, { once: true });
+      return;
+    }
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      showInvitation();
+      return;
+    }
+    // La carta vuela hasta los nombres, también cuando cambia la portada en móvil.
+    const letter = envelope.querySelector('.mail-letter');
+    const source = letter.getBoundingClientRect();
+    const target = title.getBoundingClientRect();
+    letter.style.setProperty('--flight-x', (target.left + target.width / 2 - source.left - source.width / 2) + 'px');
+    letter.style.setProperty('--flight-y', (target.top + target.height / 2 - source.top - source.height / 2) + 'px');
+    skip.hidden = false;
+    seal.disabled = true;
+    skip.focus({ preventScroll: true });
+    document.addEventListener('keydown', skipWithEscape);
+    document.body.classList.add('opening-ceremony');
+    envelope.classList.add('is-opening');
+    const reveal = envelope.getAnimations?.().find(animation => animation.animationName === 'reveal-invitation');
+    if (reveal) {
+      reveal.finished.then(showInvitation, showInvitation);
+    } else {
+      showInvitation();
+    }
+  }
+
+  skip.addEventListener('click', showInvitation);
+  seal.addEventListener('click', openLetter, { once: true });
+})();
+</script>
   <header class="masthead wrap">
     <a class="monogram" href="#titulo" aria-label="Inicio de la invitación">S<em>&amp;</em>D</a>
     <nav aria-label="Invitación">
@@ -219,6 +286,7 @@
 </main>
 
 <div class="toast" id="toast" role="status"></div>
-<script src="invitacion.js?v=carta" defer></script>
+<script src="invitacion.js?v=lacre" defer></script>
+<script src="interior-motion.js?v=lacre" defer></script>
 </body>
 </html>

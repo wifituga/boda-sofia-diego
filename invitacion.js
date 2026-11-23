@@ -10,36 +10,6 @@ const FOTOS = [
   // { src: "img/fotos/1.jpg", alt: "Sofía y Diego juntos", texto: "Cómo empezó" },
 ];
 
-/* ===== Abrir sobre ===== */
-const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-if (!location.hash) {
-  const envelope = document.getElementById('envelope');
-  const invitation = document.querySelector('main');
-  envelope.hidden = false;
-  invitation.inert = true;
-  document.body.classList.add('locked');
-
-  document.getElementById('seal').addEventListener('click', () => {
-    const showInvitation = () => {
-      envelope.hidden = true;
-      invitation.inert = false;
-      document.body.classList.remove('locked');
-      document.getElementById('titulo').focus({ preventScroll: true });
-    };
-    if (reducedMotion.matches) {
-      showInvitation();
-      return;
-    }
-    envelope.classList.add('is-opening');
-    const reveal = envelope.getAnimations?.().find(animation => animation.animationName === 'reveal-invitation');
-    if (reveal) {
-      reveal.finished.then(showInvitation, showInvitation);
-    } else {
-      showInvitation();
-    }
-  }, { once: true });
-}
-
 /* ===== Fotos ===== */
 if (FOTOS.length) {
   const photos = document.getElementById('galeria');
