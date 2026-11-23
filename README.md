@@ -4,7 +4,7 @@ Invitación de boda en una sola página, con HTML, CSS y JavaScript nativos. Ada
 
 ## Secciones
 - Tarjeta de dos tapas en relieve con lacre marfil. Tocar el sobre o activar el lacre con el teclado abre la carta. Con movimiento reducido, la invitación se abre de inmediato.
-- Portada con la fecha y accesos a la confirmación y al lugar
+- Carta interior con una cascada de orquídeas y una cala sobre el papel, seguida de los accesos a la confirmación y al lugar
 - Calendario, cuenta regresiva y enlace para agendar en Google Calendar
 - Itinerario con horarios visibles desde el inicio
 - Lugar (Fundo Pozo Santo) con botón a Google Maps
@@ -34,4 +34,4 @@ Settings → Pages → *Deploy from a branch* → rama `main`, carpeta `/ (root)
 La invitación queda en `https://<usuario>.github.io/<repo>/`.
 
 ## Imágenes editoriales
-La cubierta en relieve y el monograma de lacre se encuentran en `img/cubierta-relieve.webp` e `img/lacre-sd.webp`. La rama de la carta, el ramo y la flor de solapa se encuentran en `img/rama-botanica.webp`, `img/ramo-calas*.webp` e `img/flor-de-solapa*.webp`. Los retratos de los novios se configuran por separado en `FOTOS`.
+La cubierta en relieve y el monograma de lacre se encuentran en `img/cubierta-relieve.webp` e `img/lacre-sd.webp`. Las flores que enmarcan la carta durante la apertura y en la portada se encuentran en `img/cascada-orquideas*.webp` e `img/cala-prensada.webp`. La foto del código de vestimenta se encuentra en `img/flor-de-solapa*.webp`. Los retratos de los novios se configuran por separado en `FOTOS`.
