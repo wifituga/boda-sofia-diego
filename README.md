@@ -3,25 +3,27 @@
 Invitación de boda en una sola página (HTML + CSS + JS, sin dependencias). Pensada para celular.
 
 ## Secciones
-- Sobre con puertas en relieve y sello de cera que se abre al tocarlo
-- Portada, frase, fecha con calendario y cuenta regresiva (botón para agendar en Google Calendar)
-- Itinerario con línea que avanza al hacer scroll y sellos con rosa en cada hora
+- Sobre con puertas en relieve, sello de cera y botón de apertura
+- Portada con la fecha y accesos a la confirmación y al lugar
+- Calendario, cuenta regresiva y enlace para agendar en Google Calendar
+- Itinerario con sellos y horarios visibles desde el inicio
 - Lugar (Fundo Pozo Santo) con botón a Google Maps
 - Código de vestimenta y paleta de colores
 - Regalos: enlace a la lista en D'Parte y datos para transferencia
-- Confirmación de asistencia (arma un mensaje de WhatsApp para los novios)
-- Galería de fotos (se muestra sola cuando hay fotos)
+- Confirmación de asistencia (abre WhatsApp con la respuesta preparada)
+- Retrato y galería opcionales en «Nuestra historia»
 
 ## Cómo editar
 Todo lo que cambia está en `index.html`:
 
 - **Datos generales**: objeto `CONFIG` al inicio del `<script>` (fecha, lugar, número de WhatsApp).
-- **Fotos**: copiar las imágenes a `img/fotos/` y listarlas en `FOTOS`:
+- **Fotos**: copiar las imágenes a `img/fotos/` y listarlas en `FOTOS`. La primera es el retrato principal y las demás forman la galería. Un archivo vertical funciona bien con el recorte 4:5.
   ```js
   const FOTOS = [
-    { src: "img/fotos/1.jpg", texto: "Cómo empezó" },
+    { src: "img/fotos/1.jpg", alt: "Descripción de la foto", texto: "Cómo empezó" },
   ];
   ```
+  El pie `texto` es opcional. Si `FOTOS` está vacío, la sección muestra la historia sin un espacio vacío para imágenes.
 - **Lista de regalos**: cambiar el `href` del botón `#giftList` por el link de D'Parte de los novios.
 - **Datos bancarios**: bloque `#bank`.
 
