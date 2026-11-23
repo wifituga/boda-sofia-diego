@@ -6,7 +6,7 @@ const CONFIG = {
   whatsapp: "51900000000", // número de demo
   transferencia: null
 };
-/* La primera foto acompaña la nota a la familia y amigos. Las siguientes forman la galería. */
+/* La primera foto aparece en Nuestra historia. Las siguientes forman la galería. */
 const FOTOS = [
   // { src: "img/fotos/1.jpg", alt: "Sofía y Diego juntos", texto: "Cómo empezó" },
 ];
@@ -49,7 +49,6 @@ if (FOTOS.length) {
   const first=(new Date(y,m,1).getDay()+6)%7, days=new Date(y,m+1,0).getDate();
   for(let i=0;i<first;i++)g.insertAdjacentHTML('beforeend','<div></div>');
   for(let d=1;d<=days;d++)g.insertAdjacentHTML('beforeend',`<div class="d${d===mark?' m':''}">${d}</div>`);
-  g.closest('.calendar').hidden = false;
 })();
 
 /* ===== Cuenta regresiva ===== */
@@ -59,12 +58,10 @@ function tick(){
   cdD.textContent=D;cdH.textContent=String(H).padStart(2,'0');cdM.textContent=String(M).padStart(2,'0');cdS.textContent=String(s).padStart(2,'0');
 }
 tick();setInterval(tick,1000);
-document.querySelector('.date-count').hidden = false;
 
 /* ===== Agendar (Google Calendar) ===== */
 calBtn.href='https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent('Boda de '+CONFIG.novios)
  +'&dates=20270515T210000Z/20270516T060000Z&details='+encodeURIComponent('¡Te esperamos para celebrar juntos!')+'&location='+encodeURIComponent(CONFIG.lugar);
-calBtn.hidden = false;
 
 /* ===== Datos bancarios ===== */
 const transfer = CONFIG.transferencia;

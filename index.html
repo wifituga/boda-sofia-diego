@@ -7,15 +7,18 @@
 <meta name="description" content="Invitación de boda de Sofía y Diego. Encuentra la fecha, el itinerario y cómo confirmar tu asistencia.">
 <title>Sofía &amp; Diego · Nos casamos</title>
 <link rel="preload" as="image" href="img/cubierta-relieve.webp" type="image/webp" fetchpriority="high">
-<link rel="preload" href="fonts/cormorant-garamond.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css?v=edicion">
-<link rel="stylesheet" href="interior-motion.css?v=edicion">
-<link rel="stylesheet" href="papeleria-cierre.css?v=edicion">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=regalos">
+<link rel="stylesheet" href="interior-motion.css?v=jardin">
+<link rel="stylesheet" href="papeleria-cierre.css?v=jardin">
 </head>
 <body>
 
 <aside class="intro" id="envelope" aria-label="Apertura de la invitación" hidden>
   <div class="mail-scene">
+    <span class="mail-aura" aria-hidden="true"></span>
     <div class="mail-letter" aria-hidden="true">
       <span class="kicker">Nos casamos</span>
       <p>Sofía <em>&amp;</em> Diego</p>
@@ -28,6 +31,8 @@
     <div class="mail-door mail-door-right" aria-hidden="true">
       <span class="mail-door-face"></span><span class="mail-door-lining"></span>
     </div>
+    <span class="mail-seam" aria-hidden="true"></span>
+    <span class="mail-motes" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
     <button class="seal-button" id="seal" type="button" aria-label="Abrir la carta de Sofía y Diego">
       <span class="mail-seal" aria-hidden="true"><img src="img/lacre-sd.webp" width="288" height="288" alt="" fetchpriority="high"></span>
     </button>
@@ -88,9 +93,9 @@
   <header class="masthead wrap">
     <a class="monogram" href="#titulo" aria-label="Inicio de la invitación">S<em>&amp;</em>D</a>
     <nav aria-label="Invitación">
-      <a href="#itineraryTitle">Itinerario</a>
-      <a href="#vestimenta">Vestimenta</a>
+      <a href="#lugar">Ubicación</a>
       <a href="#regalos">Regalos</a>
+      <a href="#rsvp">Confirmar</a>
     </nav>
   </header>
 
@@ -115,10 +120,12 @@
   </section>
 
   <section class="story wrap section-space" aria-labelledby="storyTitle">
-    <div class="story-message">
-      <h2 id="storyTitle">A nuestra familia<br> y amigos</h2>
-      <p class="prose">Te invitamos a acompañarnos en la ceremonia y a compartir la mesa con nosotros. Después del brindis, nos vemos en la pista.</p>
+    <div class="story-divider" aria-hidden="true">
+      <img src="img/olivo-de-la-carta.webp" width="650" height="217" alt="" loading="lazy" decoding="async">
     </div>
+    <p class="kicker">Nuestra historia</p>
+    <h2 id="storyTitle">Y ahora, <em>para siempre.</em></h2>
+    <p class="prose">Después de tantos momentos juntos, decidimos dar el paso más bonito de nuestras vidas. Nada nos haría más felices que celebrarlo contigo.</p>
     <div class="story-photos" id="galeria" hidden>
       <div id="storyPortrait"></div>
       <div class="gallery" id="gal"></div>
@@ -128,21 +135,18 @@
   <section class="date-section section-space" aria-labelledby="dateTitle">
     <div class="date-layout wrap">
       <div class="date-copy">
-        <p class="date-weekday">Sábado</p>
-        <h2 id="dateTitle"><time datetime="2027-05-15">15 de mayo <span>de 2027</span></time></h2>
-        <p class="date-hour"><time datetime="16:00">4:00 p. m.</time></p>
-        <div class="date-count" hidden>
-          <p class="countdown-label">Faltan</p>
-          <div class="countdown" role="timer" aria-label="Tiempo hasta la ceremonia">
-            <div><strong id="cdD">--</strong><span>Días</span></div>
-            <div><strong id="cdH">--</strong><span>Horas</span></div>
-            <div><strong id="cdM">--</strong><span>Minutos</span></div>
-            <div><strong id="cdS">--</strong><span>Segundos</span></div>
-          </div>
+        <h2 id="dateTitle">Guarda <em>la fecha.</em></h2>
+        <p class="prose">Sábado 15 de mayo de 2027 <span class="date-hour">· 4:00 p. m.</span></p>
+        <p class="countdown-label">Cada vez falta menos</p>
+        <div class="countdown">
+          <div><strong id="cdD">--</strong><span>Días</span></div>
+          <div><strong id="cdH">--</strong><span>Horas</span></div>
+          <div><strong id="cdM">--</strong><span>Minutos</span></div>
+          <div><strong id="cdS">--</strong><span>Segundos</span></div>
         </div>
-        <a class="text-link" id="calBtn" target="_blank" rel="noopener" hidden>Añadir a Google Calendar</a>
+        <a class="btn line" id="calBtn" target="_blank" rel="noopener">Agendar la fecha</a>
       </div>
-      <div class="calendar" aria-hidden="true" hidden>
+      <div class="calendar" aria-hidden="true">
         <div class="cal-head"><span>Mayo</span><span>2027</span></div>
         <div class="cal-grid" id="calG"></div>
       </div>
@@ -151,42 +155,42 @@
 
   <div class="event-layout wrap section-space">
     <section class="itinerary" aria-labelledby="itineraryTitle">
-      <h2 id="itineraryTitle">Programa de la boda</h2>
+      <p class="kicker">Itinerario</p>
+      <h2 id="itineraryTitle">Nuestro día, <em>contigo.</em></h2>
       <ol class="timeline" id="tl">
         <li class="tl-row">
           <time class="tl-t" datetime="16:00">4:00 p. m.</time>
-          <div class="tl-e"><h3>Ceremonia</h3></div>
+          <div class="tl-e"><h3>Ceremonia</h3><p>Nos damos el “sí”.</p></div>
         </li>
         <li class="tl-row">
           <time class="tl-t" datetime="17:30">5:30 p. m.</time>
-          <div class="tl-e"><h3>Cóctel y brindis</h3></div>
+          <div class="tl-e"><h3>Cóctel</h3><p>Brindis y primeros abrazos.</p></div>
         </li>
         <li class="tl-row">
           <time class="tl-t" datetime="19:00">7:00 p. m.</time>
-          <div class="tl-e"><h3>Recepción</h3><p>Cena y primer baile</p></div>
+          <div class="tl-e"><h3>Recepción</h3><p>Cena y nuestro primer baile.</p></div>
         </li>
         <li class="tl-row">
           <time class="tl-t" datetime="21:00">9:00 p. m.</time>
-          <div class="tl-e"><h3>Fiesta</h3></div>
+          <div class="tl-e"><h3>Fiesta</h3><p>Que nadie se quede sin bailar.</p></div>
         </li>
       </ol>
     </section>
 
     <section class="venue" id="lugar" aria-labelledby="lugarTitle">
-      <img class="venue-flowers" src="img/ramo-calas-720.webp" alt="" width="720" height="900" loading="lazy" decoding="async">
       <div class="venue-content">
         <p class="kicker">Ceremonia y recepción</p>
-        <h2 id="lugarTitle">Fundo<br>Pozo Santo</h2>
-        <address>Av. Víctor Malásquez, Lima</address>
-        <a class="btn line" href="https://maps.app.goo.gl/76194Tj1qc9E568Q7" target="_blank" rel="noopener">Ver en Google Maps</a>
+        <h2 id="lugarTitle">Fundo <em>Pozo Santo</em></h2>
+        <p>Av. Víctor Malásquez<br>Lima</p>
+        <a class="btn line" href="https://maps.app.goo.gl/76194Tj1qc9E568Q7" target="_blank" rel="noopener">Abrir Google Maps <span class="external-arrow" aria-hidden="true"></span></a>
       </div>
     </section>
   </div>
 
   <section class="dress wrap section-space" id="vestimenta" aria-labelledby="dressTitle">
     <header class="dress-heading">
-      <h2 id="dressTitle">Vestimenta</h2>
-      <p>Formal elegante</p>
+      <p class="kicker">Código de vestimenta</p>
+      <h2 id="dressTitle">Formal <em>elegante.</em></h2>
     </header>
     <div class="dress-tabs" role="tablist" aria-label="Guía de vestimenta" hidden>
       <button id="tab-ellos" type="button" role="tab" aria-controls="look-ellos" aria-selected="true">Ellos</button>
@@ -204,7 +208,7 @@
         <div class="outfit-advice">
           <p class="outfit-audience kicker">Ellos</p>
           <h3>Traje oscuro o esmoquin</h3>
-          <p>Con el traje azul noche, una corbata granate. Con el esmoquin, un lazo negro.</p>
+          <p>Puedes combinar un traje azul noche con camisa blanca y corbata granate.</p>
         </div>
       </div>
       <div class="outfit-panel" id="look-ellas">
@@ -218,7 +222,7 @@
         <div class="outfit-advice">
           <p class="outfit-audience kicker">Ellas</p>
           <h3>Vestido largo o midi de gala</h3>
-          <p>Puedes acompañarlo con sandalias de vestir o zapatos cerrados y un bolso de mano.</p>
+          <p>Un vestido granate de escote asimétrico queda muy bien con sandalias doradas.</p>
         </div>
       </div>
     </div>
@@ -230,7 +234,7 @@
       </div>
     </dialog>
     <div class="dress-palette">
-      <p class="swatch-title">Colores sugeridos</p>
+      <p class="swatch-title">Tonos que nos encantarían</p>
       <ul class="swatches" aria-label="Colores sugeridos">
         <li><span style="--swatch:#4d0011" aria-hidden="true"></span>Granate</li>
         <li><span style="--swatch:#ad4e18" aria-hidden="true"></span>Óxido</li>
@@ -238,15 +242,15 @@
         <li><span style="--swatch:#708981" aria-hidden="true"></span>Verde salvia</li>
         <li><span style="--swatch:#1f3550" aria-hidden="true"></span>Azul marino</li>
       </ul>
-      <p class="dress-note">El blanco y el marfil están reservados para la novia.</p>
+      <p class="dress-note">El blanco y el marfil se los dejamos a la novia.</p>
     </div>
   </section>
 
   <section class="rsvp section-space" id="rsvp" aria-labelledby="rsvpTitle">
     <div class="rsvp-layout wrap">
       <div class="rsvp-copy">
-        <h2 id="rsvpTitle">¿Nos acompañas?</h2>
-        <p>Confírmanos antes del <time datetime="2027-04-15">15 de abril</time>.</p>
+        <h2 id="rsvpTitle">Confirma tu <em>asistencia.</em></h2>
+        <p>Por favor confírmanos antes del 15 de abril.</p>
       </div>
       <form class="letter" id="rsvpForm" method="post">
         <div class="field">
@@ -254,7 +258,7 @@
           <input id="fName" name="guestName" autocomplete="name" required>
         </div>
         <fieldset class="field rsvp-attendance">
-          <legend>Tu respuesta</legend>
+          <legend>¿Nos acompañas?</legend>
           <div class="rsvp-choices">
             <label class="rsvp-choice"><input type="radio" name="attend" value="si" required> Sí, asistiré</label>
             <label class="rsvp-choice"><input type="radio" name="attend" value="no"> No podré ir</label>
@@ -272,12 +276,12 @@
           </select>
         </div>
         <details class="rsvp-optional">
-          <summary>Añadir un mensaje o una restricción alimentaria</summary>
+          <summary>Agregar un mensaje o una restricción alimentaria</summary>
           <div class="field"><label for="fDiet">Restricción alimentaria</label><input id="fDiet" name="diet"></div>
           <div class="field"><label for="fMsg">Mensaje para los novios</label><textarea id="fMsg" name="message"></textarea></div>
         </details>
         <button class="btn" id="rsvpSubmit" type="submit" aria-describedby="rsvpHint" disabled>Continuar a WhatsApp</button>
-        <p class="rsvp-hint" id="rsvpHint">Revisa y envía tu respuesta en WhatsApp.</p>
+        <p class="rsvp-hint" id="rsvpHint">WhatsApp abrirá con tu respuesta preparada para que puedas enviarla.</p>
         <noscript><p class="rsvp-hint">Activa JavaScript para confirmar por WhatsApp.</p></noscript>
         <p class="rsvp-status" id="rsvpStatus" role="status"></p>
         <a class="rsvp-link" id="waLink" target="_blank" rel="noopener noreferrer" hidden>Abrir WhatsApp de nuevo</a>
@@ -286,49 +290,49 @@
   </section>
 
   <section class="gifts wrap section-space" id="regalos" aria-labelledby="giftsTitle">
-    <div class="gift-heading">
-      <h2 id="giftsTitle">Regalos</h2>
-      <p class="prose">Nos hace ilusión que vengas a la boda. Si te gustaría tener un detalle con nosotros, aquí tienes algunas ideas.</p>
-    </div>
-    <img class="gift-photo" src="img/regalos-editorial.webp" width="960" height="640" loading="lazy" decoding="async" alt="">
-    <div class="gift-options">
-      <details class="gift-list" id="giftList">
-        <summary class="btn">
-          <span class="gift-when-closed">Ver ideas de regalo</span><span class="gift-when-open">Cerrar ideas de regalo</span>
-          <span class="gift-toggle-mark" aria-hidden="true"></span>
-        </summary>
-        <div class="gift-spread">
-          <p class="gift-intro">Aún estamos preparando la lista definitiva. Estas son algunas sugerencias.</p>
+    <p class="kicker">Regalos</p>
+    <h2 id="giftsTitle">Tu presencia es <em>nuestro regalo.</em></h2>
+    <p class="prose">Lo que más ilusión nos hace es compartir ese día contigo. Si además quieres tener un detalle, aquí encontrarás algunas ideas.</p>
+    <details class="gift-list" id="giftList">
+      <summary class="btn">
+        <span class="gift-when-closed">Ver ideas de regalo</span><span class="gift-when-open">Cerrar ideas de regalo</span>
+        <span class="gift-toggle-mark" aria-hidden="true"></span>
+      </summary>
+      <div class="gift-spread">
+        <img class="gift-photo" src="img/regalos-editorial.webp" width="960" height="640" loading="lazy" decoding="async" alt="">
+        <div class="gift-note">
+          <p class="gift-note-title">Ideas para dos</p>
+          <p class="gift-intro">Te dejamos algunas sugerencias mientras preparamos la lista definitiva.</p>
           <dl class="gift-ideas">
-            <div><dt>Para la casa</dt><dd>Una fuente de cerámica para los almuerzos del domingo.</dd></div>
-            <div><dt>Una cena para dos</dt><dd>Una invitación a cenar después de la boda.</dd></div>
-            <div><dt>Para la luna de miel</dt><dd>Un recorrido a pie por una ciudad nueva.</dd></div>
+            <div><dt>Para la casa</dt><dd>Una fuente de cerámica para compartir el almuerzo del domingo.</dd></div>
+            <div><dt>Una cena para dos</dt><dd>Una mesa en un restaurante acogedor para brindar por la boda.</dd></div>
+            <div><dt>Una escapada</dt><dd>Un paseo guiado para descubrir una ciudad durante la luna de miel.</dd></div>
           </dl>
         </div>
-      </details>
-      <details class="gift-transfer" id="giftTransfer" hidden>
-        <summary>Datos para transferencia</summary>
-        <dl class="bank">
-          <div><dt>Banco</dt><dd id="bankName"></dd></div>
-          <div><dt>Titular</dt><dd id="bankHolder"></dd></div>
-          <div><dt>Cuenta</dt><dd><span id="acc"></span><button class="copy" type="button" data-copy="acc" aria-label="Copiar número de cuenta">Copiar</button></dd></div>
-          <div id="cciRow" hidden><dt>CCI</dt><dd><span id="cci"></span><button class="copy" type="button" data-copy="cci" aria-label="Copiar CCI">Copiar</button></dd></div>
-        </dl>
-        <p class="bank-status" id="bankStatus" role="status"></p>
-      </details>
-    </div>
+      </div>
+    </details>
+    <details class="gift-transfer" id="giftTransfer" hidden>
+      <summary>Datos para transferencia</summary>
+      <dl class="bank">
+        <div><dt>Banco</dt><dd id="bankName"></dd></div>
+        <div><dt>Titular</dt><dd id="bankHolder"></dd></div>
+        <div><dt>Cuenta</dt><dd><span id="acc"></span><button class="copy" type="button" data-copy="acc" aria-label="Copiar número de cuenta">Copiar</button></dd></div>
+        <div id="cciRow" hidden><dt>CCI</dt><dd><span id="cci"></span><button class="copy" type="button" data-copy="cci" aria-label="Copiar CCI">Copiar</button></dd></div>
+      </dl>
+      <p class="bank-status" id="bankStatus" role="status"></p>
+    </details>
   </section>
 
   <footer class="closing">
     <div class="wrap">
-      <p class="closing-line">Con cariño,</p>
-      <p class="closing-signature">Sofía <i>y</i> Diego</p>
+      <p class="closing-line">Las mejores historias <em>se celebran juntos.</em></p>
+      <p class="closing-signature">Con cariño, Sofía y Diego</p>
     </div>
   </footer>
 </main>
 
-<script src="invitacion.js?v=edicion" defer></script>
-<script src="interior-motion.js?v=edicion" defer></script>
-<script src="vestimenta.js?v=edicion" defer></script>
+<script src="invitacion.js?v=regalos" defer></script>
+<script src="interior-motion.js?v=jardin" defer></script>
+<script src="vestimenta.js?v=guia" defer></script>
 </body>
 </html>
