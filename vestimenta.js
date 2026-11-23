@@ -55,6 +55,7 @@
       enlarged.alt = preview.alt;
       enlarged.src = link.href;
       caption.textContent = panel.querySelector('h3').textContent;
+      opener.focus({ preventScroll: true });
       dialog.showModal();
     });
   }
@@ -63,8 +64,11 @@
     if (event.target === dialog) dialog.close();
   });
   dialog.addEventListener('close', () => {
+    if (dialog.open) return;
     enlarged.removeAttribute('src');
     enlarged.style.backgroundImage = '';
-    opener?.focus({ preventScroll: true });
+    if (document.activeElement === document.body || dialog.contains(document.activeElement)) {
+      opener?.focus({ preventScroll: true });
+    }
   });
 })();

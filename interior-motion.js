@@ -3,7 +3,7 @@
   if (!page || !('IntersectionObserver' in window)) return;
 
   const motion = matchMedia('(prefers-reduced-motion: no-preference)');
-  const details = page.querySelectorAll('.story-divider, .calendar, .tl-row, .dress-art, .swatches, .letter, .story-photos figure');
+  const details = page.querySelectorAll('.calendar, .story-photos figure');
   const observer = new IntersectionObserver(entries => {
     for (const entry of entries) {
       if (!entry.isIntersecting || entry.intersectionRatio < .12) continue;
