@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=carta">
+<link rel="stylesheet" href="styles.css?v=botanica">
 </head>
 <body>
 
@@ -17,19 +17,19 @@
   <div class="intro-layout">
     <p class="intro-caption" aria-hidden="true">Para ti</p>
     <div class="mail-scene">
-      <div class="mail-back" aria-hidden="true"></div>
       <div class="mail-letter" aria-hidden="true">
         <span class="kicker">Nos casamos</span>
         <p>Sofía <em>&amp;</em> Diego</p>
         <time datetime="2027-05-15">15 de mayo de 2027</time>
       </div>
-      <div class="mail-pocket" aria-hidden="true"></div>
-      <div class="mail-flap" aria-hidden="true">
-        <span class="mail-flap-front"></span>
-        <span class="mail-flap-back"></span>
+      <div class="mail-door mail-door-left" aria-hidden="true">
+        <span class="mail-door-face"></span><span class="mail-door-lining"></span>
+      </div>
+      <div class="mail-door mail-door-right" aria-hidden="true">
+        <span class="mail-door-face"></span><span class="mail-door-lining"></span>
       </div>
       <button class="seal-button" id="seal" type="button">
-        <span class="mail-seal" aria-hidden="true"></span>
+        <span class="mail-seal" aria-hidden="true">S&amp;D</span>
         <span class="seal-label">Abrir invitación</span>
       </button>
     </div>
@@ -57,8 +57,8 @@
       </div>
     </div>
     <picture class="hero-art">
-      <source media="(max-width: 580px)" srcset="img/flores-editoriales-720.webp">
-      <img src="img/flores-editoriales.webp" width="1120" height="1400" alt="" decoding="async">
+      <source media="(max-width: 580px)" srcset="img/ramo-calas-720.webp">
+      <img src="img/ramo-calas.webp" width="1120" height="1400" alt="" decoding="async">
     </picture>
   </section>
 
@@ -128,21 +128,27 @@
   </div>
 
   <section class="dress wrap section-space" aria-labelledby="dressTitle">
-    <p class="kicker">Código de vestimenta</p>
-    <h2 id="dressTitle">Formal <em>elegante.</em></h2>
-    <div class="dress-guide">
-      <div><h3>Ellos</h3><p>Traje oscuro o esmoquin</p></div>
-      <div><h3>Ellas</h3><p>Vestido largo o midi de gala</p></div>
+    <picture class="dress-art">
+      <source media="(max-width: 580px)" srcset="img/flor-de-solapa-720.webp">
+      <img src="img/flor-de-solapa.webp" alt="" width="800" height="1000" loading="lazy" decoding="async">
+    </picture>
+    <div class="dress-copy">
+      <p class="kicker">Código de vestimenta</p>
+      <h2 id="dressTitle">Formal <em>elegante.</em></h2>
+      <div class="dress-guide">
+        <div><h3>Ellos</h3><p>Traje oscuro o esmoquin</p></div>
+        <div><h3>Ellas</h3><p>Vestido largo o midi de gala</p></div>
+      </div>
+      <p class="swatch-title">Tonos que nos encantarían</p>
+      <ul class="swatches" aria-label="Colores sugeridos">
+        <li><span style="--swatch:#4d0011" aria-hidden="true"></span>Granate</li>
+        <li><span style="--swatch:#ad4e18" aria-hidden="true"></span>Óxido</li>
+        <li><span style="--swatch:#c66f45" aria-hidden="true"></span>Terracota</li>
+        <li><span style="--swatch:#708981" aria-hidden="true"></span>Verde salvia</li>
+        <li><span style="--swatch:#1f3550" aria-hidden="true"></span>Azul marino</li>
+      </ul>
+      <p class="dress-note">El blanco y el marfil se los dejamos a la novia.</p>
     </div>
-    <p class="swatch-title">Tonos que nos encantarían</p>
-    <ul class="swatches" aria-label="Colores sugeridos">
-      <li><span style="--swatch:#4d0011" aria-hidden="true"></span>Granate</li>
-      <li><span style="--swatch:#ad4e18" aria-hidden="true"></span>Óxido</li>
-      <li><span style="--swatch:#c66f45" aria-hidden="true"></span>Terracota</li>
-      <li><span style="--swatch:#708981" aria-hidden="true"></span>Verde salvia</li>
-      <li><span style="--swatch:#1f3550" aria-hidden="true"></span>Azul marino</li>
-    </ul>
-    <p class="dress-note">El blanco y el marfil se los dejamos a la novia.</p>
   </section>
 
   <section class="rsvp section-space" id="rsvp" aria-labelledby="rsvpTitle">
