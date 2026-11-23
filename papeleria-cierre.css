@@ -1,0 +1,99 @@
+/* The response card rests on wine-colored paper. */
+.rsvp {
+  background: radial-gradient(ellipse at 15% 18%, #64283a, transparent 68%), #401521;
+}
+.rsvp .letter {
+  position: relative;
+  padding-top: clamp(39px, 4.6vw, 57px);
+  padding-bottom: clamp(25px, 4.4vw, 44px);
+  border: 1px solid #ddcbb2;
+  outline: 1px solid #deccb4;
+  outline-offset: -7px;
+  background: linear-gradient(135deg, #fffdf7, #fbf5e9);
+  box-shadow: 3px 4px 0 -1px #d5c1a4, 0 17px 30px -21px #240a14;
+}
+.rsvp .letter::after {
+  content: "";
+  position: absolute;
+  width: clamp(47px, 6.1vw, 82px);
+  aspect-ratio: 1;
+  top: 0;
+  right: 0;
+  transform: translate(6%, -37%) rotate(10deg);
+  background: url("img/orquidea-suelta.webp") center / contain no-repeat;
+  filter: drop-shadow(1px 3px 2px #49203730);
+  pointer-events: none;
+}
+
+/* A pressed sprig divides the gift note from the response card. */
+.gifts .kicker::before {
+  content: "";
+  display: block;
+  width: clamp(132px, 18vw, 200px);
+  height: clamp(42px, 6.2vw, 68px);
+  margin: 0 auto clamp(12px, 2vw, 23px);
+  background: url("img/olivo-de-la-carta.webp") center / contain no-repeat;
+  filter: drop-shadow(0 2px 1px #554c2a1a);
+}
+.gifts h2 {
+  max-width: 16ch;
+  margin-inline: auto;
+  text-wrap: balance;
+}
+
+/* The last page echoes the botanical relief of the closed envelope. */
+.closing {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(64px, 8vw, 112px) 0;
+  background: #520f20;
+  border-top: 1px solid #ad8a67;
+}
+.closing::before, .closing::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  z-index: -1;
+  width: min(31%, 460px);
+  pointer-events: none;
+  background-image: url("img/cubierta-relieve.webp");
+  background-repeat: no-repeat;
+}
+.closing::before {
+  left: 0;
+  background-size: auto 120%;
+  background-position: left bottom;
+  mask-image: linear-gradient(90deg, #000 28%, transparent);
+}
+.closing::after {
+  right: 0;
+  background-size: auto 145%;
+  background-position: right top;
+  mask-image: linear-gradient(-90deg, #000 25%, transparent);
+}
+.closing .wrap { position: relative; }
+.closing-line {
+  max-width: 17ch;
+  margin-inline: auto;
+}
+.closing-signature {
+  margin-top: clamp(18px, 2.3vw, 28px);
+  color: #f6e4d3;
+  font: italic 500 clamp(19px, 2.2vw, 27px)/1.25 var(--serif);
+}
+.closing-signature::after {
+  content: "";
+  display: block;
+  width: clamp(42px, 5vw, 58px);
+  aspect-ratio: 1;
+  margin: 20px auto 0;
+  background: url("img/lacre-sd.webp") center / contain no-repeat;
+  transform: rotate(-6deg);
+  filter: drop-shadow(1px 3px 3px #2a081a60);
+}
+@media (max-width: 700px) {
+  .rsvp-layout { row-gap: 44px; }
+  .closing::before, .closing::after { width: 24%; }
+  .closing-line { max-width: 15ch; }
+}
