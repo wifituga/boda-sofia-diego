@@ -28,9 +28,14 @@ if (!location.hash) {
     };
     if (reducedMotion.matches) {
       showInvitation();
+      return;
+    }
+    envelope.classList.add('is-opening');
+    const reveal = envelope.getAnimations?.().find(animation => animation.animationName === 'reveal-invitation');
+    if (reveal) {
+      reveal.finished.then(showInvitation, showInvitation);
     } else {
-      envelope.classList.add('open');
-      setTimeout(showInvitation, 240);
+      showInvitation();
     }
   }, { once: true });
 }
