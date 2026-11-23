@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=jardin">
+<link rel="stylesheet" href="styles.css?v=vestimenta">
 <link rel="stylesheet" href="interior-motion.css?v=jardin">
 <link rel="stylesheet" href="papeleria-cierre.css?v=jardin">
 </head>
@@ -186,20 +186,53 @@
     </section>
   </div>
 
-  <section class="dress wrap section-space" aria-labelledby="dressTitle">
-    <div class="dress-print">
-      <picture class="dress-art">
-        <source media="(max-width: 580px)" srcset="img/flor-de-solapa-720.webp">
-        <img src="img/flor-de-solapa.webp" alt="" width="800" height="1000" loading="lazy" decoding="async">
-      </picture>
-    </div>
-    <div class="dress-copy">
+  <section class="dress wrap section-space" id="vestimenta" aria-labelledby="dressTitle">
+    <header class="dress-heading">
       <p class="kicker">Código de vestimenta</p>
       <h2 id="dressTitle">Formal <em>elegante.</em></h2>
-      <div class="dress-guide">
-        <div><h3>Ellos</h3><p>Traje oscuro o esmoquin</p></div>
-        <div><h3>Ellas</h3><p>Vestido largo o midi de gala</p></div>
+    </header>
+    <div class="dress-tabs" role="tablist" aria-label="Guía de vestimenta" hidden>
+      <button id="tab-ellos" type="button" role="tab" aria-controls="look-ellos" aria-selected="true">Ellos</button>
+      <button id="tab-ellas" type="button" role="tab" aria-controls="look-ellas" aria-selected="false" tabindex="-1">Ellas</button>
+    </div>
+    <div class="outfit-panels">
+      <div class="outfit-panel" id="look-ellos">
+        <a class="dress-print" href="img/traje-invitado.webp" aria-label="Ampliar foto: traje oscuro o esmoquin">
+          <picture class="dress-art">
+            <source media="(max-width: 640px)" srcset="img/traje-invitado-500.webp">
+            <img src="img/traje-invitado.webp" alt="Traje azul noche con corbata granate y zapatos negros." width="900" height="1125" loading="lazy" decoding="async">
+          </picture>
+          <span class="photo-enlarge" aria-hidden="true">Ampliar foto</span>
+        </a>
+        <div class="outfit-advice">
+          <p class="outfit-audience kicker">Ellos</p>
+          <h3>Traje oscuro o esmoquin</h3>
+          <p>Puedes combinar un traje azul noche con camisa blanca y corbata granate.</p>
+        </div>
       </div>
+      <div class="outfit-panel" id="look-ellas">
+        <a class="dress-print" href="img/vestido-invitada.webp" aria-label="Ampliar foto: vestido largo o midi de gala">
+          <picture class="dress-art">
+            <source media="(max-width: 640px)" srcset="img/vestido-invitada-500.webp">
+            <img src="img/vestido-invitada.webp" alt="Vestido largo granate de escote asimétrico con sandalias doradas." width="900" height="1125" loading="lazy" decoding="async">
+          </picture>
+          <span class="photo-enlarge" aria-hidden="true">Ampliar foto</span>
+        </a>
+        <div class="outfit-advice">
+          <p class="outfit-audience kicker">Ellas</p>
+          <h3>Vestido largo o midi de gala</h3>
+          <p>Un vestido granate de escote asimétrico queda muy bien con sandalias doradas.</p>
+        </div>
+      </div>
+    </div>
+    <dialog class="look-dialog" id="look-ampliado" aria-labelledby="look-caption">
+      <div class="look-viewer">
+        <button type="button" autofocus>Cerrar <span aria-hidden="true">×</span></button>
+        <img alt="" width="900" height="1125">
+        <p id="look-caption"></p>
+      </div>
+    </dialog>
+    <div class="dress-palette">
       <p class="swatch-title">Tonos que nos encantarían</p>
       <ul class="swatches" aria-label="Colores sugeridos">
         <li><span style="--swatch:#4d0011" aria-hidden="true"></span>Granate</li>
@@ -282,5 +315,6 @@
 <div class="toast" id="toast" role="status"></div>
 <script src="invitacion.js?v=lacre" defer></script>
 <script src="interior-motion.js?v=jardin" defer></script>
+<script src="vestimenta.js?v=guia" defer></script>
 </body>
 </html>

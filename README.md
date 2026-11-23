@@ -8,7 +8,7 @@ Invitación de boda en una sola página, con HTML, CSS y JavaScript nativos. Ada
 - Calendario, cuenta regresiva y enlace para agendar en Google Calendar
 - Itinerario con horarios visibles desde el inicio
 - Lugar (Fundo Pozo Santo) con botón a Google Maps
-- Código de vestimenta y paleta de colores
+- Guía de vestimenta con pestañas «Ellos» y «Ellas», fotografías ampliables y paleta de colores
 - Regalos: enlace a la lista en D'Parte y datos para transferencia
 - Confirmación de asistencia (abre WhatsApp con la respuesta preparada)
 - Retrato y galería opcionales en «Nuestra historia»
@@ -34,4 +34,4 @@ Settings → Pages → *Deploy from a branch* → rama `main`, carpeta `/ (root)
 La invitación queda en `https://<usuario>.github.io/<repo>/`.
 
 ## Imágenes editoriales
-La cubierta en relieve y el monograma de lacre se encuentran en `img/cubierta-relieve.webp` e `img/lacre-sd.webp`. Las flores que enmarcan la carta durante la apertura y en la portada se encuentran en `img/cascada-orquideas*.webp` e `img/cala-prensada.webp`. La rama de olivo y la orquídea que aparecen en las secciones interiores están en `img/olivo-de-la-carta.webp` e `img/orquidea-suelta.webp`. La foto del código de vestimenta se encuentra en `img/flor-de-solapa*.webp`. Los retratos de los novios se configuran por separado en `FOTOS`.
+La cubierta en relieve y el monograma de lacre se encuentran en `img/cubierta-relieve.webp` e `img/lacre-sd.webp`. Las flores que enmarcan la carta durante la apertura y en la portada se encuentran en `img/cascada-orquideas*.webp` e `img/cala-prensada.webp`. La rama de olivo y la orquídea que aparecen en las secciones interiores están en `img/olivo-de-la-carta.webp` e `img/orquidea-suelta.webp`. Las referencias de vestimenta están en `img/traje-invitado*.webp` e `img/vestido-invitada*.webp`. Sus pestañas y la vista ampliada se controlan desde `vestimenta.js`. Los retratos de los novios se configuran por separado en `FOTOS`.
