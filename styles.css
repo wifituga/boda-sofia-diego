@@ -665,44 +665,148 @@ button, input, select, textarea { font: inherit; }
   transform: rotate(-45deg);
 }
 
-.dress {
+.dress { padding-top: 0; }
+.dress-tabs {
+  display: inline-flex;
+  gap: 4px;
+  margin-top: 20px;
+  padding: 4px;
+  border: 1px solid #bba383;
+  border-radius: 4px;
+  background: #f6efe2;
+}
+.dress-tabs button {
+  min-height: 44px;
+  min-width: clamp(86px, 19vw, 112px);
+  padding: 4px 20px;
+  border: 0;
+  border-radius: 2px;
+  background: transparent;
+  color: var(--wine);
+  font: 500 20px/1.2 var(--serif);
+  cursor: pointer;
+}
+.dress-tabs button:hover { background: #e9dece; }
+.dress-tabs button[aria-selected="true"] { background: var(--wine); color: var(--paper); }
+.outfit-panels {
   display: grid;
-  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
-  gap: clamp(28px, 6vw, 82px);
+  gap: 20px;
+  max-width: 730px;
+  margin: 26px auto 0;
+}
+.outfit-panel {
+  display: grid;
+  grid-template-columns: minmax(0, .8fr) minmax(0, 1fr);
   align-items: center;
+  gap: clamp(20px, 5vw, 60px);
+  padding: clamp(18px, 3.1vw, 39px);
+  border: 1px solid #dcc9ad;
+  background: linear-gradient(120deg,#fffdf6,#faf3e6);
+  text-align: left;
 }
-.dress {
-  padding-top: 0;
-}
+.dress[data-interactive] .outfit-panel { grid-area: 1 / 1; }
+.outfit-panel[aria-hidden="true"] { visibility: hidden; pointer-events: none; }
+.dress[data-interactive] .outfit-audience { display: none; }
 .dress-print {
+  display: block;
   position: relative;
-  width: min(100%, 382px);
+  width: 100%;
+  max-width: 255px;
   justify-self: center;
-  padding: clamp(9px, 1vw, 14px);
-  padding-bottom: clamp(20px, 2.4vw, 34px);
+  padding: 6px 6px 0;
   background: #fffcf4;
+  color: var(--wine);
   border: 1px solid #deceb5;
-  box-shadow: 1px 10px 23px -13px #46251b66;
+  box-shadow: 1px 6px 13px -8px #46251b66;
   transform: rotate(-2deg);
+  text-decoration: none;
+  cursor: zoom-in;
 }
-.dress-print::before {
+.dress-print::after {
   position: absolute;
   content: "";
-  width: 32%;
+  width: 30%;
   aspect-ratio: 3 / 1;
   bottom: -2px;
-  right: -4.5%;
-  z-index: 1;
+  right: -5%;
   transform: rotate(-21deg);
   background: url("img/olivo-de-la-carta.webp") center / contain no-repeat;
-  filter: drop-shadow(0 2px 1px #433e2730);
   pointer-events: none;
 }
-.dress-art { display: block; width: 100%; background: #202c35; }
-.dress-art img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; }
-.dress-guide { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; max-width: 490px; margin: 25px auto 24px; }
-.dress-guide > div { padding: 13px 4px; border-block: 1px solid var(--rule); }
-.dress-guide p { color: var(--muted); font-size: 14px; }
+.dress-art { display: block; background: #e0cdb3; }
+.dress-art img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; }
+.photo-enlarge {
+  display: block;
+  padding: 5px 2px 6px;
+  font: 500 12px/1.3 var(--sans);
+  text-align: center;
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+.outfit-advice h3 {
+  max-width: 13ch;
+  color: var(--wine);
+  font: 500 clamp(31px, 4vw, 48px)/.99 var(--serif);
+  letter-spacing: -.035em;
+  text-wrap: balance;
+}
+.outfit-audience { margin-bottom: 12px; }
+.outfit-advice > p:last-child {
+  max-width: 32ch;
+  margin-top: 14px;
+  color: var(--muted);
+  font: 400 clamp(15px, 1.5vw, 17px)/1.5 var(--sans);
+}
+.dress-palette { margin: 25px auto 0; }
+.look-dialog {
+  box-sizing: border-box;
+  width: fit-content;
+  max-width: 95vw;
+  max-height: 95vh;
+  max-height: 95svh;
+  padding: 0;
+  margin: auto;
+  border: 1px solid #decaae;
+  background: #fffaf0;
+  color: var(--wine);
+}
+.look-dialog:not([open]) { display: none; }
+.look-dialog::backdrop { background: #281b1bdc; }
+body:has(.look-dialog[open]) { overflow: hidden; }
+.look-viewer {
+  display: grid;
+  justify-items: center;
+  padding: 0 12px 12px;
+}
+.look-viewer button {
+  justify-self: end;
+  min-height: 44px;
+  padding: 0 6px;
+  border: 0;
+  background: transparent;
+  color: var(--wine);
+  font: 500 14px/1.2 var(--sans);
+  cursor: pointer;
+}
+.look-viewer button span { margin-left: 4px; font-size: 22px; vertical-align: middle; }
+.look-viewer img {
+  display: block;
+  width: min(82vw, 58vh, 650px);
+  width: min(82vw, 58svh, 650px);
+  height: auto;
+  aspect-ratio: 4 / 5;
+  background: center / cover no-repeat;
+}
+.look-viewer p { margin-top: 9px; font: 500 20px/1.15 var(--serif); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .outfit-panel[role="tabpanel"]:not([aria-hidden="true"]) .outfit-advice {
+    animation: change-outfit .22s ease-out;
+  }
+  @keyframes change-outfit {
+    from { transform: translateY(3px); opacity: .5; }
+  }
+}
 .swatch-title { font: 600 22px/1.2 var(--serif); }
 .swatches { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 17px; list-style: none; margin-top: 12px; padding: 0; }
 .swatches li { display: grid; justify-items: center; gap: 5px; color: var(--muted); font-size: 12px; }
@@ -824,9 +928,15 @@ button, input, select, textarea { font: inherit; }
   .hero-copy .kicker { font-size: 10px; gap: 9px; }
   .hero time { margin-top: 15px; }
   .hero-actions { margin-top: 18px; gap: 4px 18px; }
-  .dress { grid-template-columns: minmax(0, 1fr); }
-  .dress-print { width: min(78%, 300px); }
-  .dress-art img { aspect-ratio: 1.05; }
+  .outfit-panels { margin-top: 17px; }
+  .outfit-panel {
+    grid-template-columns: minmax(0, .92fr) minmax(0, 1fr);
+    gap: clamp(13px, 3.5vw, 23px);
+    padding: clamp(13px, 3.5vw, 21px);
+  }
+  .outfit-advice h3 { font-size: clamp(25px, 6.6vw, 39px); }
+  .outfit-advice > p:last-child { margin-top: 8px; font-size: 14px; line-height: 1.4; }
+  .dress-tabs { margin-top: 15px; }
   .date-layout, .event-layout, .rsvp-layout { grid-template-columns: minmax(0, 1fr); }
   .date-copy, .rsvp-copy { text-align: center; }
   .countdown { margin-inline: auto; }
