@@ -3,7 +3,8 @@ const CONFIG = {
   novios: "Sofía & Diego",
   fecha: new Date("2027-05-15T16:00:00-05:00"),
   lugar: "Fundo Pozo Santo, Av. Víctor Malásquez, Lima",
-  whatsapp: "51900000000" // número de demo
+  whatsapp: "51900000000", // número de demo
+  transferencia: null
 };
 /* La primera foto aparece en Nuestra historia. Las siguientes forman la galería. */
 const FOTOS = [
@@ -63,19 +64,30 @@ calBtn.href='https://calendar.google.com/calendar/render?action=TEMPLATE&text='+
  +'&dates=20270515T210000Z/20270516T060000Z&details='+encodeURIComponent('¡Te esperamos para celebrar juntos!')+'&location='+encodeURIComponent(CONFIG.lugar);
 
 /* ===== Datos bancarios ===== */
-const bankButton = document.getElementById('bankBtn');
-const bankDetails = document.getElementById('bank');
-bankButton.addEventListener('click', () => {
-  const open = bankDetails.hidden;
-  bankDetails.hidden = !open;
-  bankButton.setAttribute('aria-expanded', String(open));
-  bankButton.textContent = open ? 'Ocultar datos' : 'Datos para transferencia';
-});
-function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1800)}
-document.querySelectorAll('.copy').forEach(b=>b.addEventListener('click',async()=>{
-  const v=document.getElementById(b.dataset.copy).textContent;
-  try{await navigator.clipboard.writeText(v);toast('Copiado')}catch(e){toast(v)}
-}));
+const transfer = CONFIG.transferencia;
+if ([transfer?.banco, transfer?.titular, transfer?.cuenta].every(value => typeof value === 'string' && value.trim())) {
+  const panel = document.getElementById('giftTransfer');
+  const status = document.getElementById('bankStatus');
+  document.getElementById('bankName').textContent = transfer.banco.trim();
+  document.getElementById('bankHolder').textContent = transfer.titular.trim();
+  document.getElementById('acc').textContent = transfer.cuenta.trim();
+  if (typeof transfer.cci === 'string' && transfer.cci.trim()) {
+    document.getElementById('cci').textContent = transfer.cci.trim();
+    document.getElementById('cciRow').hidden = false;
+  }
+  panel.hidden = false;
+  for (const button of panel.querySelectorAll('[data-copy]')) {
+    button.addEventListener('click', async () => {
+      const number = document.getElementById(button.dataset.copy).textContent;
+      try {
+        await navigator.clipboard.writeText(number);
+        status.textContent = button.dataset.copy === 'cci' ? 'CCI copiado.' : 'Número de cuenta copiado.';
+      } catch {
+        status.textContent = 'Selecciona el número para copiarlo manualmente.';
+      }
+    });
+  }
+}
 
 /* ===== RSVP ===== */
 {

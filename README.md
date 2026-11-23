@@ -9,7 +9,7 @@ Invitación de boda en una sola página, con HTML, CSS y JavaScript nativos. Ada
 - Itinerario con horarios visibles desde el inicio
 - Lugar (Fundo Pozo Santo) con botón a Google Maps
 - Guía de vestimenta con pestañas «Ellos» y «Ellas», fotografías ampliables y paleta de colores
-- Regalos: enlace a la lista en D'Parte y datos para transferencia
+- Ideas de regalo dentro de la carta, con acceso directo desde el menú y desde `#regalos`
 - Confirmación de asistencia (abre WhatsApp con la respuesta preparada)
 - Retrato y galería opcionales en «Nuestra historia»
 
@@ -24,10 +24,10 @@ La estructura y los textos están en `index.html`, junto con la interacción ini
   ];
   ```
   El pie `texto` es opcional. Si `FOTOS` está vacío, la sección muestra la historia sin un espacio vacío para imágenes.
-- **Lista de regalos**: cambiar el `href` del botón `#giftList` por el link de D'Parte de los novios.
-- **Datos bancarios**: bloque `#bank`.
+- **Regalos.** La lista se despliega en `#giftList` de `index.html`, incluso sin JavaScript. Las tres ideas son ilustrativas. Cuando los novios confirmen sus regalos, reemplazar las entradas de `.gift-ideas` y actualizar el aviso de `.gift-intro`. La fotografía está en `img/regalos-editorial.webp`.
+- **Transferencias.** `CONFIG.transferencia` en `invitacion.js` controla la información pública. Con `null` el apartado permanece oculto. Para habilitarlo, establecer un objeto con los campos de texto `banco`, `titular` y `cuenta` confirmados por los novios. El campo de texto `cci` es opcional. Conservar ceros iniciales en los números de cuenta.
 
-> Datos de demo pendientes de reemplazar: fecha y horarios, número de WhatsApp, cuenta bancaria y link de la lista de regalos.
+> La fecha, los horarios y el número de WhatsApp siguen siendo datos de demostración.
 
 ## Publicar con GitHub Pages
 Settings → Pages → *Deploy from a branch* → rama `main`, carpeta `/ (root)`.
