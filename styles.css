@@ -96,7 +96,8 @@ button, input, select, textarea { font: inherit; }
   inset: 0;
   z-index: 5;
   display: flex;
-  overflow: auto;
+  overflow: hidden;
+  overflow: clip;
   overscroll-behavior: contain;
   padding: 22px 12px;
   background:
@@ -108,19 +109,15 @@ button, input, select, textarea { font: inherit; }
   --opening-length: 3.9s;
   animation: reveal-invitation var(--opening-length) ease both;
 }
-.intro-layout {
-  position: relative;
-  width: min(70vw, 360px, calc(74svh - 99px));
-  margin: auto;
-  text-align: center;
-}
-.intro-caption {
-  margin-bottom: 14px;
-  color: var(--wine);
-  font: italic 500 clamp(28px, 5.7vw, 39px)/1.12 var(--serif);
-}
 .mail-scene {
   position: relative;
+  flex: none;
+  width: min(84vw, 490px, 63vh);
+  width: min(84vw, 490px, 63svh);
+  margin: auto;
+  text-align: center;
+  --door-peak: 100deg;
+  --door-rest: 98deg;
   isolation: isolate;
   container-type: inline-size;
   perspective: 1150px;
@@ -162,7 +159,7 @@ button, input, select, textarea { font: inherit; }
 .mail-letter::before { top: 3%; left: -6%; transform: rotate(34deg); }
 .mail-letter::after { bottom: 2%; right: -6%; transform: rotate(210deg); }
 .mail-letter .kicker { font-size: clamp(9px, 3.5cqw, 12px); }
-.mail-letter p { font: 500 clamp(27px, 12.9cqw, 51px)/.99 var(--serif); letter-spacing: -.05em; }
+.mail-letter p { font: 500 clamp(27px, 12.9cqw, 62px)/.99 var(--serif); letter-spacing: -.05em; }
 .mail-letter p em { font-weight: 400; font-size: .72em; }
 .mail-letter time { color: var(--muted); font-size: clamp(10px, 3.4cqw, 13px); }
 .mail-door {
@@ -218,7 +215,7 @@ button, input, select, textarea { font: inherit; }
   position: absolute;
   top: 50%;
   left: 50%;
-  width: clamp(45px, 24cqw, 87px);
+  width: clamp(45px, 23cqw, 104px);
   aspect-ratio: 1;
   transform: translate(-50%, -50%) rotate(-3deg);
   filter: drop-shadow(0 2px 1px #3b18255c) drop-shadow(1px 4px 5px #2e10245c);
@@ -303,7 +300,6 @@ button, input, select, textarea { font: inherit; }
   .intro.is-opening::before, .intro.is-opening .mail-aura { animation: candlelight 2.5s ease .15s both; }
   .intro.is-opening .mail-seam { animation: light-in-the-fold .92s ease .11s both; }
   .intro.is-opening .mail-seal { animation: lift-the-seal .69s cubic-bezier(.32,.06,.56,.94) both; }
-  .intro.is-opening .intro-caption { animation: lift-the-caption .45s ease both; }
   .intro.is-opening .mail-door-left { animation: open-left-door 1.62s cubic-bezier(.4,.025,.19,1) .46s both, leave-binding .47s ease 2.34s forwards; }
   .intro.is-opening .mail-door-right { animation: open-right-door 1.66s cubic-bezier(.43,.03,.18,1) .55s both, leave-binding .47s ease 2.34s forwards; }
   .intro.is-opening .mail-scene::before { animation: leave-binding .47s ease 2.34s forwards; }
@@ -331,7 +327,6 @@ button, input, select, textarea { font: inherit; }
   68% { opacity: .96; }
   100% { opacity: 0; transform: translate(-32%, -94%) rotate(10deg) scale(1.09); }
 }
-@keyframes lift-the-caption { to { opacity: 0; transform: translateY(-5px); } }
 @keyframes rake-the-foil {
   0% { transform: translateX(-110%) skewX(-12deg); opacity: 0; }
   30% { opacity: .42; }
@@ -339,13 +334,13 @@ button, input, select, textarea { font: inherit; }
 }
 @keyframes open-left-door {
   0% { transform: rotateY(0deg); }
-  78% { transform: rotateY(-100deg); }
-  100% { transform: rotateY(-98deg); }
+  78% { transform: rotateY(calc(0deg - var(--door-peak))); }
+  100% { transform: rotateY(calc(0deg - var(--door-rest))); }
 }
 @keyframes open-right-door {
   0% { transform: rotateY(0deg); }
-  80% { transform: rotateY(100deg); }
-  100% { transform: rotateY(98deg); }
+  80% { transform: rotateY(var(--door-peak)); }
+  100% { transform: rotateY(var(--door-rest)); }
 }
 @keyframes draw-rule { from { opacity: 0; transform: scaleX(.12); } }
 @keyframes gold-in-the-light {
@@ -623,7 +618,11 @@ button, input, select, textarea { font: inherit; }
 .toast.show { visibility: visible; opacity: 1; }
 
 @media (max-width: 700px) {
-  .intro { padding-block: 24px; }
+  .mail-scene {
+    perspective: max(1800px, 700vw);
+    --door-peak: 95deg;
+    --door-rest: 93deg;
+  }
   .hero-copy { padding: 26px 10px; }
   .hero-copy::before, .hero-copy::after { width: 46px; }
   .dress { grid-template-columns: minmax(0, 1fr); }
@@ -650,12 +649,6 @@ button, input, select, textarea { font: inherit; }
   .hero-art { max-height: 70svh; }
   .hero .blessing { margin-bottom: 8px; }
   .hero-actions { margin-top: 10px; }
-}
-
-@media (max-height: 500px) {
-  .intro { padding-block: 14px; }
-  .intro-layout { width: min(70vw, 360px, calc(68svh - 88px)); }
-  .intro-caption { margin-bottom: 12px; font-size: 30px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
