@@ -1,99 +1,123 @@
-/* The response card rests on wine-colored paper. */
-.rsvp {
-  background: radial-gradient(ellipse at 15% 18%, #64283a, transparent 68%), #401521;
+/* La respuesta se lee como una tarjeta con talón desprendible. */
+.rsvp { background: #eee8df; }
+.rsvp .rsvp-layout {
+  max-width: 950px;
+  grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr);
+  align-items: stretch;
+  gap: 0;
+  border: 1px solid #d1bfae;
 }
+.rsvp-copy {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: clamp(32px, 5vw, 70px) clamp(24px, 4vw, 54px);
+  background: #4c1726;
+  color: var(--paper);
+  text-align: left;
+}
+.rsvp-copy::after {
+  content: "";
+  position: absolute;
+  inset: 0 12px 0 auto;
+  border-right: 1px dashed #b78484;
+  opacity: .65;
+  pointer-events: none;
+}
+.rsvp-copy h2 {
+  max-width: 9ch;
+  font-size: clamp(44px, 4.6vw, 66px);
+  line-height: 1.02;
+}
+.rsvp-copy p { margin-top: 19px; color: #f3ded6; }
+.rsvp-copy time { white-space: nowrap; }
 .rsvp .letter {
-  position: relative;
-  padding-top: clamp(39px, 4.6vw, 57px);
-  padding-bottom: clamp(25px, 4.4vw, 44px);
-  border: 1px solid #ddcbb2;
-  outline: 1px solid #deccb4;
-  outline-offset: -7px;
-  background: linear-gradient(135deg, #fffdf7, #fbf5e9);
-  box-shadow: 3px 4px 0 -1px #d5c1a4, 0 17px 30px -21px #240a14;
+  padding: clamp(22px, 3.6vw, 46px);
+  background: var(--paper);
 }
-.rsvp .letter::after {
-  content: "";
-  position: absolute;
-  width: clamp(47px, 6.1vw, 82px);
-  aspect-ratio: 1;
-  top: 0;
-  right: 0;
-  transform: translate(6%, -37%) rotate(10deg);
-  background: url("img/orquidea-suelta.webp") center / contain no-repeat;
-  filter: drop-shadow(1px 3px 2px #49203730);
-  pointer-events: none;
+.rsvp .field input:not([type="radio"]) {
+  padding: 5px 2px;
+  border: 0;
+  border-bottom: 1px solid #9f887d;
+  border-radius: 0;
+  background: transparent;
 }
+.rsvp .rsvp-choice { padding-inline: 0; border: 0; }
+.rsvp .rsvp-choice:has(input:checked) { background: transparent; color: var(--wine); font-weight: 500; }
+.rsvp .rsvp-optional summary { text-underline-offset: .2em; }
+.rsvp .rsvp-optional summary:hover { text-decoration: underline; }
+.rsvp .rsvp-hint { font-size: 14px; }
 
-/* A pressed sprig divides the gift note from the response card. */
-.gifts .kicker::before {
-  content: "";
+/* El bodegón acompaña también la nota cerrada. */
+.gifts {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  grid-template-areas: "photo heading" "photo options";
+  column-gap: clamp(32px, 6vw, 84px);
+  max-width: 950px;
+  text-align: left;
+}
+.gift-heading { grid-area: heading; align-self: end; }
+.gift-heading h2 { color: var(--wine); }
+.gifts .gift-heading .prose { max-width: 32ch; margin: 15px 0 0; }
+.gift-photo {
+  grid-area: photo;
+  align-self: center;
   display: block;
-  width: clamp(132px, 18vw, 200px);
-  height: clamp(42px, 6.2vw, 68px);
-  margin: 0 auto clamp(12px, 2vw, 23px);
-  background: url("img/olivo-de-la-carta.webp") center / contain no-repeat;
-  filter: drop-shadow(0 2px 1px #554c2a1a);
+  width: 100%;
+  height: auto;
+  aspect-ratio: 5 / 4;
+  object-fit: cover;
+  object-position: 44% center;
 }
-.gifts h2 {
-  max-width: 16ch;
-  margin-inline: auto;
-  text-wrap: balance;
-}
+.gift-options { grid-area: options; margin-top: 22px; }
 
-/* The last page echoes the botanical relief of the closed envelope. */
+/* La rama de olivo remata la firma. */
 .closing {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  padding: clamp(64px, 8vw, 112px) 0;
-  background: #520f20;
-  border-top: 1px solid #ad8a67;
-}
-.closing::before, .closing::after {
-  content: "";
-  position: absolute;
-  inset-block: 0;
-  z-index: -1;
-  width: min(31%, 460px);
-  pointer-events: none;
-  background-image: url("img/cubierta-relieve.webp");
-  background-repeat: no-repeat;
-}
-.closing::before {
-  left: 0;
-  background-size: auto 120%;
-  background-position: left bottom;
-  mask-image: linear-gradient(90deg, #000 28%, transparent);
+  padding-block: clamp(46px, 6.5vw, 78px);
+  background: #501020;
+  color: var(--paper);
+  text-align: center;
 }
 .closing::after {
-  right: 0;
-  background-size: auto 145%;
-  background-position: right top;
-  mask-image: linear-gradient(-90deg, #000 25%, transparent);
-}
-.closing .wrap { position: relative; }
-.closing-line {
-  max-width: 17ch;
-  margin-inline: auto;
-}
-.closing-signature {
-  margin-top: clamp(18px, 2.3vw, 28px);
-  color: #f6e4d3;
-  font: italic 500 clamp(19px, 2.2vw, 27px)/1.25 var(--serif);
-}
-.closing-signature::after {
   content: "";
   display: block;
-  width: clamp(42px, 5vw, 58px);
-  aspect-ratio: 1;
-  margin: 20px auto 0;
-  background: url("img/lacre-sd.webp") center / contain no-repeat;
-  transform: rotate(-6deg);
-  filter: drop-shadow(1px 3px 3px #2a081a60);
+  width: clamp(93px, 13vw, 140px);
+  aspect-ratio: 650 / 217;
+  margin: 16px auto 0;
+  background: url("img/olivo-de-la-carta.webp") center / contain no-repeat;
 }
+.closing-line { color: #f3dcd4; font: italic 500 clamp(21px, 2.5vw, 31px)/1.2 var(--serif); }
+.closing-signature {
+  margin-top: 4px;
+  font: 500 clamp(46px, 6vw, 84px)/1.06 var(--serif);
+  letter-spacing: -.045em;
+}
+.closing-signature i { font-size: .73em; font-weight: 400; }
+
 @media (max-width: 700px) {
-  .rsvp-layout { row-gap: 44px; }
-  .closing::before, .closing::after { width: 24%; }
-  .closing-line { max-width: 15ch; }
+  .rsvp .rsvp-layout {
+    max-width: 490px;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .rsvp-copy {
+    padding: 27px clamp(20px, 6vw, 32px) 33px;
+    text-align: left;
+  }
+  .rsvp-copy h2 { max-width: none; font-size: clamp(36px, 8.8vw, 52px); }
+  .rsvp-copy p { margin-top: 9px; }
+  .rsvp-copy::after {
+    inset: auto 0 9px;
+    border: 0;
+    border-bottom: 1px dashed #b78484;
+  }
+  .gifts {
+    max-width: 490px;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "heading" "photo" "options";
+  }
+  .gift-photo { margin-top: 21px; aspect-ratio: 3 / 2; }
+  .gift-options { margin-top: 12px; }
 }
