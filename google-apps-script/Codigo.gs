@@ -3,79 +3,37 @@
  * Instalación: ver LEEME.md en esta misma carpeta.
  */
 
-// Dirección pública de la invitación (GitHub Pages). Los links de cada invitado se arman con esta URL.
-const SITE_URL = 'https://wifituga.github.io/boda-sofia-diego/';
-
-const HOJAS = {
-  invitados: 'Invitados',
-  confirmaciones: 'Confirmaciones',
-  ingreso: 'Lista de ingreso',
-  canciones: 'Canciones'
-};
+const HOJAS = { confirmaciones: 'Confirmaciones', ingreso: 'Lista de ingreso', canciones: 'Canciones' };
 const CABECERAS = {
-  invitados: ['Código', 'Invitación', 'Invitados (separados por coma)', 'Pases', 'Link', 'Respondió'],
-  confirmaciones: ['Fecha', 'Código', 'Invitación', 'Invitado', 'Nombre y apellido', 'DNI / CE', 'Asiste', 'Restricción alimentaria', 'Mensaje'],
-  canciones: ['Fecha', 'Código', 'Nombre', 'Canción 1', 'Canción 2']
+  confirmaciones: ['Fecha', 'Grupo', 'Confirmado por', 'Nombre y apellido', 'DNI / CE', 'Asiste', 'Restricción alimentaria', 'Mensaje'],
+  canciones: ['Fecha', 'Nombre', 'Canción 1', 'Canción 2']
 };
+const MAX_PERSONAS = 8;
 
 /* ---------- Menú ---------- */
 function onOpen() {
-  SpreadsheetApp.getUi()
-    .createMenu('Invitación')
-    .addItem('1. Preparar la hoja', 'prepararHoja')
-    .addItem('2. Generar códigos y links', 'generarLinks')
-    .addToUi();
+  SpreadsheetApp.getUi().createMenu('Invitación').addItem('Preparar la hoja', 'prepararHoja').addToUi();
 }
 
 function prepararHoja() {
   const ss = SpreadsheetApp.getActive();
-  const inv = hoja_(ss, HOJAS.invitados, CABECERAS.invitados);
-  if (inv.getLastRow() === 1) {
-    inv.getRange(2, 2, 3, 3).setValues([
-      ['Néstor y Paola', 'Néstor Ruiz, Paola Díaz', 2],
-      ['Familia López', 'Carlos López, Ana Torres, Lucía López, Sofía López', 4],
-      ['Martín', 'Martín Gómez', 2]
-    ]);
-  }
-  inv.setColumnWidths(1, 6, 170);
   hoja_(ss, HOJAS.confirmaciones, CABECERAS.confirmaciones);
   hoja_(ss, HOJAS.canciones, CABECERAS.canciones);
   const ingreso = ss.getSheetByName(HOJAS.ingreso) || ss.insertSheet(HOJAS.ingreso);
   ingreso.clear();
-  ingreso.getRange('A1:C1').setValues([['Nombre y apellido', 'DNI / CE', 'Invitación']]).setFontWeight('bold');
+  ingreso.getRange('A1:C1').setValues([['Nombre y apellido', 'DNI / CE', 'Confirmado por']]).setFontWeight('bold');
   ingreso.getRange('A2').setFormula(
-    '=IFERROR(SORT(FILTER({Confirmaciones!E2:E, Confirmaciones!F2:F, Confirmaciones!C2:C}, Confirmaciones!G2:G="Sí"), 1, TRUE), "")'
+    '=IFERROR(SORT(FILTER({Confirmaciones!D2:D, Confirmaciones!E2:E, Confirmaciones!C2:C}, Confirmaciones!F2:F="Sí"), 1, TRUE), "")'
   );
   ingreso.setFrozenRows(1);
-  SpreadsheetApp.getUi().alert('Listo. Escribe tus invitados en la pestaña «Invitados» (una fila por invitación) y luego usa «Generar códigos y links».');
-}
-
-function generarLinks() {
-  const sh = SpreadsheetApp.getActive().getSheetByName(HOJAS.invitados);
-  const last = sh.getLastRow();
-  if (last < 2) return;
-  const rows = sh.getRange(2, 1, last - 1, 5).getValues();
-  const used = new Set(rows.map(r => String(r[0]).trim().toUpperCase()).filter(Boolean));
-  rows.forEach(r => {
-    if (!String(r[1]).trim()) return;
-    let code = String(r[0]).trim().toUpperCase();
-    if (!code) {
-      do { code = codigo_(); } while (used.has(code));
-      used.add(code);
-    }
-    r[0] = code;
-    r[4] = SITE_URL + '?i=' + code;
-  });
-  sh.getRange(2, 1, rows.length, 5).setValues(rows);
+  const sobra = ss.getSheetByName('Hoja 1') || ss.getSheetByName('Sheet1');
+  if (sobra && ss.getSheets().length > 1 && sobra.getLastRow() === 0) ss.deleteSheet(sobra);
+  SpreadsheetApp.getUi().alert('Listo. Ahora publica el script como aplicación web (ver LEEME.md).');
 }
 
 /* ---------- API web ---------- */
-function doGet(e) {
-  const p = (e && e.parameter) || {};
-  if (p.accion !== 'invitacion') return json_({ ok: false, error: 'accion' });
-  const found = buscar_(p.codigo);
-  if (!found) return json_({ ok: false, error: 'no_encontrada' });
-  return json_({ ok: true, invitacion: publica_(found) });
+function doGet() {
+  return json_({ ok: true });
 }
 
 function doPost(e) {
@@ -93,33 +51,34 @@ function doPost(e) {
 }
 
 function confirmar_(data) {
-  const inv = buscar_(data.codigo);
-  if (!inv) return { ok: false, error: 'no_encontrada' };
-  const personas = Array.isArray(data.personas) ? data.personas : [];
-  if (!personas.length || personas.length > inv.pases) return { ok: false, error: 'pases' };
+  const personas = (Array.isArray(data.personas) ? data.personas : [])
+    .map(p => ({ nombre: texto_(p.nombre, 80), dni: dni_(p.dni), asiste: p.asiste === true }))
+    .filter(p => p.nombre);
+  if (!personas.length || personas.length > MAX_PERSONAS) return { ok: false, error: 'personas' };
+  if (personas.some(p => p.asiste && !p.dni)) return { ok: false, error: 'dni' };
 
-  const ss = SpreadsheetApp.getActive();
-  const sh = ss.getSheetByName(HOJAS.confirmaciones);
-  // La última respuesta reemplaza a la anterior de la misma invitación.
+  const sh = SpreadsheetApp.getActive().getSheetByName(HOJAS.confirmaciones);
+  // Si alguien vuelve a confirmar, su respuesta nueva reemplaza a la anterior (mismo DNI o mismo nombre).
+  const dnis = new Set(personas.map(p => p.dni).filter(Boolean));
+  const nombres = new Set(personas.map(p => nombre_(p.nombre)));
   const last = sh.getLastRow();
   if (last > 1) {
-    const codes = sh.getRange(2, 2, last - 1, 1).getValues();
-    for (let i = codes.length - 1; i >= 0; i--) {
-      if (String(codes[i][0]).toUpperCase() === inv.codigo) sh.deleteRow(i + 2);
+    const rows = sh.getRange(2, 4, last - 1, 2).getValues();
+    for (let i = rows.length - 1; i >= 0; i--) {
+      const d = dni_(rows[i][1]);
+      if ((d && dnis.has(d)) || nombres.has(nombre_(rows[i][0]))) sh.deleteRow(i + 2);
     }
   }
   const now = new Date();
-  const rows = personas.map((p, i) => [
-    now, inv.codigo, inv.nombre,
-    texto_(p.invitado, 80),
-    texto_(p.nombre, 80),
-    texto_(p.dni, 12),
-    p.asiste === true ? 'Sí' : 'No',
+  const grupo = Utilities.formatDate(now, 'America/Lima', 'yyMMdd-HHmmss');
+  const quien = personas[0].nombre;
+  const filas = personas.map((p, i) => [
+    now, grupo, quien, p.nombre, p.dni, p.asiste ? 'Sí' : 'No',
     i === 0 ? texto_(data.restriccion, 300) : '',
     i === 0 ? texto_(data.mensaje, 600) : ''
   ]);
-  sh.getRange(sh.getLastRow() + 1, 1, rows.length, rows[0].length).setValues(rows);
-  ss.getSheetByName(HOJAS.invitados).getRange(inv.fila, 6).setValue(now);
+  sh.getRange(sh.getLastRow() + 1, 1, filas.length, filas[0].length).setValues(filas);
+  sh.getRange(2, 5, sh.getLastRow(), 1).setNumberFormat('@'); // conserva ceros iniciales del DNI
   return { ok: true };
 }
 
@@ -127,49 +86,24 @@ function cancion_(data) {
   const nombre = texto_(data.nombre, 80);
   const c1 = texto_(data.cancion1, 150);
   if (!nombre || !c1) return { ok: false, error: 'datos' };
-  const code = buscar_(data.codigo) ? String(data.codigo).toUpperCase() : '';
   SpreadsheetApp.getActive().getSheetByName(HOJAS.canciones)
-    .appendRow([new Date(), code, nombre, c1, texto_(data.cancion2, 150)]);
+    .appendRow([new Date(), nombre, c1, texto_(data.cancion2, 150)]);
   return { ok: true };
 }
 
 /* ---------- Utilidades ---------- */
-function buscar_(codigo) {
-  const code = String(codigo || '').trim().toUpperCase();
-  if (!/^[A-Z0-9]{4,12}$/.test(code)) return null;
-  const sh = SpreadsheetApp.getActive().getSheetByName(HOJAS.invitados);
-  const last = sh.getLastRow();
-  if (last < 2) return null;
-  const rows = sh.getRange(2, 1, last - 1, 6).getValues();
-  for (let i = 0; i < rows.length; i++) {
-    if (String(rows[i][0]).trim().toUpperCase() !== code) continue;
-    const invitados = String(rows[i][2]).split(/[,;\n]/).map(s => s.trim()).filter(Boolean);
-    return {
-      fila: i + 2,
-      codigo: code,
-      nombre: String(rows[i][1]).trim(),
-      invitados: invitados,
-      pases: Math.max(Number(rows[i][3]) || 0, invitados.length, 1),
-      respondida: Boolean(rows[i][5])
-    };
-  }
-  return null;
+function nombre_(v) {
+  return String(v).replace(/^'/, '').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ');
 }
 
-function publica_(inv) {
-  return { codigo: inv.codigo, nombre: inv.nombre, invitados: inv.invitados, pases: inv.pases, respondida: inv.respondida };
+function dni_(v) {
+  const s = String(v == null ? '' : v).replace(/[\s.\-']/g, '').toUpperCase();
+  return /^(\d{8}|[A-Z0-9]{9,12})$/.test(s) ? s : '';
 }
 
 function texto_(v, max) {
   let s = String(v == null ? '' : v).replace(/[\u0000-\u001f]/g, ' ').trim().slice(0, max);
   if (/^[=+\-@]/.test(s)) s = "'" + s; // evita que un texto se interprete como fórmula
-  return s;
-}
-
-function codigo_() {
-  const abc = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  let s = '';
-  for (let i = 0; i < 6; i++) s += abc[Math.floor(Math.random() * abc.length)];
   return s;
 }
 

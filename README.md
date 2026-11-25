@@ -9,7 +9,7 @@ Invitación de boda en una sola página, con HTML, CSS y JavaScript nativos. Ada
 - Itinerario con una rosa que recorre la línea al bajar
 - Lugar (Fundo Pozo Santo, Pachacámac) con foto del campo y botón a Google Maps
 - Guía de vestimenta: colores para invitados (terracota, verde salvia, azul marino); el granate es del cortejo y el blanco de la novia
-- Confirmación por invitación con pases: cada persona confirma con nombre, DNI y asistencia. Se guarda en Google Sheets.
+- Confirmación de asistencia: una sola invitación para todos; quien confirma agrega una casilla por cada persona que viene con él (nombre, DNI y si asiste). Se guarda en Google Sheets.
 - Regalos en una página aparte (`regalos.html`)
 - «Nuestros momentos»: carrusel de fotos con la tarjeta «Estos niños se casaron»
 - Recomendación de canciones para el baile (también en Google Sheets)
@@ -17,7 +17,7 @@ Invitación de boda en una sola página, con HTML, CSS y JavaScript nativos. Ada
 
 ## Cómo editar
 - **Datos generales**: `config.js` (fecha, lugar, URL de la hoja de Google, canción, fotos de portada y del lugar, datos para transferencia). Los textos de fecha y horarios están en `index.html`.
-- **Confirmaciones y canciones**: ver `google-apps-script/LEEME.md`. Mientras `hojaUrl` esté vacío, el formulario funciona en modo demostración y no guarda nada. Cada invitación tiene su link (`…/?i=CODIGO`), que se genera desde la hoja.
+- **Confirmaciones y canciones**: ver `google-apps-script/LEEME.md`. Mientras `hojaUrl` esté vacío, el formulario funciona en modo demostración y no guarda nada.
 - **Canción**: copiar el MP3 a `musica/` y escribir `cancion: { src: "musica/archivo.mp3" }` en `config.js`.
 - **Fotos de portada y del lugar**: guardarlas como `img/fotos/portada.jpg` e `img/fotos/fundo.jpg`, o cambiar las rutas en `config.js`.
 - **Foto en «Y ahora, para siempre»** (opcional): `FOTOS` en `invitacion.js`.

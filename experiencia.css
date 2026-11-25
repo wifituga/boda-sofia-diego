@@ -176,3 +176,50 @@ body.locked .music-toggle { display: none; }
 .rsvp-done li { padding: 8px 0; border-top: 1px solid var(--rule); font: 600 21px/1.2 var(--serif); }
 .rsvp-done li:last-child { border-bottom: 1px solid var(--rule); }
 .rsvp-again { margin-top: 18px; border: 0; background: none; color: var(--wine); text-decoration: underline; text-underline-offset: .25em; }
+
+/* ===== Movimiento fluido ===== */
+.route-fill { height: 0; transform: scaleY(0); transform-origin: top center; will-change: transform; }
+.route-rose { will-change: transform; backface-visibility: hidden; }
+.stop .stop-time, .stop .stop-text { transition: opacity .7s cubic-bezier(.22, 1, .36, 1), transform .7s cubic-bezier(.22, 1, .36, 1); }
+.stop:not(.reached) .stop-text { transform: translateX(6px); }
+.stop-dot { transition: background-color .6s ease, border-color .6s ease, transform .6s cubic-bezier(.34, 1.56, .64, 1); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .fx { opacity: 0; transform: translate3d(0, 26px, 0); }
+  .fx.fx-in {
+    opacity: 1; transform: none;
+    transition: opacity 1s cubic-bezier(.22, 1, .36, 1), transform 1.15s cubic-bezier(.22, 1, .36, 1);
+  }
+  /* Apertura del sobre: capas en la GPU */
+  .intro.is-opening .mail-door, .intro.is-opening .mail-letter, .intro.is-opening .mail-seal { will-change: transform, opacity; backface-visibility: hidden; }
+  /* Casillas de confirmación */
+  .pass { transition: border-color .35s ease, background-color .35s ease, opacity .26s ease, transform .26s ease; }
+  .pass.is-new { animation: pass-in .55s cubic-bezier(.22, 1, .36, 1); }
+  .pass.is-leaving { opacity: 0; transform: translateY(-6px) scale(.98); }
+  .pass-fields:not([hidden]) { animation: pass-open .45s cubic-bezier(.22, 1, .36, 1); }
+  @keyframes pass-in { from { opacity: 0; transform: translateY(14px); } }
+  @keyframes pass-open { from { opacity: 0; transform: translateY(-6px); } }
+}
+
+/* ===== Confirmación para todos ===== */
+.rsvp-intro { margin-bottom: 16px; color: var(--muted); font: 500 18px/1.4 var(--serif); }
+.people { display: grid; gap: 12px; }
+.people .pass { margin: 0; padding-top: 14px; }
+.pass-remove { position: absolute; top: -12px; right: 10px; padding: 2px 8px; border: 0; background: var(--paper); color: var(--muted); font: 500 12px/1.4 var(--sans); text-decoration: underline; text-underline-offset: .2em; cursor: pointer; }
+.pass .pass-choices { margin-top: 2px; }
+.add-person {
+  display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; min-height: 50px; margin: 12px 0 16px;
+  border: 1px dashed #b49570; background: transparent; color: var(--wine); font: 500 14px/1 var(--sans); cursor: pointer;
+  transition: background-color .25s ease;
+}
+.add-person:hover { background: var(--sand); }
+.add-person span { font-size: 20px; line-height: 1; }
+
+/* ===== Foto del lugar (Safari) ===== */
+.venue-photo { width: 100%; justify-self: stretch; }
+@media (max-width: 760px) { .venue-photo { height: auto; } }
+/* Marco de la foto sin depender de aspect-ratio (Safari lo colapsaba) */
+.venue-photo { display: block; aspect-ratio: auto; min-height: 0; }
+.venue-photo::before { content: ""; display: block; padding-top: 75%; }
+.venue-photo img, .venue-photo .photo-slot { position: absolute; inset: 8px; width: calc(100% - 16px); height: calc(100% - 16px); object-fit: cover; }
+@media (min-width: 761px) { .venue-photo::before { padding-top: 0; height: 100%; min-height: 320px; } }
