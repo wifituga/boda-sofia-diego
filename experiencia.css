@@ -141,3 +141,38 @@ body.locked .music-toggle { display: none; }
   .record.spin-once .record-disc { animation: spin 1.2s ease-out 1; }
 }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* ===== Confirmación v2 ===== */
+.rsvp-for { display: flex; flex-direction: column; gap: 4px; margin-bottom: 18px; padding-bottom: 16px; border-bottom: 1px solid var(--rule); text-align: center; }
+.rsvp-for strong { font: 500 clamp(28px, 7.5vw, 36px)/1.05 var(--serif); color: var(--wine); }
+.rsvp-for span { color: var(--muted); font: italic 500 18px/1.3 var(--serif); }
+.pass { position: relative; margin: 0 0 12px; padding: 16px 14px 6px; border: 1px solid var(--rule); background: #fffdf9; transition: border-color .25s, background-color .25s; }
+.pass legend { padding: 0 8px; margin-left: -4px; }
+.pass .pass-name { color: var(--ink); font: 600 23px/1.1 var(--serif); letter-spacing: 0; text-transform: none; }
+.pass-sub { margin: -4px 0 10px; color: var(--muted); font-size: 13px; }
+.pass-extra { border-style: dashed; }
+.pass.is-yes { border-color: #8c5a63; background: #fffaf5; }
+.pass.is-no { background: #f8f3ec; }
+.pass.has-error { border-color: #b4412e; }
+.pass-choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-bottom: 12px; }
+.pass-choice { position: relative; display: block; cursor: pointer; }
+.pass-choice input { position: absolute; opacity: 0; pointer-events: none; }
+.pass-choice span {
+  display: flex; align-items: center; justify-content: center; min-height: 46px; padding: 8px 6px; text-align: center;
+  border: 1px solid var(--rule); background: var(--paper); color: var(--muted); font: 500 14px/1.2 var(--sans);
+  transition: background-color .2s, color .2s, border-color .2s;
+}
+.pass-choice input:focus-visible + span { outline: 2px solid var(--wine); outline-offset: 2px; }
+.pass-choice input[value=si]:checked + span { background: var(--wine); border-color: var(--wine); color: var(--paper); }
+.pass-choice input[value=no]:checked + span { background: var(--sand); border-color: #a58a7b; color: var(--ink); }
+.pass-fields .field { margin-bottom: 10px; }
+.pass-why { margin: -2px 0 10px; color: var(--muted); font-size: 12.5px; }
+.pass-error { margin: 0 0 10px; color: #a3311f; font-size: 13px; }
+.rsvp-demo { margin: 12px 0 0; padding: 0; background: none; text-align: center; color: #a08f85; font-size: 11.5px; letter-spacing: .04em; }
+.rsvp-done { max-width: 420px; margin: 0 auto; padding: clamp(26px, 6vw, 40px) clamp(20px, 5vw, 34px); background: var(--paper); color: var(--ink); text-align: center; }
+.rsvp-done-title { font: italic 500 clamp(34px, 8vw, 42px)/1.05 var(--serif); color: var(--wine); }
+.rsvp-done > p:not(.rsvp-done-title):not(.rsvp-demo) { margin-top: 12px; color: var(--muted); font: 500 19px/1.35 var(--serif); }
+.rsvp-done ul { list-style: none; margin: 14px 0 0; padding: 0; }
+.rsvp-done li { padding: 8px 0; border-top: 1px solid var(--rule); font: 600 21px/1.2 var(--serif); }
+.rsvp-done li:last-child { border-bottom: 1px solid var(--rule); }
+.rsvp-again { margin-top: 18px; border: 0; background: none; color: var(--wine); text-decoration: underline; text-underline-offset: .25em; }

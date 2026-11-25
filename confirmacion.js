@@ -35,48 +35,90 @@
   function passCard(index, name) {
     const extra = !name;
     const id = `p${++uid}`;
-    const field = document.createElement('fieldset');
-    field.className = 'pass' + (extra ? ' pass-extra' : '');
-    field.innerHTML = `
-      <legend>${extra ? 'Pase adicional' : 'Invitado ' + (index + 1)}</legend>
-      <div class="pass-choices" role="radiogroup">
-        <label class="rsvp-choice"><input type="radio" name="${id}-asiste" value="si"> ${extra ? 'Usaré este pase' : 'Asistirá'}</label>
-        <label class="rsvp-choice"><input type="radio" name="${id}-asiste" value="no"> ${extra ? 'No lo usaré' : 'No podrá ir'}</label>
+    const card = document.createElement('fieldset');
+    card.className = 'pass' + (extra ? ' pass-extra' : '');
+    card.dataset.invited = name || '';
+    const first = (name || '').split(/\s+/)[0];
+    card.innerHTML = `
+      <legend class="pass-name"></legend>
+      <p class="pass-sub">${extra ? 'Puedes venir con alguien más' : ''}</p>
+      <div class="pass-choices">
+        <label class="pass-choice"><input type="radio" name="${id}" value="si"><span>${extra ? 'Iré con acompañante' : 'Asistirá'}</span></label>
+        <label class="pass-choice"><input type="radio" name="${id}" value="no"><span>${extra ? 'Iré sin acompañante' : 'No podrá ir'}</span></label>
       </div>
       <div class="pass-fields" hidden>
-        <div class="field"><label for="${id}-nombre">Nombre y apellido</label><input id="${id}-nombre" autocomplete="off"></div>
-        <div class="field"><label for="${id}-dni">DNI o carné de extranjería</label><input id="${id}-dni" inputmode="numeric" autocomplete="off" maxlength="12"></div>
+        <div class="field"><label for="${id}-n">${extra ? 'Nombre y apellido del acompañante' : 'Nombre y apellido completos'}</label><input id="${id}-n" class="pass-full" autocomplete="off" autocapitalize="words"></div>
+        <div class="field"><label for="${id}-d">DNI o carné de extranjería</label><input id="${id}-d" class="pass-dni" inputmode="numeric" autocomplete="off" maxlength="12" placeholder="8 dígitos"></div>
+        <p class="pass-why">Lo necesitamos para la lista de ingreso.</p>
       </div>
       <p class="pass-error" hidden></p>`;
-    const nameInput = field.querySelector(`#${id}-nombre`);
-    nameInput.value = name || '';
-    field.dataset.extra = extra ? '1' : '';
-    field.dataset.invited = name || '';
-    field.addEventListener('change', () => {
-      const v = field.querySelector('input[type=radio]:checked')?.value;
-      field.querySelector('.pass-fields').hidden = v !== 'si';
-      field.querySelector('.pass-error').hidden = true;
+    card.querySelector('.pass-name').textContent = extra ? 'Acompañante' : name;
+    if (!extra) card.querySelector('.pass-sub').remove();
+    card.querySelector('.pass-full').value = name || '';
+    const clearError = () => {
+      card.querySelector('.pass-error').hidden = true;
+      card.classList.remove('has-error');
+      if (!passesBox.querySelector('.has-error')) status.textContent = '';
+    };
+    card.addEventListener('change', event => {
+      if (event.target.type !== 'radio') return;
+      const v = event.target.value;
+      card.querySelector('.pass-fields').hidden = v !== 'si';
+      card.classList.toggle('is-yes', v === 'si');
+      card.classList.toggle('is-no', v === 'no');
+      clearError();
     });
-    return field;
+    // Los errores se borran mientras se escribe, no al salir del campo, para que la página no se mueva al tocar otra opción.
+    card.addEventListener('input', event => { if (event.target.type !== 'radio') clearError(); });
+    return card;
   }
 
   function render(inv) {
     invitation = inv;
     const names = inv.invitados || [];
     const total = Math.max(Number(inv.pases) || 0, names.length, 1);
+    const title = inv.nombre || names.join(' y ');
     forLine.innerHTML = '';
     const strong = document.createElement('strong');
-    strong.textContent = inv.nombre || names.join(' y ');
-    forLine.append('Invitación para ', strong, `. ${total === 1 ? 'Es válida para 1 persona.' : `Es válida para ${total} personas.`}`);
+    strong.textContent = title;
+    const small = document.createElement('span');
+    small.textContent = total === 1 ? 'Reservamos 1 lugar para ti.' : `Reservamos ${total} lugares para ustedes.`;
+    forLine.append(strong, small);
     passesBox.replaceChildren(...Array.from({ length: total }, (_, i) => passCard(i, names[i])));
     if (demo) {
       const note = document.createElement('p');
       note.className = 'rsvp-demo';
-      note.textContent = 'Vista de demostración: los novios aún no conectan la hoja de respuestas, así que nada se guarda.';
-      form.prepend(note);
+      note.textContent = 'Ejemplo de prueba · aún no se guardan respuestas';
+      form.append(note);
     }
     const sName = document.getElementById('sName');
     if (sName && names[0] && !sName.value) sName.value = names[0];
+  }
+
+  function showThanks(people) {
+    const going = people.filter(p => p.asiste);
+    const box = document.createElement('div');
+    box.className = 'rsvp-done';
+    const h = document.createElement('p'); h.className = 'rsvp-done-title';
+    h.textContent = going.length ? '¡Gracias por confirmar!' : 'Gracias por avisarnos';
+    const p = document.createElement('p');
+    p.textContent = going.length
+      ? (going.length === 1 ? 'Te esperamos el viernes 11 de junio:' : 'Los esperamos el viernes 11 de junio:')
+      : 'Te vamos a extrañar. Gracias por acompañarnos con tu cariño.';
+    box.append(h, p);
+    if (going.length) {
+      const ul = document.createElement('ul');
+      going.forEach(g => { const li = document.createElement('li'); li.textContent = g.nombre; ul.append(li); });
+      box.append(ul);
+    }
+    const again = document.createElement('button');
+    again.type = 'button'; again.className = 'text-link rsvp-again'; again.textContent = 'Cambiar mi respuesta';
+    again.addEventListener('click', () => { box.remove(); form.hidden = false; form.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+    box.append(again);
+    if (demo) { const d = document.createElement('p'); d.className = 'rsvp-demo'; d.textContent = 'Ejemplo de prueba · esta respuesta no se guardó'; box.append(d); }
+    form.hidden = true;
+    form.after(box);
+    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
   /* ---- Validar y enviar ---- */
@@ -89,47 +131,47 @@
     for (const card of passesBox.querySelectorAll('.pass')) {
       const err = card.querySelector('.pass-error');
       const choice = card.querySelector('input[type=radio]:checked')?.value;
-      const nombre = card.querySelector('input[id$=-nombre]').value.trim();
-      const dni = card.querySelector('input[id$=-dni]').value.replace(/\s+/g, '').toUpperCase();
+      const nombre = card.querySelector('.pass-full').value.trim().replace(/\s+/g, ' ');
+      const dni = card.querySelector('.pass-dni').value.replace(/[\s.-]+/g, '').toUpperCase();
+      const extra = !card.dataset.invited;
       let msg = '';
-      if (!choice) msg = 'Indica si asistirá.';
-      else if (choice === 'si' && nombre.split(/\s+/).length < 2) msg = 'Escribe nombre y apellido.';
-      else if (choice === 'si' && !/^(\d{8}|[A-Z0-9]{9,12})$/.test(dni)) msg = 'Escribe un DNI de 8 dígitos o un carné de extranjería válido.';
+      if (!choice) msg = extra ? 'Cuéntanos si vendrás con acompañante.' : 'Indica si asistirá.';
+      else if (choice === 'si' && nombre.split(' ').length < 2) msg = 'Escribe nombre y apellido.';
+      else if (choice === 'si' && !/^(\d{8}|[A-Z0-9]{9,12})$/.test(dni)) msg = 'El DNI tiene 8 dígitos. Si es carné de extranjería, escríbelo completo.';
       err.textContent = msg; err.hidden = !msg;
+      card.classList.toggle('has-error', Boolean(msg));
       if (msg && !firstBad) firstBad = card;
       people.push({
-        invitado: card.dataset.invited || 'Pase adicional',
+        invitado: card.dataset.invited || 'Acompañante',
         nombre: choice === 'si' ? nombre : (card.dataset.invited || ''),
         dni: choice === 'si' ? dni : '',
-        asiste: choice === 'si'
+        asiste: choice === 'si',
+        extra
       });
     }
     if (firstBad) {
       firstBad.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      status.textContent = 'Revisa los datos marcados.';
+      status.textContent = 'Falta completar algunos datos.';
       return;
     }
     const payload = {
       accion: 'confirmar',
       codigo: invitation.codigo,
-      personas: people.filter(p => !(p.invitado === 'Pase adicional' && !p.asiste)),
+      personas: people.filter(p => !(p.extra && !p.asiste)).map(({ extra, ...p }) => p),
       restriccion: document.getElementById('fDiet').value.trim(),
       mensaje: document.getElementById('fMsg').value.trim()
     };
-    const going = people.filter(p => p.asiste).length;
-    const done = going
-      ? `¡Gracias! Registramos ${going} ${going === 1 ? 'asistente' : 'asistentes'}. Si algo cambia, puedes volver a enviar este formulario.`
-      : 'Gracias por avisarnos. ¡Te vamos a extrañar!';
-    if (demo) { status.textContent = `${done} (Demostración: no se guardó.)`; return; }
+    if (demo) { showThanks(people); return; }
     submit.disabled = true;
-    status.textContent = 'Enviando…';
+    submit.textContent = 'Enviando…';
     try {
       await api(null, payload);
-      status.textContent = done;
+      showThanks(people);
     } catch {
       status.textContent = 'No pudimos enviar tu respuesta. Revisa tu conexión e inténtalo de nuevo.';
     } finally {
       submit.disabled = false;
+      submit.textContent = 'Enviar confirmación';
     }
   });
 
