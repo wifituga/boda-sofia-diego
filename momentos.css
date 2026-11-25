@@ -72,3 +72,7 @@
 .moment-cover { overflow: visible; }
 .moment-cover .cover-flower.top { width: 42%; top: -7%; right: -10%; transform: rotate(14deg); z-index: 2; filter: drop-shadow(2px 6px 6px #3b102033); }
 .moment-cover .cover-flower.bottom { width: 36%; bottom: -7%; left: -9%; transform: rotate(-12deg) scaleX(-1); z-index: 2; filter: drop-shadow(2px 6px 6px #3b102033); }
+
+/* El carrusel solo se desliza a los lados: bajar con el dedo sobre las fotos debe mover la página */
+.moments-track { overflow-y: hidden; touch-action: pan-x pan-y; overscroll-behavior-y: auto; }
+.moment, .moment * { -webkit-user-drag: none; }
