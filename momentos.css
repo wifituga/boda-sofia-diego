@@ -1,0 +1,62 @@
+/* ===== Nuestros momentos: carrusel de fotos al final ===== */
+.moments { text-align: center; overflow: hidden; }
+.moments .prose { max-width: 520px; margin: 14px auto 0; }
+
+.moments-stage { position: relative; max-width: 560px; margin: 34px auto 0; }
+.moments-track {
+  display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory;
+  scroll-behavior: smooth; overscroll-behavior-x: contain;
+  padding: 6px 0 18px; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.moments-track::-webkit-scrollbar { display: none; }
+.moment {
+  flex: 0 0 100%; scroll-snap-align: center; scroll-snap-stop: always;
+  margin: 0; background: var(--paper); border: 1px solid var(--rule); padding: 10px;
+  box-shadow: 0 18px 34px -22px rgba(59, 16, 32, .45);
+}
+.moment-photo { position: relative; aspect-ratio: 4 / 5; background: var(--sand); overflow: hidden; }
+.moment-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.moment figcaption {
+  padding: 12px 6px 4px; color: var(--muted);
+  font: italic 500 20px/1.3 var(--serif);
+}
+
+/* Foto pendiente */
+.photo-slot {
+  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  color: rgba(77, 0, 17, .55); font: 500 10.5px/1.4 var(--sans); letter-spacing: .18em; text-transform: uppercase;
+  background:
+    repeating-linear-gradient(135deg, rgba(77, 0, 17, .035) 0 10px, transparent 10px 20px),
+    linear-gradient(160deg, #efe4d8, #e3d3c4);
+}
+.photo-slot svg { width: 30px; height: 30px; opacity: .7; }
+
+/* Primera tarjeta: Estos niños se casaron */
+.moment-cover { position: relative; display: flex; flex-direction: column; padding: 30px 18px 26px; overflow: hidden; }
+.moment-cover .cover-flower { position: absolute; pointer-events: none; opacity: .95; }
+.moment-cover .cover-flower.top { width: 44%; top: -4%; right: -9%; transform: rotate(14deg); }
+.moment-cover .cover-flower.bottom { width: 38%; bottom: -6%; left: -10%; transform: rotate(-12deg) scaleX(-1); }
+.cover-title { position: relative; font: 400 clamp(34px, 9vw, 46px)/1.05 var(--serif); color: var(--ink); text-align: left; padding-left: 6px; }
+.cover-title em { display: block; padding-left: 1.6em; color: var(--wine); }
+.kids { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 22px; }
+.kid { margin: 0; }
+.kid .moment-photo { aspect-ratio: 3 / 4; outline: 1px solid var(--rule); outline-offset: 4px; }
+.kid:nth-child(1) { transform: rotate(-1.6deg); }
+.kid:nth-child(2) { transform: rotate(1.4deg) translateY(10px); }
+.kid figcaption { padding-top: 12px; font: 500 10.5px/1.3 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); font-style: normal; }
+.cover-names { position: relative; margin-top: auto; padding-top: 26px; font: italic 500 clamp(30px, 8vw, 40px)/1.1 var(--serif); color: var(--wine); }
+.cover-date { position: relative; margin-top: 8px; font: 500 12px/1 var(--sans); letter-spacing: .32em; color: var(--muted); }
+
+/* Controles */
+.moments-nav { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 8px; }
+.moments-nav button {
+  width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--rule); background: var(--paper);
+  color: var(--wine); display: grid; place-items: center; cursor: pointer; transition: background-color .2s, opacity .2s;
+}
+.moments-nav button:hover { background: var(--sand); }
+.moments-nav button:disabled { opacity: .35; cursor: default; }
+.moments-nav svg { width: 18px; height: 18px; }
+.moments-count { min-width: 64px; font: 500 12px/1 var(--sans); letter-spacing: .2em; color: var(--muted); }
+
+@media (min-width: 760px) { .moments-stage { max-width: 440px; } }
+@media (prefers-reduced-motion: reduce) { .moments-track { scroll-behavior: auto; } }

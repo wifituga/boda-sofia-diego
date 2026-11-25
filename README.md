@@ -24,6 +24,7 @@ La estructura y los textos están en `index.html`, junto con la interacción ini
   ];
   ```
   El pie `texto` es opcional. Si `FOTOS` está vacío, la sección muestra la historia sin un espacio vacío para imágenes.
+- **Nuestros momentos** (galería al final): editar `MOMENTOS` en `momentos.js`. En `ninos` van las fotos de Sofía y Diego de niños para la primera tarjeta («Estos niños se casaron»), y en `fotos` el resto del carrusel con su pie de foto. Mientras un archivo no exista en `img/fotos/`, se muestra un espacio «Foto pendiente».
 - **Regalos.** La lista se despliega en `#giftList` de `index.html`, incluso sin JavaScript. Las tres ideas son ilustrativas. Cuando los novios confirmen sus regalos, reemplazar las entradas de `.gift-ideas` y actualizar el aviso de `.gift-intro`. La fotografía está en `img/regalos-editorial.webp`.
 - **Transferencias.** `CONFIG.transferencia` en `invitacion.js` controla la información pública. Con `null` el apartado permanece oculto. Para habilitarlo, establecer un objeto con los campos de texto `banco`, `titular` y `cuenta` confirmados por los novios. El campo de texto `cci` es opcional. Conservar ceros iniciales en los números de cuenta.
 

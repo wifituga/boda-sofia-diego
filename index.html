@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="styles.css?v=regalos">
 <link rel="stylesheet" href="interior-motion.css?v=jardin">
 <link rel="stylesheet" href="papeleria-cierre.css?v=jardin">
+<link rel="stylesheet" href="momentos.css?v=1">
 </head>
 <body>
 
@@ -323,6 +324,31 @@
     </details>
   </section>
 
+  <section class="moments wrap section-space" id="momentos" aria-labelledby="momentsTitle">
+    <p class="kicker">Nuestros momentos</p>
+    <h2 id="momentsTitle">Un pedacito de <em>nuestra historia.</em></h2>
+    <div class="moments-stage">
+      <div class="moments-track" id="momentsTrack" tabindex="0" aria-label="Galería de fotos de Sofía y Diego">
+        <article class="moment moment-cover" aria-label="Estos niños se casaron">
+          <img class="cover-flower top" src="img/orquidea-suelta.webp" alt="" loading="lazy" decoding="async">
+          <img class="cover-flower bottom" src="img/cala-prensada.webp" alt="" loading="lazy" decoding="async">
+          <h3 class="cover-title">Estos niños <em>se casaron.</em></h3>
+          <div class="kids">
+            <figure class="kid" data-kid="sofia"><figcaption>Sofía</figcaption></figure>
+            <figure class="kid" data-kid="diego"><figcaption>Diego</figcaption></figure>
+          </div>
+          <p class="cover-names">Sofía y Diego</p>
+          <p class="cover-date">15 · 05 · 2027</p>
+        </article>
+      </div>
+      <div class="moments-nav">
+        <button type="button" id="momentsPrev" aria-label="Foto anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <span class="moments-count" id="momentsCount" aria-live="polite">1 / 1</span>
+        <button type="button" id="momentsNext" aria-label="Foto siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 5l7 7-7 7"/></svg></button>
+      </div>
+    </div>
+  </section>
+
   <footer class="closing">
     <div class="wrap">
       <p class="closing-line">Las mejores historias <em>se celebran juntos.</em></p>
@@ -334,5 +360,6 @@
 <script src="invitacion.js?v=regalos" defer></script>
 <script src="interior-motion.js?v=jardin" defer></script>
 <script src="vestimenta.js?v=guia" defer></script>
+<script src="momentos.js?v=1" defer></script>
 </body>
 </html>
