@@ -36,7 +36,7 @@ if (FOTOS.length) {
 
 /* ===== Calendario ===== */
 (function(){
-  const g=document.getElementById('calG'), y=2027, m=4, mark=15;
+  const g=document.getElementById('calG'), y=2027, m=5, mark=11;
   ['L','M','M','J','V','S','D'].forEach(d=>g.insertAdjacentHTML('beforeend',`<div class="w">${d}</div>`));
   const first=(new Date(y,m,1).getDay()+6)%7, days=new Date(y,m+1,0).getDate();
   for(let i=0;i<first;i++)g.insertAdjacentHTML('beforeend','<div></div>');
@@ -53,4 +53,4 @@ tick();setInterval(tick,1000);
 
 /* ===== Agendar (Google Calendar) ===== */
 calBtn.href='https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent('Boda de '+CONFIG.novios)
- +'&dates=20270515T210000Z/20270516T060000Z&details='+encodeURIComponent('¡Te esperamos para celebrar juntos!')+'&location='+encodeURIComponent(CONFIG.lugar);
+ +'&dates=20270612T010000Z/20270612T100000Z&details='+encodeURIComponent('¡Te esperamos para celebrar juntos!')+'&location='+encodeURIComponent(CONFIG.lugar);

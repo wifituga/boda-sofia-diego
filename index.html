@@ -25,7 +25,7 @@
       <span class="kicker">Nos casamos</span>
       <p>Sofía <em>&amp;</em> Diego</p>
       <span class="letter-rule"></span>
-      <time datetime="2027-05-15">15 de mayo de 2027</time>
+      <time datetime="2027-06-11">11 de junio de 2027</time>
     </div>
     <div class="mail-door mail-door-left" aria-hidden="true">
       <span class="mail-door-face"></span><span class="mail-door-lining"></span>
@@ -102,9 +102,9 @@
       <img class="flor-cala" src="img/cala-prensada.webp" width="520" height="520" alt="" decoding="async">
       <div class="hero-copy">
         <p class="kicker">Nos casamos</p>
-        <figure class="hero-photo" id="heroPhoto" hidden></figure>
         <h1 id="titulo" tabindex="-1"><span>Sofía</span> <em>&amp;</em> <span>Diego</span></h1>
-        <time datetime="2027-05-15">Sábado 15 de mayo de 2027</time>
+        <figure class="hero-photo" id="heroPhoto"></figure>
+        <time datetime="2027-06-11">Viernes 11 de junio de 2027</time>
       </div>
     </div>
   </section>
@@ -115,6 +115,10 @@
     </div>
     <h2 id="storyTitle">Y ahora, <em>para siempre.</em></h2>
     <p class="prose">Después de tantos momentos juntos, decidimos dar el paso más bonito de nuestras vidas. Nada nos haría más felices que celebrarlo contigo.</p>
+    <button class="record" id="record" type="button" aria-pressed="false">
+      <span class="record-disc" aria-hidden="true"><span class="record-label"><i></i></span></span>
+      <span class="record-text"><span class="record-kicker">Nuestra canción</span><span class="record-action" id="recordAction">Toca para escucharla</span></span>
+    </button>
     <div class="story-photos" id="galeria" hidden>
       <div id="storyPortrait"></div>
       <div class="gallery" id="gal"></div>
@@ -125,7 +129,7 @@
     <div class="date-layout wrap">
       <div class="date-copy">
         <h2 id="dateTitle">Guarda <em>la fecha.</em></h2>
-        <p class="prose">Sábado 15 de mayo de 2027 <span class="date-hour">· 4:00 p. m.</span></p>
+        <p class="prose">Viernes 11 de junio de 2027 <span class="date-hour">· 8:00 p. m.</span></p>
         <p class="countdown-label">Cada vez falta menos</p>
         <div class="countdown">
           <div><strong id="cdD">--</strong><span>Días</span></div>
@@ -136,7 +140,7 @@
         <a class="btn line" id="calBtn" target="_blank" rel="noopener">Agendar la fecha</a>
       </div>
       <div class="calendar" aria-hidden="true">
-        <div class="cal-head"><span>Mayo</span><span>2027</span></div>
+        <div class="cal-head"><span>Junio</span><span>2027</span></div>
         <div class="cal-grid" id="calG"></div>
       </div>
     </div>
@@ -152,22 +156,22 @@
       <img class="route-rose" id="routeRose" src="img/rosa-itinerario.webp" width="240" height="235" alt="" aria-hidden="true" decoding="async">
       <ol class="route-stops">
         <li class="stop">
-          <time class="stop-time" datetime="16:00">4:00 p. m.</time>
+          <time class="stop-time" datetime="20:00">8:00 p. m.</time>
           <span class="stop-dot" aria-hidden="true"></span>
           <div class="stop-text"><h3>Ceremonia</h3><p>Nos damos el “sí”.</p></div>
         </li>
         <li class="stop">
-          <time class="stop-time" datetime="17:30">5:30 p. m.</time>
+          <time class="stop-time" datetime="21:00">9:00 p. m.</time>
           <span class="stop-dot" aria-hidden="true"></span>
           <div class="stop-text"><h3>Cóctel</h3><p>Brindis y primeros abrazos.</p></div>
         </li>
         <li class="stop">
-          <time class="stop-time" datetime="19:00">7:00 p. m.</time>
+          <time class="stop-time" datetime="22:00">10:00 p. m.</time>
           <span class="stop-dot" aria-hidden="true"></span>
-          <div class="stop-text"><h3>Recepción</h3><p>Cena y nuestro primer baile.</p></div>
+          <div class="stop-text"><h3>Cena</h3><p>Brindis y nuestro primer baile.</p></div>
         </li>
         <li class="stop">
-          <time class="stop-time" datetime="21:00">9:00 p. m.</time>
+          <time class="stop-time" datetime="23:00">11:00 p. m.</time>
           <span class="stop-dot" aria-hidden="true"></span>
           <div class="stop-text"><h3>Fiesta</h3><p>Que nadie se quede sin bailar.</p></div>
         </li>
@@ -182,7 +186,7 @@
         <p class="kicker">Ceremonia y recepción</p>
         <h2 id="lugarTitle">Fundo <em>Pozo Santo</em></h2>
         <p class="venue-place">Pachacámac, Lima</p>
-        <p class="venue-address">Av. Víctor Malásquez</p>
+        <p class="venue-address">Av. Víctor Malásquez 12.3</p>
         <p class="venue-note">Celebraremos al aire libre, en pleno campo.</p>
         <a class="btn line" href="https://maps.app.goo.gl/76194Tj1qc9E568Q7" target="_blank" rel="noopener">Abrir Google Maps <span class="external-arrow" aria-hidden="true"></span></a>
       </div>
@@ -251,7 +255,7 @@
     <div class="rsvp-layout wrap">
       <div class="rsvp-copy">
         <h2 id="rsvpTitle">Confirma tu <em>asistencia.</em></h2>
-        <p>Por favor confírmanos antes del 15 de abril.</p>
+        <p>Por favor confírmanos tu asistencia lo antes posible.</p>
       </div>
       <form class="letter" id="rsvpForm" novalidate>
         <p class="rsvp-for" id="rsvpFor"></p>
@@ -291,7 +295,7 @@
             <figure class="kid" data-kid="diego"><figcaption>Diego</figcaption></figure>
           </div>
           <p class="cover-names">Sofía y Diego</p>
-          <p class="cover-date">15 · 05 · 2027</p>
+          <p class="cover-date">11 · 06 · 2027</p>
         </article>
       </div>
       <div class="moments-nav">

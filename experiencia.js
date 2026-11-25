@@ -13,7 +13,9 @@
   }
 
   const hero = document.getElementById('heroPhoto');
-  loadPhoto(hero, CONFIG.fotoPortada, 'Sofía y Diego', () => { hero.hidden = true; });
+  loadPhoto(hero, CONFIG.fotoPortada, 'Sofía y Diego', () => {
+    hero.innerHTML = '<div class="photo-slot"><span>Su foto</span></div>';
+  });
 
   const venue = document.getElementById('venuePhoto');
   loadPhoto(venue, CONFIG.fotoLugar, 'El Fundo Pozo Santo, en Pachacámac', () => {
@@ -52,31 +54,42 @@
     route.classList.add('is-live');
   }
 
-  /* ---- Canción de los novios ---- */
+  /* ---- Canción de los novios: disco en la página + botón flotante mientras suena ---- */
   const toggle = document.getElementById('musicToggle');
   const audio = document.getElementById('musicAudio');
   const label = document.getElementById('musicLabel');
+  const record = document.getElementById('record');
+  const recordAction = document.getElementById('recordAction');
   const song = CONFIG.cancion;
-  if (toggle && audio && song && song.src) {
-    audio.src = song.src;
-    toggle.hidden = false;
-    const idle = 'Escuchar nuestra canción';
-    label.textContent = idle;
-    function sync() {
-      const on = !audio.paused;
-      toggle.setAttribute('aria-pressed', String(on));
-      toggle.classList.toggle('playing', on);
-      label.textContent = on ? 'Pausar la canción' : idle;
-    }
-    toggle.addEventListener('click', async () => {
-      if (audio.paused) {
-        try { await audio.play(); } catch { label.textContent = 'No se pudo reproducir'; }
-      } else {
-        audio.pause();
-      }
-    });
-    audio.addEventListener('play', sync);
-    audio.addEventListener('pause', sync);
-    audio.addEventListener('error', () => { toggle.hidden = true; });
+  const ready = Boolean(song && song.src);
+  if (ready) audio.src = song.src;
+  if (song && song.titulo) record.querySelector('.record-kicker').textContent = song.titulo;
+
+  function sync() {
+    const on = !audio.paused;
+    record.setAttribute('aria-pressed', String(on));
+    record.classList.toggle('playing', on);
+    toggle.setAttribute('aria-pressed', String(on));
+    toggle.classList.toggle('playing', on);
+    recordAction.textContent = on ? 'Toca para pausar' : 'Toca para escucharla';
+    label.textContent = on ? 'Pausar la canción' : 'Escuchar nuestra canción';
+    if (on) toggle.hidden = false;
   }
+  async function playPause() {
+    if (!ready) {
+      recordAction.textContent = 'Muy pronto podrás escucharla aquí';
+      record.classList.add('spin-once');
+      setTimeout(() => record.classList.remove('spin-once'), 1200);
+      return;
+    }
+    if (audio.paused) {
+      try { await audio.play(); } catch { recordAction.textContent = 'No se pudo reproducir'; }
+    } else {
+      audio.pause();
+    }
+  }
+  record.addEventListener('click', playPause);
+  toggle.addEventListener('click', playPause);
+  audio.addEventListener('play', sync);
+  audio.addEventListener('pause', sync);
 })();

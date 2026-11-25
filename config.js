@@ -1,8 +1,8 @@
 /* ===== Configuración de la invitación (editar aquí) ===== */
 const CONFIG = {
   novios: "Sofía & Diego",
-  fecha: new Date("2027-05-15T16:00:00-05:00"),
-  lugar: "Fundo Pozo Santo, Av. Víctor Malásquez, Pachacámac, Lima",
+  fecha: new Date("2027-06-11T20:00:00-05:00"),
+  lugar: "Fundo Pozo Santo, Av. Víctor Malásquez 12.3, Pachacámac, Lima",
 
   /* URL de la app web de Google Apps Script (ver google-apps-script/LEEME.md).
      Mientras esté vacía, la confirmación funciona en modo demostración y no guarda nada. */

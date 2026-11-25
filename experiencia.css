@@ -104,3 +104,40 @@ body.locked .music-toggle { display: none; }
 .gifts-page .gift-list { margin: 30px auto 0; }
 .gift-transfer-title { margin-top: 34px; font: 500 30px/1 var(--serif); }
 .gifts-page .back-btn { margin-top: 34px; }
+
+/* ---- Foto de portada: entre los nombres y la fecha ---- */
+.hero-copy h1 { margin-bottom: 0; }
+.hero-photo { margin: clamp(14px, 2vw, 22px) auto clamp(4px, 1vw, 10px); position: relative; }
+.hero-photo .photo-slot { inset: 5px; border-radius: 999px 999px 3px 3px; font-size: 9.5px; }
+
+/* ---- Disco «Nuestra canción» ---- */
+.record {
+  display: inline-flex; align-items: center; gap: 16px; margin: 30px auto 0; padding: 10px 22px 10px 10px;
+  border: 1px solid var(--rule); border-radius: 999px; background: var(--paper); color: var(--ink); cursor: pointer;
+  box-shadow: 0 12px 26px -18px #3b102088; text-align: left;
+}
+.record:hover { border-color: #c7a77e; }
+.record-disc {
+  position: relative; width: 74px; height: 74px; border-radius: 50%; flex: none;
+  background:
+    repeating-radial-gradient(circle, #1b1416 0 1.5px, #2a2023 1.5px 3px),
+    #1b1416;
+  box-shadow: inset 0 0 0 2px #0f0b0c, 0 4px 10px #00000040;
+  display: grid; place-items: center;
+}
+.record-disc::after {
+  content: ""; position: absolute; inset: 0; border-radius: 50%;
+  background: conic-gradient(from 30deg, transparent 0 12%, #ffffff22 16%, transparent 22% 62%, #ffffff18 66%, transparent 72%);
+}
+.record-label { width: 30px; height: 30px; border-radius: 50%; background: var(--wine); display: grid; place-items: center; border: 2px solid #c7a77e; }
+.record-label i { width: 9px; height: 10px; background: #f1dcd2; clip-path: polygon(0 0, 100% 50%, 0 100%); margin-left: 2px; }
+.record.playing .record-label i { width: 8px; height: 9px; clip-path: none; margin: 0;
+  background: linear-gradient(90deg, #f1dcd2 0 35%, transparent 35% 65%, #f1dcd2 65%); }
+.record-text { display: flex; flex-direction: column; gap: 4px; }
+.record-kicker { color: var(--wine); font: 500 12px/1.2 var(--sans); letter-spacing: .2em; text-transform: uppercase; }
+.record-action { color: var(--muted); font: italic 500 18px/1.2 var(--serif); }
+@media (prefers-reduced-motion: no-preference) {
+  .record.playing .record-disc { animation: spin 3.2s linear infinite; }
+  .record.spin-once .record-disc { animation: spin 1.2s ease-out 1; }
+}
+@keyframes spin { to { transform: rotate(360deg); } }

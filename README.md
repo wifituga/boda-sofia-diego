@@ -25,7 +25,7 @@ Invitación de boda en una sola página, con HTML, CSS y JavaScript nativos. Ada
 - **Regalos**: textos e ideas en `regalos.html`; datos bancarios en `config.js` (`transferencia`).
 - **Itinerario**: horarios en `index.html` (`.route-stops`); la rosa está en `img/rosa-itinerario.webp` y su movimiento en `experiencia.js`.
 
-> La fecha, los horarios y los datos bancarios siguen siendo de demostración.
+> Fecha, horarios y dirección tomados de la invitación anterior de Canva (11 de junio de 2027). Faltan la cuenta bancaria, el MP3 y las fotos.
 
 ## Publicar con GitHub Pages
 Settings → Pages → *Deploy from a branch* → rama `main`, carpeta `/ (root)`.
