@@ -10,7 +10,7 @@ const CONFIG = {
 
   /* Canción de los novios: copiar el MP3 a musica/ y escribir aquí su nombre.
      Mientras sea null, el botón de música no aparece. */
-  cancion: null, // { src: "musica/cancion.mp3", titulo: "Nombre de la canción" }
+  cancion: { src: "musica/cancion.mp3" }, // subir el archivo con ese nombre a la carpeta musica/
 
   /* Foto pequeña de la portada. Si el archivo no existe, la portada se muestra sin foto. */
   fotoPortada: "img/fotos/portada.jpg",

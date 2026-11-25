@@ -61,7 +61,7 @@
   const record = document.getElementById('record');
   const recordAction = document.getElementById('recordAction');
   const song = CONFIG.cancion;
-  const ready = Boolean(song && song.src);
+  let ready = Boolean(song && song.src);
   if (ready) audio.src = song.src;
   if (song && song.titulo) record.querySelector('.record-kicker').textContent = song.titulo;
 
@@ -83,7 +83,7 @@
       return;
     }
     if (audio.paused) {
-      try { await audio.play(); } catch { recordAction.textContent = 'No se pudo reproducir'; }
+      try { await audio.play(); } catch { ready = false; recordAction.textContent = 'Muy pronto podrás escucharla aquí'; }
     } else {
       audio.pause();
     }
@@ -92,4 +92,5 @@
   toggle.addEventListener('click', playPause);
   audio.addEventListener('play', sync);
   audio.addEventListener('pause', sync);
+  audio.addEventListener('error', () => { ready = false; toggle.hidden = true; });
 })();
