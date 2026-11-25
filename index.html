@@ -10,8 +10,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=3">
-<link rel="stylesheet" href="apertura.css?v=6">
+<link rel="stylesheet" href="styles.css?v=4">
+<link rel="stylesheet" href="apertura.css?v=7">
 <link rel="stylesheet" href="interior-motion.css?v=jardin">
 <link rel="stylesheet" href="papeleria-cierre.css?v=jardin">
 <link rel="stylesheet" href="momentos.css?v=3">
@@ -59,6 +59,8 @@
   document.body.classList.add('locked');
 
   const seal = document.getElementById('seal');
+  // En iPhone, arrastrar sobre el sobre movía la página de atrás: se bloquea mientras está cerrado.
+  envelope.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
   const scene = envelope.querySelector('.mail-scene');
   const letter = envelope.querySelector('.mail-letter');
 
@@ -121,10 +123,17 @@
     const copy = copyCover();
     const sheet = document.querySelector('main > .hero .letter-sheet');
     const source = copy.getBoundingClientRect();
-    const target = sheet.getBoundingClientRect();
-    letter.style.setProperty('--flight-x', (target.left + target.width / 2 - source.left - source.width / 2) + 'px');
-    letter.style.setProperty('--flight-y', (target.top + target.height / 2 - source.top - source.height / 2) + 'px');
-    letter.style.setProperty('--flight-s', (target.width / source.width).toFixed(4));
+    // El destino se mide en cada cuadro: si el iPhone mueve la página o la barra del navegador
+    // durante la apertura, la carta sigue a la portada real y encaja exacta.
+    function aim() {
+      if (scrollY !== 0) toTop();
+      const target = sheet.getBoundingClientRect();
+      letter.style.setProperty('--flight-x', (target.left + target.width / 2 - source.left - source.width / 2) + 'px');
+      letter.style.setProperty('--flight-y', (target.top + target.height / 2 - source.top - source.height / 2) + 'px');
+      letter.style.setProperty('--flight-s', (target.width / source.width).toFixed(4));
+      if (!envelope.hidden) requestAnimationFrame(aim);
+    }
+    aim();
     // Acercamiento: la carta se agranda hacia el centro de la pantalla antes de volver a su sitio.
     const zoom = Math.min(1.18, (innerWidth * .94) / source.width);
     letter.style.setProperty('--zoom-s', zoom.toFixed(4));
