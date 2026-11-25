@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css?v=2">
-<link rel="stylesheet" href="apertura.css?v=2">
+<link rel="stylesheet" href="apertura.css?v=5">
 <link rel="stylesheet" href="interior-motion.css?v=jardin">
 <link rel="stylesheet" href="papeleria-cierre.css?v=jardin">
 <link rel="stylesheet" href="momentos.css?v=3">
@@ -48,6 +48,10 @@
 /* El sobre se prepara antes de que el navegador dibuje la portada. */
 (() => {
   if (location.hash) return;
+  // El navegador no debe devolver al invitado a donde estaba la última vez: la carta se abre siempre en el inicio.
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  const toTop = () => window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  toTop();
   const envelope = document.getElementById('envelope');
   const invitation = document.querySelector('main');
   envelope.hidden = false;
@@ -55,12 +59,45 @@
   document.body.classList.add('locked');
 
   const seal = document.getElementById('seal');
+  const scene = envelope.querySelector('.mail-scene');
+  const letter = envelope.querySelector('.mail-letter');
+
+  // El sobre toma la misma proporción que la tarjeta de la portada, para que dentro haya una copia exacta.
+  function shapeEnvelope() {
+    const sheet = document.querySelector('main > .hero .letter-sheet');
+    if (!sheet || envelope.classList.contains('is-opening')) return;
+    const ratio = Math.min(1.25, Math.max(.6, sheet.offsetWidth / sheet.offsetHeight));
+    scene.style.aspectRatio = ratio.toFixed(4);
+  }
+  document.addEventListener('DOMContentLoaded', shapeEnvelope, { once: true });
+  addEventListener('resize', shapeEnvelope);
+
+  // Copia la portada dentro del sobre, a escala.
+  function copyCover() {
+    const sheet = document.querySelector('main > .hero .letter-sheet');
+    const copy = sheet.cloneNode(true);
+    copy.querySelectorAll('[id]').forEach(n => n.removeAttribute('id'));
+    // Envuelta en .hero para que tenga exactamente los mismos estilos que la portada.
+    const host = document.createElement('div');
+    host.className = 'hero cover-copy';
+    host.setAttribute('aria-hidden', 'true');
+    host.append(copy);
+    const w = sheet.offsetWidth, h = sheet.offsetHeight;
+    const s = Math.min(letter.offsetWidth / w, letter.offsetHeight / h);
+    host.style.width = w + 'px';
+    host.style.height = h + 'px';
+    copy.style.minHeight = h + 'px';
+    host.style.transform = `translate(-50%, -50%) scale(${s})`;
+    letter.replaceChildren(host);
+    return host;
+  }
 
   function showInvitation() {
     if (envelope.hidden) return;
     envelope.hidden = true;
     invitation.inert = false;
     document.body.classList.remove('locked', 'opening-ceremony');
+    toTop();
     document.getElementById('titulo').focus({ preventScroll: true });
   }
 
@@ -70,23 +107,26 @@
       document.addEventListener('DOMContentLoaded', openLetter, { once: true });
       return;
     }
+    toTop();
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
       showInvitation();
       return;
     }
-    // La carta viaja hasta ocupar el lugar de la tarjeta de la portada, sin cortes.
-    const letter = envelope.querySelector('.mail-letter');
-    const scene = envelope.querySelector('.mail-scene');
-    const sheet = document.querySelector('.hero .letter-sheet') || title;
+    shapeEnvelope();
     // Congela el vaivén del sobre en su posición actual para que no salte.
     const sway = getComputedStyle(scene).transform;
     if (sway && sway !== 'none') scene.style.setProperty('--freeze', sway);
-    const source = letter.getBoundingClientRect();
+    const copy = copyCover();
+    const sheet = document.querySelector('main > .hero .letter-sheet');
+    const source = copy.getBoundingClientRect();
     const target = sheet.getBoundingClientRect();
     letter.style.setProperty('--flight-x', (target.left + target.width / 2 - source.left - source.width / 2) + 'px');
     letter.style.setProperty('--flight-y', (target.top + target.height / 2 - source.top - source.height / 2) + 'px');
-    letter.style.setProperty('--flight-sx', (target.width / source.width).toFixed(4));
-    letter.style.setProperty('--flight-sy', (target.height / source.height).toFixed(4));
+    letter.style.setProperty('--flight-s', (target.width / source.width).toFixed(4));
+    // Acercamiento: la carta se agranda hacia el centro de la pantalla antes de volver a su sitio.
+    const zoom = Math.min(1.18, (innerWidth * .94) / source.width);
+    letter.style.setProperty('--zoom-s', zoom.toFixed(4));
+    letter.style.setProperty('--zoom-y', (innerHeight / 2 - (source.top + source.height / 2)) + 'px');
     seal.disabled = true;
     document.body.classList.add('opening-ceremony');
     envelope.classList.add('is-opening');
