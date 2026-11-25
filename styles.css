@@ -170,9 +170,9 @@ button, input, select, textarea { font: inherit; }
   background-image: url("img/cala-prensada.webp");
   background-position: bottom left;
 }
-.mail-letter .kicker { font-size: clamp(9px, 3.5cqw, 12px); }
-.mail-letter p { font: 500 clamp(27px, 12.9cqw, 62px)/.99 var(--serif); letter-spacing: -.05em; }
-.mail-letter p em { font-weight: 400; font-size: .72em; }
+.mail-letter > .kicker { font-size: clamp(9px, 3.5cqw, 12px); }
+.mail-letter > p { font: 500 clamp(27px, 12.9cqw, 62px)/.99 var(--serif); letter-spacing: -.05em; }
+.mail-letter > p em { font-weight: 400; font-size: .72em; }
 .mail-letter time { color: var(--muted); font-size: clamp(10px, 3.4cqw, 13px); }
 .mail-door {
   position: absolute;

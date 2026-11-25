@@ -10,12 +10,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=2">
-<link rel="stylesheet" href="apertura.css?v=5">
+<link rel="stylesheet" href="styles.css?v=3">
+<link rel="stylesheet" href="apertura.css?v=6">
 <link rel="stylesheet" href="interior-motion.css?v=jardin">
 <link rel="stylesheet" href="papeleria-cierre.css?v=jardin">
 <link rel="stylesheet" href="momentos.css?v=3">
-<link rel="stylesheet" href="experiencia.css?v=6">
+<link rel="stylesheet" href="experiencia.css?v=7">
 </head>
 <body>
 
@@ -70,7 +70,9 @@
     scene.style.aspectRatio = ratio.toFixed(4);
   }
   document.addEventListener('DOMContentLoaded', shapeEnvelope, { once: true });
-  addEventListener('resize', shapeEnvelope);
+  addEventListener('resize', () => { shapeEnvelope(); if (letter.firstElementChild?.classList.contains('cover-copy')) copyCover(); });
+  // La carta dentro del sobre es la misma portada desde el primer momento (y se vuelve a copiar al abrir).
+  addEventListener('load', () => { shapeEnvelope(); copyCover(); }, { once: true });
 
   // Copia la portada dentro del sobre, a escala.
   function copyCover() {
