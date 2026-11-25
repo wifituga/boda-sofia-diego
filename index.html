@@ -11,6 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css?v=2">
+<link rel="stylesheet" href="apertura.css?v=2">
 <link rel="stylesheet" href="interior-motion.css?v=jardin">
 <link rel="stylesheet" href="papeleria-cierre.css?v=jardin">
 <link rel="stylesheet" href="momentos.css?v=3">
@@ -39,6 +40,7 @@
       <span class="mail-seal" aria-hidden="true"><img src="img/lacre-sd.webp" width="288" height="288" alt="" fetchpriority="high"></span>
     </button>
   </div>
+  <p class="intro-hint" aria-hidden="true">Toca el sello para abrir</p>
 </aside>
 
 <main class="page">
@@ -72,12 +74,19 @@
       showInvitation();
       return;
     }
-    // La carta vuela hasta los nombres, también cuando cambia la portada en móvil.
+    // La carta viaja hasta ocupar el lugar de la tarjeta de la portada, sin cortes.
     const letter = envelope.querySelector('.mail-letter');
+    const scene = envelope.querySelector('.mail-scene');
+    const sheet = document.querySelector('.hero .letter-sheet') || title;
+    // Congela el vaivén del sobre en su posición actual para que no salte.
+    const sway = getComputedStyle(scene).transform;
+    if (sway && sway !== 'none') scene.style.setProperty('--freeze', sway);
     const source = letter.getBoundingClientRect();
-    const target = title.getBoundingClientRect();
+    const target = sheet.getBoundingClientRect();
     letter.style.setProperty('--flight-x', (target.left + target.width / 2 - source.left - source.width / 2) + 'px');
     letter.style.setProperty('--flight-y', (target.top + target.height / 2 - source.top - source.height / 2) + 'px');
+    letter.style.setProperty('--flight-sx', (target.width / source.width).toFixed(4));
+    letter.style.setProperty('--flight-sy', (target.height / source.height).toFixed(4));
     seal.disabled = true;
     document.body.classList.add('opening-ceremony');
     envelope.classList.add('is-opening');
