@@ -1,0 +1,106 @@
+/* ===== Ajustes pedidos por los novios ===== */
+
+/* ---- Portada: "Nos casamos" más visible y foto pequeña opcional ---- */
+.hero-copy .kicker { font-size: clamp(13px, 1.5vw, 17px); letter-spacing: .3em; color: var(--wine); }
+.hero-copy .kicker::before, .hero-copy .kicker::after { width: clamp(22px, 4vw, 52px); }
+.hero-photo {
+  width: clamp(96px, 26vw, 150px); aspect-ratio: 4 / 5; margin: clamp(16px, 2vw, 24px) auto 0;
+  padding: 5px; border: 1px solid #c7a77e; border-radius: 999px 999px 6px 6px; background: var(--paper);
+  box-shadow: 0 10px 22px -14px #4d001166;
+}
+.hero-photo img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 999px 999px 3px 3px; }
+
+/* ---- Itinerario: una rosa recorre la línea ---- */
+.itinerary {
+  /* anula la tarjeta anterior */
+  align-self: auto; padding: clamp(66px, 10vw, 126px) 0; background: var(--paper);
+  border: 0; border-block: 1px solid var(--rule); box-shadow: none; text-align: center;
+}
+.itinerary::before { display: none; }
+.route { position: relative; width: min(620px, calc(100% - 2 * var(--gutter))); margin: clamp(30px, 5vw, 56px) auto 0; }
+.route-stops { list-style: none; margin: 0; padding: 0; }
+.stop {
+  display: grid; grid-template-columns: minmax(0, 1fr) 64px minmax(0, 1fr); align-items: center;
+  min-height: clamp(150px, 26vw, 200px);
+}
+.stop-time { justify-self: end; padding-right: 6px; color: var(--wine); font: 500 clamp(22px, 5.4vw, 30px)/1 var(--serif); white-space: nowrap; }
+.stop-dot {
+  justify-self: center; width: 11px; height: 11px; border-radius: 50%; position: relative; z-index: 1;
+  background: var(--paper); border: 1px solid #b49570; transition: background-color .4s, border-color .4s, transform .4s;
+}
+.stop-text { text-align: left; padding-left: 6px; }
+.stop-text h3 { color: var(--ink); font: 600 clamp(24px, 6vw, 32px)/1.05 var(--serif); }
+.stop-text p { margin-top: 4px; color: var(--muted); font: italic 500 clamp(16px, 4vw, 19px)/1.3 var(--serif); }
+.route-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; transform: translateX(-50%); background: linear-gradient(transparent, #cdb79a 8%, #cdb79a 92%, transparent); }
+.route-fill { position: absolute; left: -.5px; width: 2px; height: 0; background: var(--wine); }
+.route-rose {
+  position: absolute; left: 50%; top: 0; z-index: 2; width: clamp(54px, 13vw, 70px); height: auto;
+  filter: drop-shadow(0 6px 7px #3b102055); will-change: transform; pointer-events: none;
+}
+.route:not(.is-live) .route-rose { opacity: 0; }
+.stop .stop-time, .stop .stop-text { opacity: .38; transition: opacity .5s; }
+.route:not(.is-live) .stop .stop-time, .route:not(.is-live) .stop .stop-text, .stop.reached .stop-time, .stop.reached .stop-text { opacity: 1; }
+.stop.reached .stop-dot { background: var(--wine); border-color: var(--wine); transform: scale(1.15); }
+@media (prefers-reduced-motion: reduce) { .stop .stop-time, .stop .stop-text { opacity: 1; } }
+
+/* ---- Lugar: más alto, con foto del campo ---- */
+.venue { display: block; min-height: 0; padding: clamp(40px, 7vw, 84px) 0; }
+.venue + .dress { padding-top: clamp(66px, 10vw, 126px); }
+.venue-layout { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(20px, 4vw, 48px); align-items: stretch; }
+.venue-photo { position: relative; margin: 0; min-height: 320px; padding: 8px; background: #f6ecdf; border: 1px solid #c09b78; }
+.venue-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.venue-photo .photo-slot { inset: 8px; }
+.venue-content { align-self: center; }
+.venue-place { font: 500 clamp(22px, 2.6vw, 28px)/1.2 var(--serif); color: var(--paper); letter-spacing: .02em; }
+.venue-address { color: var(--on-wine); }
+.venue-note { color: var(--on-wine); font: italic 500 19px/1.35 var(--serif); }
+.venue-content > p.venue-address, .venue-content > p.venue-note { margin-top: 8px; }
+@media (max-width: 760px) {
+  .venue-layout { grid-template-columns: minmax(0, 1fr); }
+  .venue-photo { min-height: 0; aspect-ratio: 4 / 3; }
+}
+
+/* ---- Confirmación por pases ---- */
+.rsvp-for { margin-bottom: 14px; color: var(--muted); font-size: 15px; }
+.rsvp-for strong { color: var(--wine); font: 600 21px/1.2 var(--serif); }
+.rsvp-demo { margin-bottom: 14px; padding: 9px 12px; background: var(--sand); color: var(--muted); font-size: 13px; }
+.pass { margin: 0 0 14px; padding: 14px 14px 4px; border: 1px solid var(--rule); min-width: 0; }
+.pass legend { padding: 0 6px; color: var(--wine); font: 500 11px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; }
+.pass-extra { border-style: dashed; }
+.pass-choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-bottom: 12px; }
+.pass-fields .field { margin-bottom: 12px; }
+.pass-error { margin: -4px 0 10px; color: #9a2a1c; font-size: 13px; }
+.rsvp-closed { text-align: center; font: 500 20px/1.4 var(--serif); }
+.rsvp-status { color: var(--muted); }
+
+/* ---- Canciones ---- */
+.songs { text-align: center; }
+.songs .prose { max-width: 520px; margin: 16px auto 0; }
+.song-form { max-width: 440px; margin: 28px auto 0; text-align: left; padding: clamp(18px, 4.5vw, 30px); background: var(--paper); border: 1px solid var(--rule); }
+.song-form .btn { width: 100%; }
+
+/* ---- Botón de la canción ---- */
+.music-toggle {
+  position: fixed; right: max(14px, env(safe-area-inset-right)); bottom: max(14px, env(safe-area-inset-bottom)); z-index: 40;
+  display: flex; align-items: center; gap: 10px; min-height: 46px; padding: 8px 16px 8px 12px;
+  border: 1px solid #c7a77e; border-radius: 999px; background: #fffcf7ee; color: var(--wine);
+  font: 500 12.5px/1 var(--sans); cursor: pointer; box-shadow: 0 10px 24px -12px #3b102077; backdrop-filter: blur(6px);
+}
+body.locked .music-toggle { display: none; }
+.music-icon { display: flex; align-items: flex-end; gap: 2px; height: 14px; }
+.music-icon i { width: 3px; height: 40%; background: currentColor; border-radius: 1px; }
+.music-icon i:nth-child(2) { height: 100%; } .music-icon i:nth-child(3) { height: 65%; }
+.music-toggle.playing .music-icon i { animation: bars .9s ease-in-out infinite alternate; }
+.music-toggle.playing .music-icon i:nth-child(2) { animation-delay: -.3s; }
+.music-toggle.playing .music-icon i:nth-child(3) { animation-delay: -.6s; }
+@keyframes bars { from { height: 25%; } to { height: 100%; } }
+@media (max-width: 520px) { .music-label { max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } }
+
+/* ---- Página de regalos ---- */
+.gifts-page .back { padding-top: 20px; }
+.gifts-page .back a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--wine); font-size: 14px; text-decoration: none; }
+.gifts-page h1 { font: 500 clamp(46px, 5.4vw, 76px)/.98 var(--serif); letter-spacing: -.047em; margin-top: 14px; text-wrap: balance; }
+.gifts-page h1 em { color: var(--wine); font-weight: 400; }
+.gifts-page .gift-list { margin: 30px auto 0; }
+.gift-transfer-title { margin-top: 34px; font: 500 30px/1 var(--serif); }
+.gifts-page .back-btn { margin-top: 34px; }

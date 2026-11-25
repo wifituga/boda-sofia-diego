@@ -3,36 +3,33 @@
 Invitación de boda en una sola página, con HTML, CSS y JavaScript nativos. Adaptada a móvil y escritorio.
 
 ## Secciones
-- Tarjeta de dos tapas en relieve con lacre marfil. Tocar el sobre o activar el lacre con el teclado abre la carta. Con movimiento reducido, la invitación se abre de inmediato.
-- Carta interior con una cascada de orquídeas y una cala sobre el papel, seguida de los accesos a la confirmación y al lugar
+- Tarjeta de dos tapas en relieve con lacre. Tocar el sobre o activar el lacre con el teclado abre la carta. Con movimiento reducido, la invitación se abre de inmediato.
+- Portada con «Nos casamos», una foto pequeña opcional y los nombres
 - Calendario, cuenta regresiva y enlace para agendar en Google Calendar
-- Itinerario con horarios visibles desde el inicio
-- Lugar (Fundo Pozo Santo) con botón a Google Maps
-- Guía de vestimenta con pestañas «Ellos» y «Ellas», fotografías ampliables y paleta de colores
-- Ideas de regalo dentro de la carta, con acceso directo desde el menú y desde `#regalos`
-- Confirmación de asistencia (abre WhatsApp con la respuesta preparada)
-- Retrato y galería opcionales en «Nuestra historia»
+- Itinerario con una rosa que recorre la línea al bajar
+- Lugar (Fundo Pozo Santo, Pachacámac) con foto del campo y botón a Google Maps
+- Guía de vestimenta: colores para invitados (terracota, verde salvia, azul marino); el granate es del cortejo y el blanco de la novia
+- Confirmación por invitación con pases: cada persona confirma con nombre, DNI y asistencia. Se guarda en Google Sheets.
+- Regalos en una página aparte (`regalos.html`)
+- «Nuestros momentos»: carrusel de fotos con la tarjeta «Estos niños se casaron»
+- Recomendación de canciones para el baile (también en Google Sheets)
+- Botón flotante con la canción de los novios
 
 ## Cómo editar
-La estructura y los textos están en `index.html`, junto con la interacción inicial del sobre. Las animaciones de la apertura están en `styles.css` y los datos y formularios en `invitacion.js`. El estilo de la confirmación, los regalos y la despedida está en `papeleria-cierre.css`. Los detalles que se animan al recorrer la carta están en `interior-motion.css` e `interior-motion.js`.
+- **Datos generales**: `config.js` (fecha, lugar, URL de la hoja de Google, canción, fotos de portada y del lugar, datos para transferencia). Los textos de fecha y horarios están en `index.html`.
+- **Confirmaciones y canciones**: ver `google-apps-script/LEEME.md`. Mientras `hojaUrl` esté vacío, el formulario funciona en modo demostración y no guarda nada. Cada invitación tiene su link (`…/?i=CODIGO`), que se genera desde la hoja.
+- **Canción**: copiar el MP3 a `musica/` y escribir `cancion: { src: "musica/archivo.mp3" }` en `config.js`.
+- **Fotos de portada y del lugar**: guardarlas como `img/fotos/portada.jpg` e `img/fotos/fundo.jpg`, o cambiar las rutas en `config.js`.
+- **Foto en «Y ahora, para siempre»** (opcional): `FOTOS` en `invitacion.js`.
+- **Nuestros momentos**: `MOMENTOS` en `momentos.js`. En `ninos` van las fotos de Sofía y Diego de niños; en `fotos`, el resto del carrusel. Mientras un archivo no exista, se muestra «Foto pendiente».
+- **Regalos**: textos e ideas en `regalos.html`; datos bancarios en `config.js` (`transferencia`).
+- **Itinerario**: horarios en `index.html` (`.route-stops`); la rosa está en `img/rosa-itinerario.webp` y su movimiento en `experiencia.js`.
 
-- **Datos generales**: editar `CONFIG` en `invitacion.js` y actualizar los textos de fecha, ubicación y horarios de `index.html`. El calendario mensual y el enlace de Google Calendar están en `invitacion.js`.
-- **Fotos de la pareja**: copiar las imágenes a `img/fotos/` y listarlas en `FOTOS` de `invitacion.js`. La primera es el retrato principal y las demás forman la galería. Un archivo vertical funciona bien con el recorte 4:5.
-  ```js
-  const FOTOS = [
-    { src: "img/fotos/1.jpg", alt: "Descripción de la foto", texto: "Cómo empezó" },
-  ];
-  ```
-  El pie `texto` es opcional. Si `FOTOS` está vacío, la sección muestra la historia sin un espacio vacío para imágenes.
-- **Nuestros momentos** (galería al final): editar `MOMENTOS` en `momentos.js`. En `ninos` van las fotos de Sofía y Diego de niños para la primera tarjeta («Estos niños se casaron»), y en `fotos` el resto del carrusel con su pie de foto. Mientras un archivo no exista en `img/fotos/`, se muestra un espacio «Foto pendiente».
-- **Regalos.** La lista se despliega en `#giftList` de `index.html`, incluso sin JavaScript. Las tres ideas son ilustrativas. Cuando los novios confirmen sus regalos, reemplazar las entradas de `.gift-ideas` y actualizar el aviso de `.gift-intro`. La fotografía está en `img/regalos-editorial.webp`.
-- **Transferencias.** `CONFIG.transferencia` en `invitacion.js` controla la información pública. Con `null` el apartado permanece oculto. Para habilitarlo, establecer un objeto con los campos de texto `banco`, `titular` y `cuenta` confirmados por los novios. El campo de texto `cci` es opcional. Conservar ceros iniciales en los números de cuenta.
-
-> La fecha, los horarios y el número de WhatsApp siguen siendo datos de demostración.
+> La fecha, los horarios y los datos bancarios siguen siendo de demostración.
 
 ## Publicar con GitHub Pages
 Settings → Pages → *Deploy from a branch* → rama `main`, carpeta `/ (root)`.
 La invitación queda en `https://<usuario>.github.io/<repo>/`.
 
 ## Imágenes editoriales
-La cubierta en relieve y el monograma de lacre se encuentran en `img/cubierta-relieve.webp` e `img/lacre-sd.webp`. Las flores que enmarcan la carta durante la apertura y en la portada se encuentran en `img/cascada-orquideas*.webp` e `img/cala-prensada.webp`. La rama de olivo y la orquídea que aparecen en las secciones interiores están en `img/olivo-de-la-carta.webp` e `img/orquidea-suelta.webp`. Las referencias de vestimenta están en `img/traje-invitado*.webp` e `img/vestido-invitada*.webp`. Sus pestañas y la vista ampliada se controlan desde `vestimenta.js`. Los retratos de los novios se configuran por separado en `FOTOS`.
+La cubierta en relieve y el monograma de lacre se encuentran en `img/cubierta-relieve.webp` e `img/lacre-sd.webp`. Las flores que enmarcan la carta durante la apertura y en la portada se encuentran en `img/cascada-orquideas*.webp` e `img/cala-prensada.webp`. La rama de olivo y la orquídea que aparecen en las secciones interiores están en `img/olivo-de-la-carta.webp` e `img/orquidea-suelta.webp`. Las referencias de vestimenta están en `img/traje-invitado*.webp` e `img/vestido-invitada*.webp`. Sus pestañas y la vista ampliada se controlan desde `vestimenta.js`. Los retratos de los novios se configuran por separado en `FOTOS`. Las referencias de vestimenta se recolorearon a terracota (vestido) y verde salvia (corbata).
