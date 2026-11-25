@@ -1,6 +1,6 @@
 # Confirmaciones en Google Sheets
 
-La invitación es una sola página para todos los invitados. Quien confirma escribe sus datos y agrega una casilla por cada persona que viene con él (pareja, acompañante, hijos). Cada casilla lleva nombre, DNI o carné de extranjería y si asiste. Las respuestas llegan solas a una hoja de Google, que se descarga como Excel con **Archivo → Descargar → Microsoft Excel**.
+La invitación es una sola página para todos los invitados. Quien confirma escribe sus datos y agrega una casilla por cada persona que viene con él (pareja, acompañante, hijos). Cada casilla lleva nombre, DNI o carné de extranjería y si asiste (el DNI se pide a todos). Las respuestas llegan solas a una hoja de Google, que se descarga como Excel con **Archivo → Descargar → Microsoft Excel**.
 
 ## Instalación (una sola vez, unos 10 minutos)
 

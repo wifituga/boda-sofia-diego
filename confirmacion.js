@@ -34,13 +34,10 @@
       <legend class="pass-name"></legend>
       <button type="button" class="pass-remove" aria-label="Quitar esta persona">Quitar</button>
       <div class="field"><label for="${id}-n">Nombre y apellido</label><input id="${id}-n" class="pass-full" autocomplete="off" autocapitalize="words"></div>
+      <div class="field"><label for="${id}-d">DNI o carné de extranjería</label><input id="${id}-d" class="pass-dni" inputmode="numeric" autocomplete="off" maxlength="12" placeholder="8 dígitos"></div>
       <div class="pass-choices">
         <label class="pass-choice"><input type="radio" name="${id}" value="si"><span>Asistirá</span></label>
         <label class="pass-choice"><input type="radio" name="${id}" value="no"><span>No podrá ir</span></label>
-      </div>
-      <div class="pass-fields" hidden>
-        <div class="field"><label for="${id}-d">DNI o carné de extranjería</label><input id="${id}-d" class="pass-dni" inputmode="numeric" autocomplete="off" maxlength="12" placeholder="8 dígitos"></div>
-        <p class="pass-why">Lo necesitamos para la lista de ingreso.</p>
       </div>
       <p class="pass-error" hidden></p>`;
     const clearError = () => {
@@ -51,7 +48,6 @@
     card.addEventListener('change', event => {
       if (event.target.type !== 'radio') return;
       const yes = event.target.value === 'si';
-      card.querySelector('.pass-fields').hidden = !yes;
       card.classList.toggle('is-yes', yes);
       card.classList.toggle('is-no', !yes);
       clearError();
@@ -139,13 +135,13 @@
       const dni = card.querySelector('.pass-dni').value.replace(/[\s.-]+/g, '').toUpperCase();
       let msg = '';
       if (nombre.split(' ').length < 2) msg = 'Escribe nombre y apellido.';
+      else if (!/^(\d{8}|[A-Z0-9]{9,12})$/.test(dni)) msg = 'El DNI tiene 8 dígitos. Si es carné de extranjería, escríbelo completo.';
       else if (!choice) msg = 'Indica si asistirá.';
-      else if (choice === 'si' && !/^(\d{8}|[A-Z0-9]{9,12})$/.test(dni)) msg = 'El DNI tiene 8 dígitos. Si es carné de extranjería, escríbelo completo.';
       err.textContent = msg;
       err.hidden = !msg;
       card.classList.toggle('has-error', Boolean(msg));
       if (msg && !firstBad) firstBad = card;
-      people.push({ nombre, dni: choice === 'si' ? dni : '', asiste: choice === 'si' });
+      people.push({ nombre, dni, asiste: choice === 'si' });
     }
     if (firstBad) {
       firstBad.scrollIntoView({ behavior: 'smooth', block: 'center' });

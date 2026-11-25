@@ -55,7 +55,7 @@ function confirmar_(data) {
     .map(p => ({ nombre: texto_(p.nombre, 80), dni: dni_(p.dni), asiste: p.asiste === true }))
     .filter(p => p.nombre);
   if (!personas.length || personas.length > MAX_PERSONAS) return { ok: false, error: 'personas' };
-  if (personas.some(p => p.asiste && !p.dni)) return { ok: false, error: 'dni' };
+  if (personas.some(p => !p.dni)) return { ok: false, error: 'dni' };
 
   const sh = SpreadsheetApp.getActive().getSheetByName(HOJAS.confirmaciones);
   // Si alguien vuelve a confirmar, su respuesta nueva reemplaza a la anterior (mismo DNI o mismo nombre).
