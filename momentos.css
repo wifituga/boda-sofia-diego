@@ -60,3 +60,15 @@
 
 @media (min-width: 760px) { .moments-stage { max-width: 440px; } }
 @media (prefers-reduced-motion: reduce) { .moments-track { scroll-behavior: auto; } }
+
+/* Las flores de la primera tarjeta pueden salirse del encuadre */
+.moments { overflow: visible; }
+.moments-track {
+  position: relative;
+  margin: -44px calc(-1 * var(--gutter)) 0;
+  padding: 50px var(--gutter) 34px;
+  gap: calc(2 * var(--gutter) + 10px);
+}
+.moment-cover { overflow: visible; }
+.moment-cover .cover-flower.top { width: 52%; top: -9%; right: -13%; transform: rotate(14deg); z-index: 2; filter: drop-shadow(2px 6px 6px #3b102033); }
+.moment-cover .cover-flower.bottom { width: 44%; bottom: -9%; left: -12%; transform: rotate(-12deg) scaleX(-1); z-index: 2; filter: drop-shadow(2px 6px 6px #3b102033); }
