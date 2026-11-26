@@ -7,9 +7,8 @@ const MOMENTOS = {
     diego: "img/fotos/diego-nino.jpg"
   },
   fotos: [
-    { src: "img/fotos/momento-1.jpg", alt: "Sofía y Diego", texto: "Cómo empezó" },
-    { src: "img/fotos/momento-2.jpg", alt: "Sofía y Diego", texto: "Nuestro primer viaje" },
-    { src: "img/fotos/momento-3.jpg", alt: "Sofía y Diego", texto: "El sí más bonito" }
+    { src: "img/fotos/momento-1.webp", alt: "Sofía y Diego frente a frente en la orilla", pos: "50% 45%" },
+    { src: "img/fotos/momento-2.webp", alt: "Sofía y Diego entre las olas", pos: "50% 62%" }
   ]
 };
 
@@ -43,7 +42,9 @@ const MOMENTOS = {
   for (const f of MOMENTOS.fotos) {
     const fig = document.createElement('figure');
     fig.className = 'moment';
-    fig.append(photo(f.src, f.alt));
+    const box = photo(f.src, f.alt);
+    if (f.pos) box.style.setProperty('--pos', f.pos);
+    fig.append(box);
     if (f.texto) {
       const cap = document.createElement('figcaption');
       cap.textContent = f.texto;

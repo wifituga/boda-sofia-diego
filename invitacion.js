@@ -1,6 +1,6 @@
 /* La primera foto aparece en Nuestra historia. Las siguientes forman la galería. */
 const FOTOS = [
-  // { src: "img/fotos/1.jpg", alt: "Sofía y Diego juntos", texto: "Cómo empezó" },
+  { src: "img/fotos/historia.webp", alt: "Sofía y Diego abrazados entre las olas" },
 ];
 
 /* ===== Fotos ===== */

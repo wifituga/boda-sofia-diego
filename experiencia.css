@@ -250,3 +250,8 @@ body.locked .music-toggle { display: none; }
 .hero .hero-copy .kicker { font-size: clamp(16px, 4.4vw, 21px); letter-spacing: .26em; gap: clamp(10px, 2.6vw, 16px); }
 .hero h1 { font-size: clamp(70px, 7.6vw, 110px); }
 @media (max-width: 700px) { .hero h1 { font-size: clamp(58px, 15.2vw, 82px); margin-top: 20px; } }
+
+/* ===== Fotos reales ===== */
+.hero-photo img { object-position: 50% 24%; }
+.story-photos img { object-position: 50% 58%; }
+.moment-photo img { object-position: var(--pos, 50% 50%); }
