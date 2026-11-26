@@ -252,6 +252,6 @@ body.locked .music-toggle { display: none; }
 @media (max-width: 700px) { .hero h1 { font-size: clamp(58px, 15.2vw, 82px); margin-top: 20px; } }
 
 /* ===== Fotos reales ===== */
-.hero-photo img { object-position: 50% 24%; }
+.hero-photo img { object-position: 46% 32%; }
 .story-photos img { object-position: 50% 58%; }
 .moment-photo img { object-position: var(--pos, 50% 50%); }

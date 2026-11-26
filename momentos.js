@@ -8,7 +8,8 @@ const MOMENTOS = {
   },
   fotos: [
     { src: "img/fotos/momento-1.webp", alt: "Sofía y Diego frente a frente en la orilla", pos: "50% 45%" },
-    { src: "img/fotos/momento-2.webp", alt: "Sofía y Diego entre las olas", pos: "50% 62%" }
+    { src: "img/fotos/momento-2.webp", alt: "Sofía y Diego entre las olas", pos: "50% 62%" },
+    { src: "img/fotos/momento-3.webp", alt: "Sofía y Diego abrazados frente al acantilado", pos: "50% 28%" }
   ]
 };
 
