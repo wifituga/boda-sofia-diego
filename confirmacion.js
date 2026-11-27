@@ -11,7 +11,8 @@
   const songStatus = document.getElementById('songStatus');
   if (!form) return;
 
-  const MAX = 8;
+  const token = (new URLSearchParams(location.search).get('i') || '').trim().toLowerCase();
+  const MAX = Math.max(1, Math.min(8, Number((CONFIG.pases || {})[token]) || 1));
   const extrasTitle = document.createElement('p');
   extrasTitle.className = 'extras-title';
   extrasTitle.textContent = 'Quienes vienen contigo';
@@ -73,6 +74,8 @@
       c.querySelector('.pass-remove').hidden = i === 0;
     });
     addBtn.hidden = cards.length >= MAX;
+    const left = MAX - cards.length;
+    addBtn.lastChild.textContent = left === 1 ? ' Agregar acompañante (queda 1)' : ` Agregar acompañante (quedan ${left})`;
     extrasTitle.hidden = cards.length < 2;
     if (cards[1]) cards[0].after(extrasTitle);
   }
@@ -88,6 +91,10 @@
     }
   }
   addBtn.addEventListener('click', () => addPerson(true));
+  const intro = form.querySelector('.rsvp-intro');
+  if (intro) intro.textContent = MAX === 1
+    ? 'Esta invitación es personal, para 1 persona.'
+    : `Esta invitación es para ${MAX} personas: tú y hasta ${MAX - 1} ${MAX - 1 === 1 ? 'acompañante' : 'acompañantes'}. Primero tus datos y luego agrega a quienes vienen contigo.`;
   addPerson(false);
 
   if (demo) {
@@ -161,6 +168,7 @@
     try {
       await post({
         accion: 'confirmar',
+        pase: token,
         personas: people,
         restriccion: document.getElementById('fDiet').value.trim(),
         mensaje: document.getElementById('fMsg').value.trim()

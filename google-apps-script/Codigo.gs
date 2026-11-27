@@ -5,10 +5,18 @@
 
 const HOJAS = { confirmaciones: 'Confirmaciones', ingreso: 'Lista de ingreso', canciones: 'Canciones' };
 const CABECERAS = {
-  confirmaciones: ['Fecha', 'Grupo', 'Confirmado por', 'Nombre y apellido', 'DNI / CE', 'Asiste', 'Tipo', 'Restricción alimentaria', 'Mensaje'],
+  confirmaciones: ['Fecha', 'Grupo', 'Confirmado por', 'Nombre y apellido', 'DNI / CE', 'Asiste', 'Tipo', 'Restricción alimentaria', 'Mensaje', 'Invitación para'],
   canciones: ['Fecha', 'Nombre', 'Canción 1', 'Canción 2']
 };
 const MAX_PERSONAS = 8;
+// Mismos códigos que en config.js: cantidad de personas que permite cada link.
+const PASES = {
+  '8cff02': 1,
+  '5dcb33': 2,
+  '9a43ac': 3,
+  '291749': 4,
+  'bf0125': 5
+};
 
 /* ---------- Menú ---------- */
 function onOpen() {
@@ -54,7 +62,8 @@ function confirmar_(data) {
   const personas = (Array.isArray(data.personas) ? data.personas : [])
     .map((p, i) => ({ nombre: texto_(p.nombre, 80), dni: dni_(p.dni), asiste: p.asiste === true, tipo: i === 0 ? 'Invitado' : 'Acompañante' }))
     .filter(p => p.nombre);
-  if (!personas.length || personas.length > MAX_PERSONAS) return { ok: false, error: 'personas' };
+  const limite = PASES[String(data.pase || '').trim().toLowerCase()] || 1;
+  if (!personas.length || personas.length > Math.min(limite, MAX_PERSONAS)) return { ok: false, error: 'personas' };
   if (personas.some(p => !p.dni)) return { ok: false, error: 'dni' };
 
   const sh = SpreadsheetApp.getActive().getSheetByName(HOJAS.confirmaciones);
@@ -75,7 +84,8 @@ function confirmar_(data) {
   const filas = personas.map((p, i) => [
     now, grupo, quien, p.nombre, p.dni, p.asiste ? 'Sí' : 'No', p.tipo,
     i === 0 ? texto_(data.restriccion, 300) : '',
-    i === 0 ? texto_(data.mensaje, 600) : ''
+    i === 0 ? texto_(data.mensaje, 600) : '',
+    limite === 1 ? '1 persona' : limite + ' personas'
   ]);
   sh.getRange(sh.getLastRow() + 1, 1, filas.length, filas[0].length).setValues(filas);
   sh.getRange(2, 5, sh.getLastRow(), 1).setNumberFormat('@'); // conserva ceros iniciales del DNI

@@ -8,6 +8,18 @@ const CONFIG = {
      Mientras esté vacía, la confirmación funciona en modo demostración y no guarda nada. */
   hojaUrl: "",
 
+  /* Links por cantidad de personas. Cada código permite confirmar hasta ese número de personas
+     (el invitado + sus acompañantes). El link sin código es para 1 persona.
+     Ejemplo: https://wifituga.github.io/boda-sofia-diego/?i=CODIGO
+     Si cambias los códigos, cámbialos también en google-apps-script/Codigo.gs (PASES). */
+  pases: {
+    "8cff02": 1,
+    "5dcb33": 2,
+    "9a43ac": 3,
+    "291749": 4,
+    "bf0125": 5
+  },
+
   /* Canción de los novios: copiar el MP3 a musica/ y escribir aquí su nombre.
      Mientras sea null, el botón de música no aparece. */
   cancion: { src: "musica/cancion.mp3" }, // subir el archivo con ese nombre a la carpeta musica/

@@ -17,6 +17,20 @@ Hazlo con la cuenta de Google de los novios.
    - Quién tiene acceso: **Cualquier usuario**
 7. Copia la **URL de la aplicación web**, que termina en `/exec`, y envíasela a quien mantiene la página. Esa URL va en `hojaUrl` dentro de `config.js`.
 
+## Links por cantidad de personas
+
+Cada invitado recibe el link según cuántas personas pueden ir con esa invitación. El formulario solo deja agregar acompañantes hasta ese número, y la hoja rechaza cualquier respuesta con más personas.
+
+| Invitación para | Link |
+|---|---|
+| 1 persona | https://wifituga.github.io/boda-sofia-diego/?i=8cff02 |
+| 2 personas | https://wifituga.github.io/boda-sofia-diego/?i=5dcb33 |
+| 3 personas | https://wifituga.github.io/boda-sofia-diego/?i=9a43ac |
+| 4 personas | https://wifituga.github.io/boda-sofia-diego/?i=291749 |
+| 5 personas | https://wifituga.github.io/boda-sofia-diego/?i=bf0125 |
+
+El link sin código (https://wifituga.github.io/boda-sofia-diego/) es para 1 persona. Ejemplos: los papás reciben el de 2, un amigo que va solo el de 1, la tía con sus dos hijos el de 3.
+
 ## Pestañas
 
 - **Confirmaciones**: una fila por persona, con nombre, DNI y si asiste. La columna «Grupo» junta a quienes confirmaron en el mismo envío, «Confirmado por» dice quién llenó el formulario y «Tipo» separa al invitado de sus acompañantes (extras). Si alguien vuelve a confirmar, su respuesta nueva reemplaza a la anterior.

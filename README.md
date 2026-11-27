@@ -17,7 +17,7 @@ Invitación de boda en una sola página, con HTML, CSS y JavaScript nativos. Ada
 
 ## Cómo editar
 - **Datos generales**: `config.js` (fecha, lugar, URL de la hoja de Google, canción, fotos de portada y del lugar, datos para transferencia). Los textos de fecha y horarios están en `index.html`.
-- **Confirmaciones y canciones**: ver `google-apps-script/LEEME.md`. Mientras `hojaUrl` esté vacío, el formulario funciona en modo demostración y no guarda nada.
+- **Confirmaciones y canciones**: ver `google-apps-script/LEEME.md` (ahí están también los links para 1, 2, 3, 4 y 5 personas). Mientras `hojaUrl` esté vacío, el formulario funciona en modo demostración y no guarda nada.
 - **Canción**: copiar el MP3 a `musica/` y escribir `cancion: { src: "musica/archivo.mp3" }` en `config.js`.
 - **Fotos de portada y del lugar**: guardarlas como `img/fotos/portada.jpg` e `img/fotos/fundo.jpg`, o cambiar las rutas en `config.js`.
 - **Foto en «Y ahora, para siempre»** (opcional): `FOTOS` en `invitacion.js`.

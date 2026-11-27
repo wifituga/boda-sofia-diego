@@ -259,3 +259,9 @@ body.locked .music-toggle { display: none; }
 /* ===== Acompañantes separados del invitado ===== */
 .extras-title { margin: 14px 0 -2px; padding-top: 14px; border-top: 1px solid var(--rule); color: var(--wine); font: 500 11.5px/1 var(--sans); letter-spacing: .2em; text-transform: uppercase; }
 .people .pass-extra { background: #fbf6ee; border-style: dashed; }
+
+/* ===== Flores de la esquina pegadas al marco (no chocan con «Nos casamos») ===== */
+@media (max-width: 760px) {
+  .hero .flor-cascada { width: 26%; top: -4.5%; right: -6.5%; transform-origin: 80% 4%; transform: rotate(7deg); }
+  .hero .hero-copy .kicker::before, .hero .hero-copy .kicker::after { width: clamp(14px, 4vw, 22px); }
+}
