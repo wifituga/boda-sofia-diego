@@ -255,3 +255,7 @@ body.locked .music-toggle { display: none; }
 .hero-photo img { object-position: 46% 32%; }
 .story-photos img { object-position: 50% 58%; }
 .moment-photo img { object-position: var(--pos, 50% 50%); }
+
+/* ===== Acompañantes separados del invitado ===== */
+.extras-title { margin: 14px 0 -2px; padding-top: 14px; border-top: 1px solid var(--rule); color: var(--wine); font: 500 11.5px/1 var(--sans); letter-spacing: .2em; text-transform: uppercase; }
+.people .pass-extra { background: #fbf6ee; border-style: dashed; }

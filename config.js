@@ -13,7 +13,7 @@ const CONFIG = {
   cancion: { src: "musica/cancion.mp3" }, // subir el archivo con ese nombre a la carpeta musica/
 
   /* Foto pequeña de la portada. Si el archivo no existe, la portada se muestra sin foto. */
-  fotoPortada: "img/fotos/portada-mar.webp",
+  fotoPortada: "img/fotos/portada-clara.webp",
 
   /* Foto del Fundo Pozo Santo. Si el archivo no existe, se muestra un espacio pendiente. */
   fotoLugar: "img/fotos/fundo.jpg",

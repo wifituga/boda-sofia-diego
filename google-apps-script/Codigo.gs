@@ -5,7 +5,7 @@
 
 const HOJAS = { confirmaciones: 'Confirmaciones', ingreso: 'Lista de ingreso', canciones: 'Canciones' };
 const CABECERAS = {
-  confirmaciones: ['Fecha', 'Grupo', 'Confirmado por', 'Nombre y apellido', 'DNI / CE', 'Asiste', 'Restricción alimentaria', 'Mensaje'],
+  confirmaciones: ['Fecha', 'Grupo', 'Confirmado por', 'Nombre y apellido', 'DNI / CE', 'Asiste', 'Tipo', 'Restricción alimentaria', 'Mensaje'],
   canciones: ['Fecha', 'Nombre', 'Canción 1', 'Canción 2']
 };
 const MAX_PERSONAS = 8;
@@ -21,9 +21,9 @@ function prepararHoja() {
   hoja_(ss, HOJAS.canciones, CABECERAS.canciones);
   const ingreso = ss.getSheetByName(HOJAS.ingreso) || ss.insertSheet(HOJAS.ingreso);
   ingreso.clear();
-  ingreso.getRange('A1:C1').setValues([['Nombre y apellido', 'DNI / CE', 'Confirmado por']]).setFontWeight('bold');
+  ingreso.getRange('A1:D1').setValues([['Nombre y apellido', 'DNI / CE', 'Tipo', 'Confirmado por']]).setFontWeight('bold');
   ingreso.getRange('A2').setFormula(
-    '=IFERROR(SORT(FILTER({Confirmaciones!D2:D, Confirmaciones!E2:E, Confirmaciones!C2:C}, Confirmaciones!F2:F="Sí"), 1, TRUE), "")'
+    '=IFERROR(SORT(FILTER({Confirmaciones!D2:D, Confirmaciones!E2:E, Confirmaciones!G2:G, Confirmaciones!C2:C}, Confirmaciones!F2:F="Sí"), 3, FALSE, 1, TRUE), "")'
   );
   ingreso.setFrozenRows(1);
   const sobra = ss.getSheetByName('Hoja 1') || ss.getSheetByName('Sheet1');
@@ -52,7 +52,7 @@ function doPost(e) {
 
 function confirmar_(data) {
   const personas = (Array.isArray(data.personas) ? data.personas : [])
-    .map(p => ({ nombre: texto_(p.nombre, 80), dni: dni_(p.dni), asiste: p.asiste === true }))
+    .map((p, i) => ({ nombre: texto_(p.nombre, 80), dni: dni_(p.dni), asiste: p.asiste === true, tipo: i === 0 ? 'Invitado' : 'Acompañante' }))
     .filter(p => p.nombre);
   if (!personas.length || personas.length > MAX_PERSONAS) return { ok: false, error: 'personas' };
   if (personas.some(p => !p.dni)) return { ok: false, error: 'dni' };
@@ -73,7 +73,7 @@ function confirmar_(data) {
   const grupo = Utilities.formatDate(now, 'America/Lima', 'yyMMdd-HHmmss');
   const quien = personas[0].nombre;
   const filas = personas.map((p, i) => [
-    now, grupo, quien, p.nombre, p.dni, p.asiste ? 'Sí' : 'No',
+    now, grupo, quien, p.nombre, p.dni, p.asiste ? 'Sí' : 'No', p.tipo,
     i === 0 ? texto_(data.restriccion, 300) : '',
     i === 0 ? texto_(data.mensaje, 600) : ''
   ]);

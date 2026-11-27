@@ -12,6 +12,10 @@
   if (!form) return;
 
   const MAX = 8;
+  const extrasTitle = document.createElement('p');
+  extrasTitle.className = 'extras-title';
+  extrasTitle.textContent = 'Quienes vienen contigo';
+  extrasTitle.hidden = true;
   const url = (CONFIG.hojaUrl || '').trim();
   const demo = !url;
 
@@ -62,12 +66,15 @@
   }
 
   function renumber() {
-    const cards = [...list.children];
+    const cards = [...list.querySelectorAll(':scope > .pass')];
     cards.forEach((c, i) => {
-      c.querySelector('.pass-name').textContent = i === 0 ? 'Tus datos' : `Persona ${i + 1}`;
+      c.querySelector('.pass-name').textContent = i === 0 ? 'Tus datos' : `Acompañante ${i}`;
+      c.classList.toggle('pass-extra', i > 0);
       c.querySelector('.pass-remove').hidden = i === 0;
     });
     addBtn.hidden = cards.length >= MAX;
+    extrasTitle.hidden = cards.length < 2;
+    if (cards[1]) cards[0].after(extrasTitle);
   }
 
   function addPerson(focus) {
@@ -128,7 +135,7 @@
     status.textContent = '';
     const people = [];
     let firstBad = null;
-    for (const card of list.querySelectorAll('.pass')) {
+    for (const [k, card] of [...list.querySelectorAll('.pass')].entries()) {
       const err = card.querySelector('.pass-error');
       const choice = card.querySelector('input[type=radio]:checked')?.value;
       const nombre = card.querySelector('.pass-full').value.trim().replace(/\s+/g, ' ');
@@ -141,7 +148,7 @@
       err.hidden = !msg;
       card.classList.toggle('has-error', Boolean(msg));
       if (msg && !firstBad) firstBad = card;
-      people.push({ nombre, dni, asiste: choice === 'si' });
+      people.push({ nombre, dni, asiste: choice === 'si', tipo: k === 0 ? 'Invitado' : 'Acompañante' });
     }
     if (firstBad) {
       firstBad.scrollIntoView({ behavior: 'smooth', block: 'center' });

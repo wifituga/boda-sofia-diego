@@ -19,8 +19,8 @@ Hazlo con la cuenta de Google de los novios.
 
 ## Pestañas
 
-- **Confirmaciones**: una fila por persona, con nombre, DNI y si asiste. La columna «Grupo» junta a quienes confirmaron en el mismo envío, y «Confirmado por» dice quién llenó el formulario. Si alguien vuelve a confirmar, su respuesta nueva reemplaza a la anterior.
-- **Lista de ingreso**: se actualiza sola con las personas que asisten, ordenadas por nombre. Es la que se le pasa a la wedding planner para la puerta.
+- **Confirmaciones**: una fila por persona, con nombre, DNI y si asiste. La columna «Grupo» junta a quienes confirmaron en el mismo envío, «Confirmado por» dice quién llenó el formulario y «Tipo» separa al invitado de sus acompañantes (extras). Si alguien vuelve a confirmar, su respuesta nueva reemplaza a la anterior.
+- **Lista de ingreso**: se actualiza sola con las personas que asisten, primero los invitados y luego los acompañantes, cada grupo ordenado por nombre. Es la que se le pasa a la wedding planner para la puerta.
 - **Canciones**: las canciones que recomiendan los invitados para el baile.
 
 ## Privacidad
