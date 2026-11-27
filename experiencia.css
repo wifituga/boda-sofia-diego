@@ -262,6 +262,6 @@ body.locked .music-toggle { display: none; }
 
 /* ===== Flores de la esquina pegadas al marco (no chocan con «Nos casamos») ===== */
 @media (max-width: 760px) {
-  .hero .flor-cascada { width: 26%; top: -4.5%; right: -12%; transform-origin: 80% 4%; transform: rotate(-8deg); }
+  .hero .flor-cascada { width: 24%; top: -4%; right: -4%; transform-origin: 80% 4%; transform: rotate(-12deg); }
   .hero .hero-copy .kicker::before, .hero .hero-copy .kicker::after { width: clamp(14px, 4vw, 22px); }
 }
